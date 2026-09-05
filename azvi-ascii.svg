@@ -1,5 +1,239 @@
 <svg width="420" height="450" viewBox="0 0 420 450" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <style>
+  <defs>
+    <clipPath id="terminalTypewriterClip">
+      <rect x="0" y="52.0" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.0429;0.0607;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="63.2" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.0607;0.0786;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="74.5" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.0786;0.0964;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="85.8" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.0964;0.1143;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="97.0" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.1143;0.1321;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="108.2" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.1321;0.15;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="119.5" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.15;0.1679;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="130.8" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.1679;0.1857;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="142.0" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.1857;0.2036;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="153.2" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.2036;0.2214;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="164.5" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.2214;0.2393;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="175.8" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.2393;0.2571;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="187.0" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.2571;0.275;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="198.2" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.275;0.2929;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="209.5" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.2929;0.3107;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="220.8" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.3107;0.3286;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="232.0" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.3286;0.3464;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="243.2" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.3464;0.3643;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="254.5" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.3643;0.3821;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="265.8" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.3821;0.4;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="277.0" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.4;0.4179;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="288.2" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.4179;0.4357;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="299.5" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.4357;0.4536;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="310.8" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.4536;0.4714;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="322.0" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.4714;0.4893;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="333.2" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.4893;0.5071;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="344.5" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.5071;0.525;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="355.8" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.525;0.5429;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="367.0" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.5429;0.5607;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="378.2" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.5607;0.5786;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="389.5" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.5786;0.5964;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+      <rect x="0" y="400.8" width="0" height="12.4">
+        <animate attributeName="width"
+                 values="0;0;420;420;0"
+                 keyTimes="0;0.5964;0.6143;0.93;1"
+                 dur="7.0s"
+                 repeatCount="indefinite" />
+      </rect>
+    </clipPath>
+  </defs>
+
+  <!-- Frame Kembar Identik -->
+  <rect width="420" height="450" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+
+  <!-- Konten ASCII dengan Masking Ketikan Terminal -->
+  <g clip-path="url(#terminalTypewriterClip)">
+    <style>
     text {
       fill: #8b949e;
       font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
@@ -25,24 +259,6 @@
 
   <!-- Window Frame -->
   
-  <defs>
-    <style>
-      @keyframes terminalTypewriter {
-        0% { clip-path: inset(0 100% 100% 0); }
-        15% { clip-path: inset(0 0 80% 0); }
-        30% { clip-path: inset(0 0 62% 0); }
-        45% { clip-path: inset(0 0 45% 0); }
-        60% { clip-path: inset(0 0 28% 0); }
-        75% { clip-path: inset(0 0 10% 0); }
-        85%, 94% { clip-path: inset(0 0 0% 0); }
-        100% { clip-path: inset(0 100% 100% 0); }
-      }
-      .ascii-typing {
-        animation: terminalTypewriter 7s steps(12, end) infinite;
-      }
-    </style>
-  </defs>
-  <rect width="420" height="450" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
 
   <!-- macOS Window Controls -->
   
@@ -54,4 +270,5 @@
 
   <!-- ASCII Art Matrix -->
   <text x="25" y="65.0" style="animation-delay: 0.05s;">-===-=*+=+++***++--*++*=+=*##%#-#%%%%@@-*%#%+-</text><text x="25" y="73.5" style="animation-delay: 0.08s;">:--===#==+==--:::.:+*+*==+++++=:*%%#%%%-#@%#+-</text><text x="25" y="82.0" style="animation-delay: 0.11s;">..-===#====: .  ....=**=-==+++=-##%####-*#=:::</text><text x="25" y="90.5" style="animation-delay: 0.14s;">----==*===:.    ..:.-*#=-==+++--......:--:::..</text><text x="25" y="99.0" style="animation-delay: 0.17s;">=..::-*=--:....::-==+*#=-++++*=- . .::=-:::-::</text><text x="25" y="107.5" style="animation-delay: 0.20s;">-:-+=-****+=..:-===**+*==++++*=:....::-:::::::</text><text x="25" y="116.0" style="animation-delay: 0.23s;">+-.::-+%#+-:  .:--===+*-=+++++-.....::::......</text><text x="25" y="124.5" style="animation-delay: 0.26s;">=+--=++-... . .--:::::+++++*****##=.:...... ..</text><text x="25" y="133.0" style="animation-delay: 0.29s;">---=++= ........-:.::.-*##+*++***=............</text><text x="25" y="141.5" style="animation-delay: 0.32s;">-::-=+- ... ..:..:.:...--::==*+---:.. ...     </text><text x="25" y="150.0" style="animation-delay: 0.35s;">..:::-.  .:. ::.......:=++==+**+==-.  ... ..:.</text><text x="25" y="158.5" style="animation-delay: 0.38s;">...::-:. ..:..::..:-===+*++:---+++=-......::::</text><text x="25" y="167.0" style="animation-delay: 0.41s;">...::--:...:...:.::+=--+++====+++==+====----:.</text><text x="25" y="175.5" style="animation-delay: 0.44s;">:::=-::-.....:...::::=====-:===========:::--. </text><text x="25" y="184.0" style="animation-delay: 0.47s;">::-=-::::.... .=++*:..::.:+=====+*-.:---:.:-=-</text><text x="25" y="192.5" style="animation-delay: 0.50s;">::....        =#**= ....-=====--:-::-===-:..:.</text>
+  </g>
 </svg>
