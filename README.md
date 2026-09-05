@@ -1,20 +1,17 @@
 <div align="center">
 
-<!-- SIDE-BY-SIDE CARDS -->
-<img src="./azvi-ascii.svg" width="410" alt="Azvi Portrait" />
-<img src="./assets/build-card.svg" width="410" alt="Kamen Rider Build" />
+<!-- DUAL TERMINAL CARDS -->
+<img src="./azvi-ascii.svg" width="414" alt="Azvi Portrait" />
+<img src="./assets/build-card.svg" width="414" alt="Kamen Rider Build" />
 
 <br><br>
 
-<!-- SOURCE INDICATORS -->
-<p>
-  <sub>
-    <b>Data Sources:</b> 
-    GitHub (<code>Azvi27</code>) • 
-    Cloud GitLab (<code>gitlab.azvibelajar.my.id</code>) • 
-    GitLab Lab 1 (<code>Lab. SSTK 1</code>) • 
-    GitLab Lab 2 (<code>Lab. SSTK 2</code>)
-  </sub>
+<!-- TELEMETRY SOURCES STATUS BAR -->
+<p align="center">
+  <code>GH: Azvi27</code> &nbsp;•&nbsp;
+  <code>GL Cloud: gitlab.azvibelajar.my.id</code> &nbsp;•&nbsp;
+  <code>Lab 1: Lab. SSTK 1</code> &nbsp;•&nbsp;
+  <code>Lab 2: Lab. SSTK 2</code>
 </p>
 
 <!-- AGGREGATED HEATMAP -->
