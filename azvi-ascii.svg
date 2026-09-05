@@ -1,11 +1,12 @@
 <svg width="350" height="340" viewBox="0 0 350 340" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <clipPath id="asciiTypeClip">
-      <rect x="0" y="30" width="350" height="0">
+      <rect x="0" y="24" width="420" height="0">
         <animate attributeName="height"
-                 values="0; 0; 300; 300; 0; 0"
-                 keyTimes="0; 0.04; 0.45; 0.85; 0.92; 1"
-                 dur="7s"
+                 calcMode="discrete"
+                 values="0; 11; 23; 35; 47; 59; 71; 82; 94; 106; 118; 130; 142; 153; 165; 177; 189; 201; 213; 225; 236; 248; 260; 272; 284; 296; 307; 319; 331; 343; 355; 367; 378; 390; 402; 414; 426; 438; 450; 450; 0; 0"
+                 keyTimes="0; 0.052; 0.064; 0.076; 0.087; 0.099; 0.111; 0.123; 0.135; 0.147; 0.158; 0.170; 0.182; 0.194; 0.206; 0.218; 0.229; 0.241; 0.253; 0.265; 0.277; 0.289; 0.301; 0.312; 0.324; 0.336; 0.348; 0.360; 0.372; 0.383; 0.395; 0.407; 0.419; 0.431; 0.443; 0.454; 0.466; 0.478; 0.490; 0.88; 0.94; 1"
+                 dur="7.5s"
                  repeatCount="indefinite" />
       </rect>
     </clipPath>
@@ -62,13 +63,5 @@
   </g>
 
   <!-- Garis Laser Pemindai Sesuai Kodemu -->
-  <g>
-    <animateTransform attributeName="transform"
-                      type="translate"
-                      values="0 30; 0 30; 0 330; 0 330; 0 30; 0 30"
-                      keyTimes="0; 0.04; 0.45; 0.85; 0.92; 1"
-                      dur="7s"
-                      repeatCount="indefinite" />
-    <line x1="24" y1="0" x2="326" y2="0" stroke="#58a6ff" stroke-width="1.5" opacity="0.65" />
-  </g>
+  
 </svg>
