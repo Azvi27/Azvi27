@@ -1,146 +1,125 @@
-import os, re, json, base64, subprocess
-import xml.etree.ElementTree as ET
-
-# Kunci dimensi asli yang padat, proporsional, dan bebas ruang kosong
-CARD_W = 350
-CARD_H = 340
+import os, re, json, base64
+from datetime import datetime
 
 # =============================================================
-# 1. PROCESS AZVI-ASCII.SVG (EXTRACT TEXT TAGS - 100% VALID XML)
+# 1. PATCH AZVI-ASCII.SVG (STRUKTUR ASLI KODEMU - TANPA GARIS BIRU)
 # =============================================================
-def get_pristine_ascii_raw():
-    res = subprocess.run(["git", "log", "-S", "*+%*====", "--format=%H", "--", "azvi-ascii.svg"], capture_output=True, text=True)
-    commits = [c.strip() for c in res.stdout.strip().split() if c.strip()]
-    for c in commits:
-        show = subprocess.run(["git", "show", f"{c}:azvi-ascii.svg"], capture_output=True, text=True)
-        if "*+%*====" in show.stdout:
-            return show.stdout
-    if os.path.exists("azvi-ascii.svg"):
-        with open("azvi-ascii.svg", "r", encoding="utf-8") as f:
-            return f.read()
-    return ""
-
 def patch_ascii_portrait():
-    raw_content = get_pristine_ascii_raw()
-    if not raw_content:
-        print("[!] Gagal memuat data asli azvi-ascii.svg.")
-        return
+    if not os.path.exists("azvi-ascii.svg"):
+        return 420, 480
 
-    # Ekstrak HANYA elemen <text>...</text> murni (bebas dari tag <g> yatim piatu)
-    all_tags = re.findall(r'<text\b[^>]*>.*?</text>', raw_content, flags=re.DOTALL)
-    clean_text_tags = []
-    for tag in all_tags:
-        if any(x in tag for x in ["portrait.sh", "rendered:", "kernel:"]):
-            continue
-        clean_text_tags.append(tag)
+    with open("azvi-ascii.svg", "r", encoding="utf-8") as f:
+        content = f.read()
 
-    if not clean_text_tags:
-        print("[!] Tag teks ASCII tidak ditemukan.")
-        return
+    # Bersihkan tombol terminal, header, footer rendered, dan garis pemindai lama
+    content = re.sub(r'<circle[^>]*>', '', content)
+    content = re.sub(r'<text[^>]*>portrait\.sh</text>', '', content)
+    content = re.sub(r'<text[^>]*>rendered:[^<]*</text>', '', content)
+    content = re.sub(r'<line[^>]*y1="4[04]"[^>]*/>', '', content)
+    content = re.sub(r'<line[^>]*stroke="#58a6ff"[^>]*/>', '', content)
+    content = re.sub(r'<defs>.*?</defs>', '', content, flags=re.DOTALL)
+    content = re.sub(r'<g id="type-wrapper"[^>]*>', '', content)
+    content = re.sub(r'<g id="type-beam"[^>]*>.*?</g>', '', content, flags=re.DOTALL)
+    content = re.sub(r'<g[^>]*clip-path=[^>]*>', '', content)
 
-    ascii_body = "\n    ".join(clean_text_tags)
+    w, h = 420, 480
 
-    # Susun SVG baru 350x340 dengan animasi reveal halus tanpa garis laser biru
-    new_svg = f'''<svg width="{CARD_W}" height="{CARD_H}" viewBox="0 0 {CARD_W} {CARD_H}" fill="none" xmlns="http://www.w3.org/2000/svg">
+    # Ekstrak seluruh body asli (menjaga tag <g font-family> utuh)
+    body = content
+    body = re.sub(r'<\?xml[^>]*\?>', '', body)
+    body = re.sub(r'<svg[^>]*>', '', body)
+    body = re.sub(r'</svg>', '', body)
+    body = re.sub(r'<rect[^>]*fill="#0d1117"[^>]*/>', '', body)
+
+    # Animasi reveal vertikal halus: terbuka ke bawah, diam 3.5 detik tampil utuh, lalu loop
+    # Tanpa garis laser biru fotokopi
+    new_svg = f'''<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Reveal halus vertikal: mengalir ke bawah, tampil utuh diam ~3.5 detik, lalu loop -->
-    <clipPath id="asciiRevealClip">
-      <rect x="0" y="20" width="{CARD_W}" height="0">
+    <clipPath id="asciiTypeClip">
+      <rect x="0" y="24" width="{w}" height="0">
         <animate attributeName="height"
-                 values="0; {CARD_H - 25}; {CARD_H - 25}; 0"
-                 keyTimes="0; 0.45; 0.92; 1"
+                 values="0; 0; {h - 30}; {h - 30}; 0; 0"
+                 keyTimes="0; 0.04; 0.46; 0.88; 0.94; 1"
                  dur="7s"
                  repeatCount="indefinite" />
       </rect>
     </clipPath>
   </defs>
 
-  <!-- Frame Kembar 350x340 -->
-  <rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+  <!-- Frame Kembar Bersih -->
+  <rect width="{w}" height="{h}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
 
-  <!-- Konten ASCII Meja Lab (Tajam, Presisi, Tanpa Garis Laser) -->
-  <g clip-path="url(#asciiRevealClip)">
-    {ascii_body}
+  <!-- Teks ASCII Meja Lab Asli (Font & Ketajaman Terjaga 100%) -->
+  <g clip-path="url(#asciiTypeClip)">
+    {body.strip()}
   </g>
 </svg>'''
 
-    try:
-        ET.fromstring(new_svg)
-        with open("azvi-ascii.svg", "w", encoding="utf-8") as f:
-            f.write(new_svg)
-        print(f"[1/3] azvi-ascii.svg 100% VALID XML & padat ({CARD_W}x{CARD_H}).")
-    except ET.ParseError as err:
-        print(f"[!] Error XML azvi-ascii.svg: {err}")
+    with open("azvi-ascii.svg", "w", encoding="utf-8") as f:
+        f.write(new_svg)
+    print(f"[1/3] azvi-ascii.svg tajam asli berhasil dipulihkan ({w}x{h}).")
+    return w, h
 
 # =============================================================
-# 2. GENERATE BUILD CARD (TWIN 350x340 - RAPAT TANPA GAP KOSONG)
+# 2. GENERATE BUILD CARD (TWIN 420x480)
 # =============================================================
-def generate_build_card():
+def generate_build_card(w, h):
     sprite_path = "assets/Build_Capsem_Sprite.webp"
     sprite_b64 = ""
     if os.path.exists(sprite_path):
         with open(sprite_path, "rb") as f:
             sprite_b64 = base64.b64encode(f.read()).decode("utf-8")
 
-    svg = f'''<svg width="{CARD_W}" height="{CARD_H}" viewBox="0 0 {CARD_W} {CARD_H}" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Frame Kembar 350x340 -->
-  <rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+    svg = f'''<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="{w}" height="{h}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
 
-  <!-- Sprite Kamen Rider Build -->
-  <g transform="translate(16, 42)">
-    <image href="data:image/webp;base64,{sprite_b64}" width="112" height="112"/>
+  <!-- Sprite Build -->
+  <g transform="translate(18, 56)">
+    <image href="data:image/webp;base64,{sprite_b64}" width="136" height="136"/>
   </g>
 
-  <!-- Quotes 3 Bahasa Sento Kiryu -->
+  <!-- Quotes 3 Bahasa -->
   <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
-    <text x="136" y="54" fill="#58a6ff" font-size="12" font-weight="600">さぁ、実験を始めようか？</text>
-    <text x="136" y="72" fill="#c9d1d9" font-size="10.5" font-style="italic">Shall we begin the experiment?</text>
-    <text x="136" y="89" fill="#8b949e" font-size="9.5">Nah, mari kita mulai eksperimennya!</text>
+    <text x="162" y="74" fill="#58a6ff" font-size="13" font-weight="600">さぁ、実験を始めようか？</text>
+    <text x="162" y="93" fill="#c9d1d9" font-size="11.5" font-style="italic">Shall we begin the experiment?</text>
+    <text x="162" y="111" fill="#8b949e" font-size="10.5">Nah, mari kita mulai eksperimennya!</text>
 
-    <line x1="136" y1="102" x2="{CARD_W - 18}" y2="102" stroke="#21262d" stroke-width="1"/>
+    <line x1="162" y1="128" x2="{w - 24}" y2="128" stroke="#21262d" stroke-width="1"/>
 
-    <text x="136" y="122" fill="#ff7b72" font-size="12" font-weight="600">勝利の法則は決まった！</text>
-    <text x="136" y="140" fill="#c9d1d9" font-size="10.5" font-style="italic">The formula for victory is set!</text>
-    <text x="136" y="157" fill="#8b949e" font-size="9.5">Hukum kemenangannya telah ditentukan!</text>
+    <text x="162" y="152" fill="#ff7b72" font-size="13" font-weight="600">勝利の法則は決まった！</text>
+    <text x="162" y="171" fill="#c9d1d9" font-size="11.5" font-style="italic">The formula for victory is set!</text>
+    <text x="162" y="189" fill="#8b949e" font-size="10.5">Hukum kemenangannya telah ditentukan!</text>
   </g>
 
-  <!-- Kotak Formula & Driver Callout (Posisi Pas di Bawah Quotes) -->
-  <g transform="translate(20, 238)">
-    <rect width="{CARD_W - 40}" height="64" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
-
-    <!-- Baris 1: BEST MATCH -->
-    <text x="{(CARD_W - 40)/2}" y="27" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" font-weight="600">
+  <!-- Formula di atas, Callout di bawah -->
+  <g transform="translate(24, {h - 86})">
+    <rect width="{w - 48}" height="56" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+    <text x="{(w - 48)/2}" y="24" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" font-weight="600">
       <tspan fill="#ff7b72">Rabbit</tspan>
       <tspan fill="#6e7681"> × </tspan>
       <tspan fill="#58a6ff">Tank</tspan>
       <tspan fill="#6e7681"> ➔ </tspan>
       <tspan fill="#3fb950" font-weight="bold">BEST MATCH</tspan>
     </text>
-
-    <!-- Baris 2: DRIVER CALLOUT -->
-    <text x="{(CARD_W - 40)/2}" y="48" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#8b949e" letter-spacing="1">
+    <text x="{(w - 48)/2}" y="43" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#8b949e" letter-spacing="1">
       &gt; &quot;Are you ready?&quot;
     </text>
   </g>
 </svg>'''
 
-    try:
-        ET.fromstring(svg)
-        with open("assets/build-card.svg", "w", encoding="utf-8") as f:
-            f.write(svg)
-        print(f"[2/3] assets/build-card.svg 100% VALID & proporsional ({CARD_W}x{CARD_H}).")
-    except ET.ParseError as err:
-        print(f"[!] Error XML assets/build-card.svg: {err}")
+    with open("assets/build-card.svg", "w", encoding="utf-8") as f:
+        f.write(svg)
+    print(f"[2/3] assets/build-card.svg diperbarui ({w}x{h}).")
 
 # =============================================================
-# 3. UPDATE README (CACHE BUSTER V15)
+# 3. UPDATE README (CACHE BUSTER V16)
 # =============================================================
 def update_readme():
     content = '''<div align="center">
 
 <!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=15" width="414" alt="Azvi Portrait" />
-<img src="./assets/build-card.svg?v=15" width="414" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=16" width="414" alt="Azvi Portrait" />
+<img src="./assets/build-card.svg?v=16" width="414" alt="Kamen Rider Build" />
 
 <br><br>
 
@@ -156,15 +135,15 @@ def update_readme():
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=15" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=16" alt="Aggregated Heatmap" width="840" />
 
 </div>
 '''
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(content)
-    print("[3/3] README.md diperbarui dengan cache-buster ?v=15.")
+    print("[3/3] README.md diperbarui dengan cache-buster ?v=16.")
 
 if __name__ == "__main__":
-    patch_ascii_portrait()
-    generate_build_card()
+    w, h = patch_ascii_portrait()
+    generate_build_card(w, h)
     update_readme()

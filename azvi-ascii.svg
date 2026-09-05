@@ -1,61 +1,57 @@
-<svg width="350" height="340" viewBox="0 0 350 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="420" height="480" viewBox="0 0 420 480" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Reveal halus vertikal: mengalir ke bawah, tampil utuh diam ~3.5 detik, lalu loop -->
-    <clipPath id="asciiRevealClip">
-      <rect x="0" y="20" width="350" height="0">
+    <clipPath id="asciiTypeClip">
+      <rect x="0" y="24" width="420" height="0">
         <animate attributeName="height"
-                 values="0; 315; 315; 0"
-                 keyTimes="0; 0.45; 0.92; 1"
+                 values="0; 0; 450; 450; 0; 0"
+                 keyTimes="0; 0.04; 0.46; 0.88; 0.94; 1"
                  dur="7s"
                  repeatCount="indefinite" />
       </rect>
     </clipPath>
   </defs>
 
-  <!-- Frame Kembar 350x340 -->
-  <rect width="350" height="340" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+  <!-- Frame Kembar Bersih -->
+  <rect width="420" height="480" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
 
-  <!-- Konten ASCII Meja Lab (Tajam, Presisi, Tanpa Garis Laser) -->
-  <g clip-path="url(#asciiRevealClip)">
-    <text x="22" y="64.0" style="animation-delay: 0.03s;">                                                                        </text>
-    <text x="22" y="69.6" style="animation-delay: 0.04s;">                  *+%*====-::=*@                                        </text>
-    <text x="22" y="75.2" style="animation-delay: 0.06s;">               -+*+**-*=--=-:..:=*                                      </text>
-    <text x="22" y="80.8" style="animation-delay: 0.07s;">              --*+++--+::::::-:..:+                                     </text>
-    <text x="22" y="86.4" style="animation-delay: 0.09s;">              -:-:-.::..:::-:.:=-.:+%                                   </text>
-    <text x="22" y="92.0" style="animation-delay: 0.10s;">             -....:.....:::---.=-:.:+*                                  </text>
-    <text x="22" y="97.6" style="animation-delay: 0.12s;">             ...............:--=-:-:-+                                  </text>
-    <text x="22" y="103.2" style="animation-delay: 0.14s;">             ...............::-.--:--:=                                 </text>
-    <text x="22" y="108.8" style="animation-delay: 0.15s;">             ..............-:.=-:-:::.=                                 </text>
-    <text x="22" y="114.4" style="animation-delay: 0.17s;">              ............-:.-**=-.-#+                                  </text>
-    <text x="22" y="120.0" style="animation-delay: 0.18s;">              .......:====+=+*###*+#%@@                                 </text>
-    <text x="22" y="125.6" style="animation-delay: 0.19s;">              ..=+=:.:==+=-=+=-=+#*-@@+*                                </text>
-    <text x="22" y="131.2" style="animation-delay: 0.21s;">               ..=+=.-====+==++=+@%%@@@                                 </text>
-    <text x="22" y="136.8" style="animation-delay: 0.23s;">               ...==--=+**##%%%*#@%@@@                                  </text>
-    <text x="22" y="142.4" style="animation-delay: 0.24s;">              ......-===+*#%@*=*+@%*@                                   </text>
-    <text x="22" y="148.0" style="animation-delay: 0.26s;">           @*+-......:======-==+*@%@                                    </text>
-    <text x="22" y="153.6" style="animation-delay: 0.27s;">       =*=-::......::::-==+*+=*%%@#=#@#                                 </text>
-    <text x="22" y="159.2" style="animation-delay: 0.29s;">    =**+=-.........:+=-:::-++++*@%+==%**@                               </text>
-    <text x="22" y="164.8" style="animation-delay: 0.30s;">  %*=*+==..:...:....-==+=-:-==+=%=:*.:+++=                              </text>
-    <text x="22" y="170.4" style="animation-delay: 0.31s;"> +-::...-+--:..:-....----=+*#...==.#=--*--                              </text>
-    <text x="22" y="176.0" style="animation-delay: 0.33s;">-=:..--...-:.:.......:+##**%#..-==.=+-.-.=#                             </text>
-    <text x="22" y="181.6" style="animation-delay: 0.34s;">:.-:..-:...----:..:....-+%@%..:.--.:+-.=:-##                            </text>
-    <text x="22" y="187.2" style="animation-delay: 0.36s;">:.....---:...:-:...:......+-.=-:+=--*:.=:-*##                           </text>
-    <text x="22" y="192.8" style="animation-delay: 0.38s;">:.........-:..=-:::-=-::-:..=+-:=-.:=..-.:.=%                @          </text>
-    <text x="22" y="198.4" style="animation-delay: 0.39s;">.:..:-::...::..=::::-:..:..:::-:-+-+=.:=.:--#+            @@@@@@        </text>
-    <text x="22" y="204.0" style="animation-delay: 0.41s;">.--:...:-:...:..-:..=--:-:.-=:-.:=@*..-..-::-@         @@@@:#@@@@       </text>
-    <text x="22" y="209.6" style="animation-delay: 0.42s;">...==:..-=--....-+-:==-:-...---....:.-=..--:.-++     +#@@@++@@@@@       </text>
-    <text x="22" y="215.2" style="animation-delay: 0.43s;"> ......::--:--...:=.:-::-:..=-+.:-.:-+=....:-#@@@@@@@+.:*@*+@@@@@@      </text>
-    <text x="22" y="220.8" style="animation-delay: 0.45s;">  ......:==::--...*=-+=---..-:=..:..:=...-#@@@@@@@@@@@-.-@@@%%#*@@      </text>
-    <text x="22" y="226.4" style="animation-delay: 0.46s;">  .........==-=...-+-==:::..:::.....:--*%%%@%%@@%%@@@@%:**   :+         </text>
-    <text x="22" y="232.0" style="animation-delay: 0.48s;">  --...-....--:=:..=--=+==-..==.:=*%@@@%*+=#%*@%##%@@*#+=.  ++@#    @% @</text>
-    <text x="22" y="237.6" style="animation-delay: 0.49s;">   ...:-:.:.:=--:..-=--+=-=--+=-@@@@@%*+++=#@+@@%%*:..:..:---:.-.@*#%+ @</text>
-    <text x="22" y="243.2" style="animation-delay: 0.51s;">    ...:-:---=:.-....=:==-=-=-..#%#*%@%#****@*++:=#=%@@**+*%**%@@@@@@%@+</text>
-    <text x="22" y="248.8" style="animation-delay: 0.53s;">    :...:::--++-+-+=-*::-.:.::..=*+=--:...-*@#**#@@@@@@@@@@@@@##@@#:@@@#</text>
-    <text x="22" y="254.4" style="animation-delay: 0.54s;">   =:...:....=-::-:..:......:---*%%%%-=::*%@@@@@@@*:..-==**=-=+*+=++*@%%</text>
-    <text x="22" y="260.0" style="animation-delay: 0.56s;">    ..:..:...........:==+*#####*=-:..=@@@+:%=-:==--+-...:===+#%%%%##*+++</text>
-    <text x="22" y="265.6" style="animation-delay: 0.57s;">    .........--=+*###**+-:...........+*-*#*%@%%@@@@%%+++*####***+++++++#</text>
-    <text x="22" y="271.2" style="animation-delay: 0.58s;">    ::-++*##**+=-:.........:=*%@@@-.-:...::..::...+**@###**************%</text>
-    <text x="22" y="276.8" style="animation-delay: 0.60s;">*@%#**+=-:............=@@@@@@@@@@%.:-::----------:.%%%+****#####*****@@@</text>
-    <text x="22" y="282.4" style="animation-delay: 0.61s;">-::..................:@@@@@@@@@@@:.::::::::::::::::*@#*########*##***@@@</text>
+  <!-- Teks ASCII Meja Lab Asli (Font & Ketajaman Terjaga 100%) -->
+  <g clip-path="url(#asciiTypeClip)">
+    <style>
+    text {
+      fill: #8b949e;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 7.8px;
+      letter-spacing: 1.5px;
+      opacity: 0;
+      animation: scanline 0.25s ease forwards;
+    }
+    @keyframes scanline {
+      to {
+        opacity: 1;
+      }
+    }
+    .title {
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 12px;
+      font-weight: bold;
+      fill: #8b949e;
+      opacity: 1;
+      animation: none;
+    }
+  </style>
+
+  <!-- Window Frame -->
+  
+
+  <!-- macOS Window Controls -->
+  
+  
+  
+  
+
+  
+
+  <!-- ASCII Art Matrix -->
+  <text x="25" y="65.0" style="animation-delay: 0.05s;">-===-=*+=+++***++--*++*=+=*##%#-#%%%%@@-*%#%+-</text><text x="25" y="73.5" style="animation-delay: 0.08s;">:--===#==+==--:::.:+*+*==+++++=:*%%#%%%-#@%#+-</text><text x="25" y="82.0" style="animation-delay: 0.11s;">..-===#====: .  ....=**=-==+++=-##%####-*#=:::</text><text x="25" y="90.5" style="animation-delay: 0.14s;">----==*===:.    ..:.-*#=-==+++--......:--:::..</text><text x="25" y="99.0" style="animation-delay: 0.17s;">=..::-*=--:....::-==+*#=-++++*=- . .::=-:::-::</text><text x="25" y="107.5" style="animation-delay: 0.20s;">-:-+=-****+=..:-===**+*==++++*=:....::-:::::::</text><text x="25" y="116.0" style="animation-delay: 0.23s;">+-.::-+%#+-:  .:--===+*-=+++++-.....::::......</text><text x="25" y="124.5" style="animation-delay: 0.26s;">=+--=++-... . .--:::::+++++*****##=.:...... ..</text><text x="25" y="133.0" style="animation-delay: 0.29s;">---=++= ........-:.::.-*##+*++***=............</text><text x="25" y="141.5" style="animation-delay: 0.32s;">-::-=+- ... ..:..:.:...--::==*+---:.. ...     </text><text x="25" y="150.0" style="animation-delay: 0.35s;">..:::-.  .:. ::.......:=++==+**+==-.  ... ..:.</text><text x="25" y="158.5" style="animation-delay: 0.38s;">...::-:. ..:..::..:-===+*++:---+++=-......::::</text><text x="25" y="167.0" style="animation-delay: 0.41s;">...::--:...:...:.::+=--+++====+++==+====----:.</text><text x="25" y="175.5" style="animation-delay: 0.44s;">:::=-::-.....:...::::=====-:===========:::--. </text><text x="25" y="184.0" style="animation-delay: 0.47s;">::-=-::::.... .=++*:..::.:+=====+*-.:---:.:-=-</text><text x="25" y="192.5" style="animation-delay: 0.50s;">::....        =#**= ....-=====--:-::-===-:..:.</text>
   </g>
 </svg>
