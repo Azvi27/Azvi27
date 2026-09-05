@@ -39,12 +39,12 @@
   <!-- Footer Info -->
   <text x="35" y="154" class="footer">300 contributions in the last year</text>
 
-  <!-- Legenda Less ... More (Terkunci sejajar ujung kanan grid) -->
-  <text x="730" y="154" class="label" text-anchor="end">Less</text>
-  <rect x="736" y="145" width="10" height="10" rx="2" fill="#161b22"/>
-  <rect x="750" y="145" width="10" height="10" rx="2" fill="#0e4429"/>
-  <rect x="764" y="145" width="10" height="10" rx="2" fill="#006d32"/>
-  <rect x="778" y="145" width="10" height="10" rx="2" fill="#26a641"/>
-  <rect x="792" y="145" width="10" height="10" rx="2" fill="#39d353"/>
-  <text x="826" y="154" class="label" text-anchor="end">More</text>
+  <!-- Legenda Less ... More -->
+  <text x="676" y="154" class="label">Less</text>
+  <rect x="708" y="144" width="11" height="11" rx="2" fill="#161b22"/>
+  <rect x="722" y="144" width="11" height="11" rx="2" fill="#0e4429"/>
+  <rect x="736" y="144" width="11" height="11" rx="2" fill="#006d32"/>
+  <rect x="750" y="144" width="11" height="11" rx="2" fill="#26a641"/>
+  <rect x="764" y="144" width="11" height="11" rx="2" fill="#39d353"/>
+  <text x="783" y="154" class="label">More</text>
 </svg>

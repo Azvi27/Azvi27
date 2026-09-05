@@ -11,7 +11,6 @@ def generate_svg():
   days = payload["days"]
   total_str = payload.get("total", "300 contributions in the last year")
 
-  # Ukuran grid proporsional untuk lebar 860px
   box_size = 11
   gap = 4
   start_x = 35
@@ -45,35 +44,26 @@ def generate_svg():
     )
     svg_rects.append(rect)
 
-    # Catat posisi teks nama bulan
     dt = datetime.strptime(item["date"], "%Y-%m-%d")
     month_name = dt.strftime("%b")
     if dt.day <= 7 and month_name not in month_positions:
       month_positions[month_name] = x
 
-  # Posisi ujung kanan grid visual yang presisi
   grid_right = max_x + box_size
+  footer_y = start_y + (7 * (box_size + gap)) + 14
+  legend_box_y = footer_y - 10
+  svg_height = footer_y + 20
 
-  # Posisi vertikal footer dan legenda (rapat dan presisi di bawah grid)
-  footer_y = start_y + (7 * (box_size + gap)) + 14  # ~154px
-  legend_box_y = footer_y - 9  # ~145px
-  svg_height = footer_y + 20  # ~174px
-
-  # Label bulan
   month_labels = [
       f'<text x="{pos}" y="22" class="label">{m}</text>'
       for m, pos in month_positions.items()
   ]
 
-# Koordinat kotak legenda dengan jarak aman agar tidak menabrak teks
-    b4 = grid_right - 48 - box_size
-    b3 = b4 - 13
-    b2 = b3 - 13
-    b1 = b2 - 13
-    b0 = b1 - 13
-    less_x = b0 - 8
+  # Posisi legenda horizontal (Less [][][][][] More) dengan jarak longgar
+  legend_x = grid_right - 150
+  box_step = box_size + 3
 
-    svg_content = f"""<svg width="860" height="{svg_height}" viewBox="0 0 860 {svg_height}" fill="none" xmlns="http://www.w3.org/2000/svg">
+  svg_content = f"""<svg width="860" height="{svg_height}" viewBox="0 0 860 {svg_height}" fill="none" xmlns="http://www.w3.org/2000/svg">
   <style>
     .box {{
       opacity: 0;
@@ -115,12 +105,20 @@ def generate_svg():
   <text x="{start_x}" y="{footer_y}" class="footer">{total_str}</text>
 
   <!-- Legenda Less ... More -->
-  <text x="{less_x}" y="{footer_y}" class="label" text-anchor="end">Less</text>
-  <rect x="{b0}" y="{legend_box_y}" width="10" height="10" rx="2" fill="#161b22"/>
-  <rect x="{b1}" y="{legend_box_y}" width="10" height="10" rx="2" fill="#0e4429"/>
-  <rect x="{b2}" y="{legend_box_y}" width="10" height="10" rx="2" fill="#006d32"/>
-  <rect x="{b3}" y="{legend_box_y}" width="10" height="10" rx="2" fill="#26a641"/>
-  <rect x="{b4}" y="{legend_box_y}" width="10" height="10" rx="2" fill="#39d353"/>
-  <text x="{grid_right}" y="{footer_y}" class="label" text-anchor="end">More</text>
+  <text x="{legend_x}" y="{footer_y}" class="label">Less</text>
+  <rect x="{legend_x + 32}" y="{legend_box_y}" width="{box_size}" height="{box_size}" rx="2" fill="#161b22"/>
+  <rect x="{legend_x + 32 + box_step}" y="{legend_box_y}" width="{box_size}" height="{box_size}" rx="2" fill="#0e4429"/>
+  <rect x="{legend_x + 32 + box_step * 2}" y="{legend_box_y}" width="{box_size}" height="{box_size}" rx="2" fill="#006d32"/>
+  <rect x="{legend_x + 32 + box_step * 3}" y="{legend_box_y}" width="{box_size}" height="{box_size}" rx="2" fill="#26a641"/>
+  <rect x="{legend_x + 32 + box_step * 4}" y="{legend_box_y}" width="{box_size}" height="{box_size}" rx="2" fill="#39d353"/>
+  <text x="{legend_x + 32 + box_step * 4 + box_size + 8}" y="{footer_y}" class="label">More</text>
 </svg>
 """
+
+  with open("contrib-heatmap.svg", "w") as f:
+    f.write(svg_content)
+  print("contrib-heatmap.svg berhasil di-render ulang!")
+
+
+if __name__ == "__main__":
+  generate_svg()
