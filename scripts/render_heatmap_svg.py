@@ -9,23 +9,20 @@ def generate_svg():
     payload = json.load(f)
 
   days = payload["days"]
-  total_str = payload.get("total", "299 contributions in the last year")
+  total_str = payload.get("total", "300 contributions in the last year")
 
-  box_size = 10
-  gap = 3
-  start_x = 42
-  start_y = 38
+  # Ukuran grid proporsional untuk lebar 860px
+  box_size = 11
+  gap = 4
+  start_x = 35
+  start_y = 35
 
-  # Hari pertama dalam kalender
   first_date = datetime.strptime(days[0]["date"], "%Y-%m-%d")
-  # Hari dalam seminggu untuk item pertama (0: Senin, 6: Minggu)
-  # GitHub memulai grid dari Sunday (0 di US calendar)
-  # Di Python: weekday() -> Monday=0, Sunday=6.
-  # Konversi ke Sunday=0: (weekday + 1) % 7
   start_day_offset = (first_date.weekday() + 1) % 7
 
   svg_rects = []
   month_positions = {}
+  max_x = start_x
 
   for idx, item in enumerate(days):
     grid_index = idx + start_day_offset
@@ -34,11 +31,13 @@ def generate_svg():
 
     x = start_x + col * (box_size + gap)
     y = start_y + row * (box_size + gap)
+    if x > max_x:
+      max_x = x
 
     lvl = item.get("level", 0)
     color = PALETTE[lvl] if lvl < len(PALETTE) else PALETTE[-1]
 
-    delay = (col * 0.01) + (row * 0.015)
+    delay = (col * 0.008) + (row * 0.015)
     rect = (
         f'<rect class="box" x="{x}" y="{y}" width="{box_size}"'
         f' height="{box_size}" rx="2" fill="{color}" style="animation-delay:'
@@ -46,19 +45,35 @@ def generate_svg():
     )
     svg_rects.append(rect)
 
-    # Catat posisi label bulan jika tanggal adalah awal bulan (1 s/d 7)
+    # Catat posisi teks nama bulan
     dt = datetime.strptime(item["date"], "%Y-%m-%d")
     month_name = dt.strftime("%b")
     if dt.day <= 7 and month_name not in month_positions:
       month_positions[month_name] = x
 
-  # Buat elemen SVG label bulan
+  # Posisi ujung kanan grid visual yang presisi
+  grid_right = max_x + box_size
+
+  # Posisi vertikal footer dan legenda (rapat dan presisi di bawah grid)
+  footer_y = start_y + (7 * (box_size + gap)) + 14  # ~154px
+  legend_box_y = footer_y - 9  # ~145px
+  svg_height = footer_y + 20  # ~174px
+
+  # Label bulan
   month_labels = [
-      f'<text x="{pos}" y="24" class="label">{m}</text>'
+      f'<text x="{pos}" y="22" class="label">{m}</text>'
       for m, pos in month_positions.items()
   ]
 
-  svg_content = f"""<svg width="860" height="175" viewBox="0 0 860 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+  # Koordinat kotak legenda yang sejajar dengan ujung grid
+  b4 = grid_right - 34
+  b3 = b4 - 14
+  b2 = b3 - 14
+  b1 = b2 - 14
+  b0 = b1 - 14
+  less_x = b0 - 6
+
+  svg_content = f"""<svg width="860" height="{svg_height}" viewBox="0 0 860 {svg_height}" fill="none" xmlns="http://www.w3.org/2000/svg">
   <style>
     .box {{
       opacity: 0;
@@ -83,36 +98,36 @@ def generate_svg():
     }}
   </style>
 
-  <rect width="860" height="175" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+  <rect width="860" height="{svg_height}" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
 
   <!-- Bulan -->
   {''.join(month_labels)}
 
-  <!-- Hari (Minggu=0, Senin=1, Rabu=3, Jumat=5) -->
-  <text x="14" y="58" class="label">Mon</text>
-  <text x="14" y="84" class="label">Wed</text>
-  <text x="14" y="110" class="label">Fri</text>
+  <!-- Hari -->
+  <text x="12" y="60" class="label">Mon</text>
+  <text x="12" y="90" class="label">Wed</text>
+  <text x="12" y="120" class="label">Fri</text>
 
   <!-- Kotak Grid -->
   {''.join(svg_rects)}
 
-  <!-- Footer -->
-  <text x="42" y="154" class="footer">{total_str}</text>
+  <!-- Footer Info -->
+  <text x="{start_x}" y="{footer_y}" class="footer">{total_str}</text>
 
-  <!-- Legenda -->
-  <text x="690" y="154" class="label">Less</text>
-  <rect x="726" y="145" width="10" height="10" rx="2" fill="#161b22"/>
-  <rect x="739" y="145" width="10" height="10" rx="2" fill="#0e4429"/>
-  <rect x="752" y="145" width="10" height="10" rx="2" fill="#006d32"/>
-  <rect x="765" y="145" width="10" height="10" rx="2" fill="#26a641"/>
-  <rect x="778" y="145" width="10" height="10" rx="2" fill="#39d353"/>
-  <text x="795" y="154" class="label">More</text>
+  <!-- Legenda Less ... More (Terkunci sejajar ujung kanan grid) -->
+  <text x="{less_x}" y="{footer_y}" class="label" text-anchor="end">Less</text>
+  <rect x="{b0}" y="{legend_box_y}" width="10" height="10" rx="2" fill="#161b22"/>
+  <rect x="{b1}" y="{legend_box_y}" width="10" height="10" rx="2" fill="#0e4429"/>
+  <rect x="{b2}" y="{legend_box_y}" width="10" height="10" rx="2" fill="#006d32"/>
+  <rect x="{b3}" y="{legend_box_y}" width="10" height="10" rx="2" fill="#26a641"/>
+  <rect x="{b4}" y="{legend_box_y}" width="10" height="10" rx="2" fill="#39d353"/>
+  <text x="{grid_right}" y="{footer_y}" class="label" text-anchor="end">More</text>
 </svg>
 """
 
   with open("contrib-heatmap.svg", "w") as f:
     f.write(svg_content)
-  print("contrib-heatmap.svg berhasil di-render ulang!")
+  print("contrib-heatmap.svg berhasil di-render ulang dengan proporsi pas!")
 
 
 if __name__ == "__main__":
