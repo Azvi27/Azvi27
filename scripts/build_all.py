@@ -2,7 +2,7 @@ import os, re, json, base64
 from datetime import datetime
 
 # =============================================================
-# 1. PATCH AZVI-ASCII.SVG (STRUKTUR ASLI KODEMU - TANPA GARIS BIRU)
+# 1. PATCH AZVI-ASCII.SVG (100% LOGIKA KODEMU YANG TERBUKTI TAJAM)
 # =============================================================
 def patch_ascii_portrait():
     if not os.path.exists("azvi-ascii.svg"):
@@ -11,57 +11,71 @@ def patch_ascii_portrait():
     with open("azvi-ascii.svg", "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Bersihkan tombol terminal, header, footer rendered, dan garis pemindai lama
+    # Bersihkan tombol titik, header, dan footer rendered
     content = re.sub(r'<circle[^>]*>', '', content)
     content = re.sub(r'<text[^>]*>portrait\.sh</text>', '', content)
     content = re.sub(r'<text[^>]*>rendered:[^<]*</text>', '', content)
     content = re.sub(r'<line[^>]*y1="4[04]"[^>]*/>', '', content)
-    content = re.sub(r'<line[^>]*stroke="#58a6ff"[^>]*/>', '', content)
     content = re.sub(r'<defs>.*?</defs>', '', content, flags=re.DOTALL)
     content = re.sub(r'<g id="type-wrapper"[^>]*>', '', content)
     content = re.sub(r'<g id="type-beam"[^>]*>.*?</g>', '', content, flags=re.DOTALL)
     content = re.sub(r'<g[^>]*clip-path=[^>]*>', '', content)
 
     w, h = 420, 480
+    vb = re.search(r'viewBox="0 0 (\d+) (\d+)"', content)
+    if vb:
+        w, h = int(vb.group(1)), int(vb.group(2))
 
-    # Ekstrak seluruh body asli (menjaga tag <g font-family> utuh)
+    bg_match = re.search(r'(<rect[^>]*fill="#0d1117"[^>]*/>)', content)
+    bg_rect = bg_match.group(1) if bg_match else f'<rect width="{w}" height="{h}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>'
+
+    # Pertahankan seluruh struktur font monospace dan karakter secara utuh
     body = content
     body = re.sub(r'<\?xml[^>]*\?>', '', body)
     body = re.sub(r'<svg[^>]*>', '', body)
     body = re.sub(r'</svg>', '', body)
-    body = re.sub(r'<rect[^>]*fill="#0d1117"[^>]*/>', '', body)
+    if bg_match:
+        body = body.replace(bg_match.group(1), '')
 
-    # Animasi reveal vertikal halus: terbuka ke bawah, diam 3.5 detik tampil utuh, lalu loop
-    # Tanpa garis laser biru fotokopi
     new_svg = f'''<svg width="{w}" height="{h}" viewBox="0 0 {w} {h}" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <clipPath id="asciiTypeClip">
-      <rect x="0" y="24" width="{w}" height="0">
+      <rect x="0" y="30" width="{w}" height="0">
         <animate attributeName="height"
-                 values="0; 0; {h - 30}; {h - 30}; 0; 0"
-                 keyTimes="0; 0.04; 0.46; 0.88; 0.94; 1"
+                 values="0; 0; {h-40}; {h-40}; 0; 0"
+                 keyTimes="0; 0.04; 0.45; 0.85; 0.92; 1"
                  dur="7s"
                  repeatCount="indefinite" />
       </rect>
     </clipPath>
   </defs>
 
-  <!-- Frame Kembar Bersih -->
-  <rect width="{w}" height="{h}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+  {bg_rect}
 
-  <!-- Teks ASCII Meja Lab Asli (Font & Ketajaman Terjaga 100%) -->
+  <!-- Teks ASCII dengan Integritas Monospace Terjaga 100% -->
   <g clip-path="url(#asciiTypeClip)">
     {body.strip()}
+  </g>
+
+  <!-- Garis Laser Pemindai Sesuai Kodemu -->
+  <g>
+    <animateTransform attributeName="transform"
+                      type="translate"
+                      values="0 30; 0 30; 0 {h-10}; 0 {h-10}; 0 30; 0 30"
+                      keyTimes="0; 0.04; 0.45; 0.85; 0.92; 1"
+                      dur="7s"
+                      repeatCount="indefinite" />
+    <line x1="24" y1="0" x2="{w-24}" y2="0" stroke="#58a6ff" stroke-width="1.5" opacity="0.65" />
   </g>
 </svg>'''
 
     with open("azvi-ascii.svg", "w", encoding="utf-8") as f:
         f.write(new_svg)
-    print(f"[1/3] azvi-ascii.svg tajam asli berhasil dipulihkan ({w}x{h}).")
+    print(f"[1/3] azvi-ascii.svg berhasil diperbarui tajam ({w}x{h}).")
     return w, h
 
 # =============================================================
-# 2. GENERATE BUILD CARD (TWIN 420x480)
+# 2. GENERATE BUILD CARD
 # =============================================================
 def generate_build_card(w, h):
     sprite_path = "assets/Build_Capsem_Sprite.webp"
@@ -91,7 +105,7 @@ def generate_build_card(w, h):
     <text x="162" y="189" fill="#8b949e" font-size="10.5">Hukum kemenangannya telah ditentukan!</text>
   </g>
 
-  <!-- Formula di atas, Callout di bawah -->
+  <!-- Kotak Formula & Driver Callout -->
   <g transform="translate(24, {h - 86})">
     <rect width="{w - 48}" height="56" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
     <text x="{(w - 48)/2}" y="24" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" font-weight="600">
@@ -109,17 +123,17 @@ def generate_build_card(w, h):
 
     with open("assets/build-card.svg", "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"[2/3] assets/build-card.svg diperbarui ({w}x{h}).")
+    print(f"[2/3] assets/build-card.svg berhasil diperbarui ({w}x{h}).")
 
 # =============================================================
-# 3. UPDATE README (CACHE BUSTER V16)
+# 3. UPDATE README (CACHE BUSTER V18)
 # =============================================================
 def update_readme():
     content = '''<div align="center">
 
 <!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=16" width="414" alt="Azvi Portrait" />
-<img src="./assets/build-card.svg?v=16" width="414" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=18" width="414" alt="Azvi Portrait" />
+<img src="./assets/build-card.svg?v=18" width="414" alt="Kamen Rider Build" />
 
 <br><br>
 
@@ -135,13 +149,13 @@ def update_readme():
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=16" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=18" alt="Aggregated Heatmap" width="840" />
 
 </div>
 '''
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(content)
-    print("[3/3] README.md diperbarui dengan cache-buster ?v=16.")
+    print("[3/3] README.md diperbarui dengan cache-buster ?v=18.")
 
 if __name__ == "__main__":
     w, h = patch_ascii_portrait()
