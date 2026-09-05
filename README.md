@@ -3,11 +3,10 @@
   <!-- Header Section: Whoami -->
   <h3><code>azvi@github ~ $ whoami</code></h3>
 
-  <!-- Dua Jendela Berdampingan: ASCII Portrait & Neofetch Card -->
-  <img src="./azvi-ascii.svg" width="350" alt="ASCII Portrait" />
-  <img src="./info-card.svg" width="490" alt="Info Card" />
+  <!-- ASCII Portrait -->
+  <img src="./azvi-ascii.svg" width="380" alt="ASCII Portrait" />
 
-  <br />
+  <br /><br />
 
   <!-- Heatmap Section -->
   <h3><code>azvi@github ~ $ ./contributions.sh</code></h3>
