@@ -65,15 +65,15 @@ def generate_svg():
       for m, pos in month_positions.items()
   ]
 
-  # Koordinat kotak legenda yang sejajar dengan ujung grid
-  b4 = grid_right - 34
-  b3 = b4 - 14
-  b2 = b3 - 14
-  b1 = b2 - 14
-  b0 = b1 - 14
-  less_x = b0 - 6
+# Koordinat kotak legenda dengan jarak aman agar tidak menabrak teks
+    b4 = grid_right - 48 - box_size
+    b3 = b4 - 13
+    b2 = b3 - 13
+    b1 = b2 - 13
+    b0 = b1 - 13
+    less_x = b0 - 8
 
-  svg_content = f"""<svg width="860" height="{svg_height}" viewBox="0 0 860 {svg_height}" fill="none" xmlns="http://www.w3.org/2000/svg">
+    svg_content = f"""<svg width="860" height="{svg_height}" viewBox="0 0 860 {svg_height}" fill="none" xmlns="http://www.w3.org/2000/svg">
   <style>
     .box {{
       opacity: 0;
@@ -114,7 +114,7 @@ def generate_svg():
   <!-- Footer Info -->
   <text x="{start_x}" y="{footer_y}" class="footer">{total_str}</text>
 
-  <!-- Legenda Less ... More (Terkunci sejajar ujung kanan grid) -->
+  <!-- Legenda Less ... More -->
   <text x="{less_x}" y="{footer_y}" class="label" text-anchor="end">Less</text>
   <rect x="{b0}" y="{legend_box_y}" width="10" height="10" rx="2" fill="#161b22"/>
   <rect x="{b1}" y="{legend_box_y}" width="10" height="10" rx="2" fill="#0e4429"/>
@@ -124,11 +124,3 @@ def generate_svg():
   <text x="{grid_right}" y="{footer_y}" class="label" text-anchor="end">More</text>
 </svg>
 """
-
-  with open("contrib-heatmap.svg", "w") as f:
-    f.write(svg_content)
-  print("contrib-heatmap.svg berhasil di-render ulang dengan proporsi pas!")
-
-
-if __name__ == "__main__":
-  generate_svg()
