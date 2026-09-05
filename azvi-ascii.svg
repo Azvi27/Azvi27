@@ -1,41 +1,10 @@
 <svg width="420" height="450" viewBox="0 0 420 450" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <!-- Stepped polygon clip revealing Left-to-Right then Top-to-Bottom -->
-    <clipPath id="typewriterClip">
-      <polygon points="0,0 0,0 0,0 0,0">
-        <animate attributeName="points"
-                 calcMode="discrete"
-                 values="
-                   0,0 0,0 0,0 0,0;
-                   0,0 120,0 0,80 0,0;
-                   0,0 280,0 60,160 0,160;
-                   0,0 420,0 180,240 0,240;
-                   0,0 420,0 320,320 0,320;
-                   0,0 420,0 420,380 0,380;
-                   0,0 420,0 420,450 0,450;
-                   0,0 420,0 420,450 0,450;
-                   0,0 0,0 0,0 0,0
-                 "
-                 keyTimes="0; 0.05; 0.12; 0.22; 0.35; 0.50; 0.65; 0.90; 1"
-                 dur="6.5s"
-                 repeatCount="indefinite" />
-      </polygon>
-    </clipPath>
-  </defs>
-
-  <!-- Card Frame Identik -->
-  <rect width="420" height="450" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
-
-  <!-- Teks ASCII dengan Animasi Ketikan Terminal -->
-  <g clip-path="url(#typewriterClip)">
-    <!-- Teks ASCII dengan Animasi Terbuka Baris Demi Baris -->
-  
-    <style>
+  <style>
     text {
-      fill: #c9d1d9;
+      fill: #8b949e;
       font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-      font-size: 5.1px;
-      white-space: pre;
+      font-size: 7.8px;
+      letter-spacing: 1.5px;
       opacity: 0;
       animation: scanline 0.25s ease forwards;
     }
@@ -45,48 +14,44 @@
       }
     }
     .title {
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
       font-size: 12px;
       font-weight: bold;
       fill: #8b949e;
-      white-space: normal;
-      opacity: 1;
-      animation: none;
-    }
-    .subtext {
-      font-size: 9px;
-      fill: #484f58;
-      white-space: normal;
       opacity: 1;
       animation: none;
     }
   </style>
 
-  <!-- Frame Window -->
+  <!-- Window Frame -->
+  
+  <defs>
+    <style>
+      @keyframes terminalTypewriter {
+        0% { clip-path: inset(0 100% 100% 0); }
+        15% { clip-path: inset(0 0 80% 0); }
+        30% { clip-path: inset(0 0 62% 0); }
+        45% { clip-path: inset(0 0 45% 0); }
+        60% { clip-path: inset(0 0 28% 0); }
+        75% { clip-path: inset(0 0 10% 0); }
+        85%, 94% { clip-path: inset(0 0 0% 0); }
+        100% { clip-path: inset(0 100% 100% 0); }
+      }
+      .ascii-typing {
+        animation: terminalTypewriter 7s steps(12, end) infinite;
+      }
+    </style>
+  </defs>
+  <rect width="420" height="450" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+
+  <!-- macOS Window Controls -->
+  
+  
+  
   
 
-  <!-- macOS Dots -->
-  
-  
-  
   
 
-  
-
-  <!-- Matriks ASCII -->
-  <text x="22" y="64.0" style="animation-delay: 0.03s;">                                                                        </text><text x="22" y="69.6" style="animation-delay: 0.04s;">                  *+%*====-::=*@                                        </text><text x="22" y="75.2" style="animation-delay: 0.06s;">               -+*+**-*=--=-:..:=*                                      </text><text x="22" y="80.8" style="animation-delay: 0.07s;">              --*+++--+::::::-:..:+                                     </text><text x="22" y="86.4" style="animation-delay: 0.09s;">              -:-:-.::..:::-:.:=-.:+%                                   </text><text x="22" y="92.0" style="animation-delay: 0.10s;">             -....:.....:::---.=-:.:+*                                  </text><text x="22" y="97.6" style="animation-delay: 0.12s;">             ...............:--=-:-:-+                                  </text><text x="22" y="103.2" style="animation-delay: 0.14s;">             ...............::-.--:--:=                                 </text><text x="22" y="108.8" style="animation-delay: 0.15s;">             ..............-:.=-:-:::.=                                 </text><text x="22" y="114.4" style="animation-delay: 0.17s;">              ............-:.-**=-.-#+                                  </text><text x="22" y="120.0" style="animation-delay: 0.18s;">              .......:====+=+*###*+#%@@                                 </text><text x="22" y="125.6" style="animation-delay: 0.19s;">              ..=+=:.:==+=-=+=-=+#*-@@+*                                </text><text x="22" y="131.2" style="animation-delay: 0.21s;">               ..=+=.-====+==++=+@%%@@@                                 </text><text x="22" y="136.8" style="animation-delay: 0.23s;">               ...==--=+**##%%%*#@%@@@                                  </text><text x="22" y="142.4" style="animation-delay: 0.24s;">              ......-===+*#%@*=*+@%*@                                   </text><text x="22" y="148.0" style="animation-delay: 0.26s;">           @*+-......:======-==+*@%@                                    </text><text x="22" y="153.6" style="animation-delay: 0.27s;">       =*=-::......::::-==+*+=*%%@#=#@#                                 </text><text x="22" y="159.2" style="animation-delay: 0.29s;">    =**+=-.........:+=-:::-++++*@%+==%**@                               </text><text x="22" y="164.8" style="animation-delay: 0.30s;">  %*=*+==..:...:....-==+=-:-==+=%=:*.:+++=                              </text><text x="22" y="170.4" style="animation-delay: 0.31s;"> +-::...-+--:..:-....----=+*#...==.#=--*--                              </text><text x="22" y="176.0" style="animation-delay: 0.33s;">-=:..--...-:.:.......:+##**%#..-==.=+-.-.=#                             </text><text x="22" y="181.6" style="animation-delay: 0.34s;">:.-:..-:...----:..:....-+%@%..:.--.:+-.=:-##                            </text><text x="22" y="187.2" style="animation-delay: 0.36s;">:.....---:...:-:...:......+-.=-:+=--*:.=:-*##                           </text><text x="22" y="192.8" style="animation-delay: 0.38s;">:.........-:..=-:::-=-::-:..=+-:=-.:=..-.:.=%                @          </text><text x="22" y="198.4" style="animation-delay: 0.39s;">.:..:-::...::..=::::-:..:..:::-:-+-+=.:=.:--#+            @@@@@@        </text><text x="22" y="204.0" style="animation-delay: 0.41s;">.--:...:-:...:..-:..=--:-:.-=:-.:=@*..-..-::-@         @@@@:#@@@@       </text><text x="22" y="209.6" style="animation-delay: 0.42s;">...==:..-=--....-+-:==-:-...---....:.-=..--:.-++     +#@@@++@@@@@       </text><text x="22" y="215.2" style="animation-delay: 0.43s;"> ......::--:--...:=.:-::-:..=-+.:-.:-+=....:-#@@@@@@@+.:*@*+@@@@@@      </text><text x="22" y="220.8" style="animation-delay: 0.45s;">  ......:==::--...*=-+=---..-:=..:..:=...-#@@@@@@@@@@@-.-@@@%%#*@@      </text><text x="22" y="226.4" style="animation-delay: 0.46s;">  .........==-=...-+-==:::..:::.....:--*%%%@%%@@%%@@@@%:**   :+         </text><text x="22" y="232.0" style="animation-delay: 0.48s;">  --...-....--:=:..=--=+==-..==.:=*%@@@%*+=#%*@%##%@@*#+=.  ++@#    @% @</text><text x="22" y="237.6" style="animation-delay: 0.49s;">   ...:-:.:.:=--:..-=--+=-=--+=-@@@@@%*+++=#@+@@%%*:..:..:---:.-.@*#%+ @</text><text x="22" y="243.2" style="animation-delay: 0.51s;">    ...:-:---=:.-....=:==-=-=-..#%#*%@%#****@*++:=#=%@@**+*%**%@@@@@@%@+</text><text x="22" y="248.8" style="animation-delay: 0.53s;">    :...:::--++-+-+=-*::-.:.::..=*+=--:...-*@#**#@@@@@@@@@@@@@##@@#:@@@#</text><text x="22" y="254.4" style="animation-delay: 0.54s;">   =:...:....=-::-:..:......:---*%%%%-=::*%@@@@@@@*:..-==**=-=+*+=++*@%%</text><text x="22" y="260.0" style="animation-delay: 0.56s;">    ..:..:...........:==+*#####*=-:..=@@@+:%=-:==--+-...:===+#%%%%##*+++</text><text x="22" y="265.6" style="animation-delay: 0.57s;">    .........--=+*###**+-:...........+*-*#*%@%%@@@@%%+++*####***+++++++#</text><text x="22" y="271.2" style="animation-delay: 0.58s;">    ::-++*##**+=-:.........:=*%@@@-.-:...::..::...+**@###**************%</text><text x="22" y="276.8" style="animation-delay: 0.60s;">*@%#**+=-:............=@@@@@@@@@@%.:-::----------:.%%%+****#####*****@@@</text><text x="22" y="282.4" style="animation-delay: 0.61s;">-::..................:@@@@@@@@@@@:.::::::::::::::::*@#*########*##***@@@</text>
-
-  
-  </g>
-
-  <!-- Garis Pemindai Ketikan di Tepi Baris -->
-  <g>
-    <animateTransform attributeName="transform"
-                      type="translate"
-                      values="0 30; 0 30; 0 330; 0 330; 0 30; 0 30"
-                      keyTimes="0; 0.04; 0.45; 0.85; 0.92; 1"
-                      dur="7s"
-                      repeatCount="indefinite" />
-    <line x1="24" y1="0" x2="326" y2="0" stroke="#58a6ff" stroke-width="1.5" opacity="0.65" />
-  </g>
-  </g>
+  <!-- ASCII Art Matrix -->
+  <text x="25" y="65.0" style="animation-delay: 0.05s;">-===-=*+=+++***++--*++*=+=*##%#-#%%%%@@-*%#%+-</text><text x="25" y="73.5" style="animation-delay: 0.08s;">:--===#==+==--:::.:+*+*==+++++=:*%%#%%%-#@%#+-</text><text x="25" y="82.0" style="animation-delay: 0.11s;">..-===#====: .  ....=**=-==+++=-##%####-*#=:::</text><text x="25" y="90.5" style="animation-delay: 0.14s;">----==*===:.    ..:.-*#=-==+++--......:--:::..</text><text x="25" y="99.0" style="animation-delay: 0.17s;">=..::-*=--:....::-==+*#=-++++*=- . .::=-:::-::</text><text x="25" y="107.5" style="animation-delay: 0.20s;">-:-+=-****+=..:-===**+*==++++*=:....::-:::::::</text><text x="25" y="116.0" style="animation-delay: 0.23s;">+-.::-+%#+-:  .:--===+*-=+++++-.....::::......</text><text x="25" y="124.5" style="animation-delay: 0.26s;">=+--=++-... . .--:::::+++++*****##=.:...... ..</text><text x="25" y="133.0" style="animation-delay: 0.29s;">---=++= ........-:.::.-*##+*++***=............</text><text x="25" y="141.5" style="animation-delay: 0.32s;">-::-=+- ... ..:..:.:...--::==*+---:.. ...     </text><text x="25" y="150.0" style="animation-delay: 0.35s;">..:::-.  .:. ::.......:=++==+**+==-.  ... ..:.</text><text x="25" y="158.5" style="animation-delay: 0.38s;">...::-:. ..:..::..:-===+*++:---+++=-......::::</text><text x="25" y="167.0" style="animation-delay: 0.41s;">...::--:...:...:.::+=--+++====+++==+====----:.</text><text x="25" y="175.5" style="animation-delay: 0.44s;">:::=-::-.....:...::::=====-:===========:::--. </text><text x="25" y="184.0" style="animation-delay: 0.47s;">::-=-::::.... .=++*:..::.:+=====+*-.:---:.:-=-</text><text x="25" y="192.5" style="animation-delay: 0.50s;">::....        =#**= ....-=====--:-::-===-:..:.</text>
 </svg>

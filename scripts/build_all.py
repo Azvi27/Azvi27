@@ -5,72 +5,62 @@ CARD_W = 420
 CARD_H = 450
 
 # =============================================================
-# 1. PATCH AZVI-ASCII.SVG (TERMINAL TYPEWRITER EFFECT)
+# 1. PROCESS AZVI-ASCII.SVG (CLEAN TWIN + DISCRETE TYPING)
 # =============================================================
 def patch_ascii_portrait():
     if not os.path.exists("azvi-ascii.svg"):
+        print("azvi-ascii.svg tidak ditemukan.")
         return
 
     with open("azvi-ascii.svg", "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Bersihkan header terminal lama, footer rendered, dan scanner lama
+    # 1. Hapus titik terminal, header, footer rendered, dan garis pemindai lama
     content = re.sub(r'<circle[^>]*>', '', content)
     content = re.sub(r'<text[^>]*>portrait\.sh</text>', '', content)
     content = re.sub(r'<text[^>]*>rendered:[^<]*</text>', '', content)
     content = re.sub(r'<line[^>]*y1="4[04]"[^>]*/>', '', content)
-    content = re.sub(r'<defs>.*?</defs>', '', content, flags=re.DOTALL)
-    content = re.sub(r'<g[^>]*clip-path=[^>]*>', '', content)
-    content = re.sub(r'<g id="type-[^>]*>.*?</g>', '', content, flags=re.DOTALL)
+    content = re.sub(r'<line[^>]*stroke="#58a6ff"[^>]*/>', '', content)
 
-    # Ekstrak seluruh teks ASCII murni (buang tag svg luar dan rect lama)
-    body = content
-    body = re.sub(r'<\?xml[^>]*\?>', '', body)
-    body = re.sub(r'<svg[^>]*>', '', body)
-    body = re.sub(r'</svg>', '', body)
-    body = re.sub(r'<rect[^>]*fill="#0d1117"[^>]*/>', '', body)
+    # 2. Samakan ukuran viewBox dan root svg
+    content = re.sub(r'<svg[^>]*>', f'<svg width="{CARD_W}" height="{CARD_H}" viewBox="0 0 {CARD_W} {CARD_H}" fill="none" xmlns="http://www.w3.org/2000/svg">', content, count=1)
 
-    # Susun ulang SVG dengan masking diagonal stepped (kiri-ke-kanan, atas-ke-bawah)
-    new_svg = f'''<svg width="{CARD_W}" height="{CARD_H}" viewBox="0 0 {CARD_W} {CARD_H}" fill="none" xmlns="http://www.w3.org/2000/svg">
+    # 3. Samakan frame background card (rx=16, stroke=#30363d)
+    content = re.sub(r'<rect[^>]*fill="#0d1117"[^>]*/>', f'<rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>', content, count=1)
+
+    # 4. Sisipkan CSS Stepped Typewriter (animasi ketikan terminal diskrit tanpa garis scan)
+    typing_style = """
   <defs>
-    <!-- Stepped polygon clip revealing Left-to-Right then Top-to-Bottom -->
-    <clipPath id="typewriterClip">
-      <polygon points="0,0 0,0 0,0 0,0">
-        <animate attributeName="points"
-                 calcMode="discrete"
-                 values="
-                   0,0 0,0 0,0 0,0;
-                   0,0 120,0 0,80 0,0;
-                   0,0 280,0 60,160 0,160;
-                   0,0 420,0 180,240 0,240;
-                   0,0 420,0 320,320 0,320;
-                   0,0 420,0 420,380 0,380;
-                   0,0 420,0 420,{CARD_H} 0,{CARD_H};
-                   0,0 420,0 420,{CARD_H} 0,{CARD_H};
-                   0,0 0,0 0,0 0,0
-                 "
-                 keyTimes="0; 0.05; 0.12; 0.22; 0.35; 0.50; 0.65; 0.90; 1"
-                 dur="6.5s"
-                 repeatCount="indefinite" />
-      </polygon>
-    </clipPath>
-  </defs>
+    <style>
+      @keyframes terminalTypewriter {
+        0% { clip-path: inset(0 100% 100% 0); }
+        15% { clip-path: inset(0 0 80% 0); }
+        30% { clip-path: inset(0 0 62% 0); }
+        45% { clip-path: inset(0 0 45% 0); }
+        60% { clip-path: inset(0 0 28% 0); }
+        75% { clip-path: inset(0 0 10% 0); }
+        85%, 94% { clip-path: inset(0 0 0% 0); }
+        100% { clip-path: inset(0 100% 100% 0); }
+      }
+      .ascii-typing {
+        animation: terminalTypewriter 7s steps(12, end) infinite;
+      }
+    </style>
+  </defs>"""
 
-  <!-- Card Frame Identik -->
-  <rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+    # Sisipkan defs style jika belum ada
+    if "terminalTypewriter" not in content:
+        content = content.replace("<rect width=", typing_style + "\n  <rect width=", 1)
 
-  <!-- Teks ASCII dengan Animasi Ketikan Terminal -->
-  <g clip-path="url(#typewriterClip)">
-    {body.strip()}
-  </g>
-</svg>'''
+    # Pasang class animasi ke elemen pembungkus teks
+    content = re.sub(r'<g([^>]*)font-family', r'<g\1class="ascii-typing" font-family', content, count=1)
 
     with open("azvi-ascii.svg", "w", encoding="utf-8") as f:
-        f.write(new_svg)
-    print(f"[1/3] azvi-ascii.svg diperbarui ({CARD_W}x{CARD_H}) dengan efek ketikan diskrit.")
+        f.write(content)
+    print(f"[1/3] azvi-ascii.svg berhasil diperbarui ({CARD_W}x{CARD_H}) dengan efek ketikan diskrit.")
 
 # =============================================================
-# 2. GENERATE BUILD CARD (CLEAN & PERFECT ALIGNMENT)
+# 2. GENERATE BUILD CARD (TWIN FRAME & CLEAN CONSOLE)
 # =============================================================
 def generate_build_card():
     sprite_path = "assets/Build_Capsem_Sprite.webp"
@@ -80,35 +70,32 @@ def generate_build_card():
             sprite_b64 = base64.b64encode(f.read()).decode("utf-8")
 
     svg = f'''<svg width="{CARD_W}" height="{CARD_H}" viewBox="0 0 {CARD_W} {CARD_H}" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Card Frame Identik -->
+  <!-- Card Frame Kembar Identik -->
   <rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
 
-  <!-- SISI KIRI: Sprite Build -->
-  <g transform="translate(16, 58)">
-    <image href="data:image/webp;base64,{sprite_b64}" width="124" height="124"/>
+  <!-- Sprite Build -->
+  <g transform="translate(16, 56)">
+    <image href="data:image/webp;base64,{sprite_b64}" width="126" height="126"/>
   </g>
 
-  <!-- SISI KANAN: Quotes 3 Bahasa (Margin Aman dari Tepi Kanan) -->
+  <!-- Quotes 3 Bahasa -->
   <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
     <!-- Quote 1 -->
-    <text x="148" y="74" fill="#58a6ff" font-size="13" font-weight="600">さぁ、実験を始めようか？</text>
-    <text x="148" y="93" fill="#c9d1d9" font-size="11" font-style="italic">Shall we begin the experiment?</text>
-    <text x="148" y="111" fill="#8b949e" font-size="10">Nah, mari kita mulai eksperimennya!</text>
+    <text x="150" y="74" fill="#58a6ff" font-size="13" font-weight="600">さぁ、実験を始めようか？</text>
+    <text x="150" y="93" fill="#c9d1d9" font-size="11" font-style="italic">Shall we begin the experiment?</text>
+    <text x="150" y="111" fill="#8b949e" font-size="10">Nah, mari kita mulai eksperimennya!</text>
 
-    <!-- Divider halus -->
-    <line x1="148" y1="128" x2="{CARD_W - 20}" y2="128" stroke="#21262d" stroke-width="1"/>
+    <line x1="150" y1="128" x2="{CARD_W - 20}" y2="128" stroke="#21262d" stroke-width="1"/>
 
     <!-- Quote 2 -->
-    <text x="148" y="152" fill="#ff7b72" font-size="13" font-weight="600">勝利の法則は決まった！</text>
-    <text x="148" y="171" fill="#c9d1d9" font-size="11" font-style="italic">The formula for victory is set!</text>
-    <text x="148" y="189" fill="#8b949e" font-size="10">Hukum kemenangannya telah ditentukan!</text>
+    <text x="150" y="152" fill="#ff7b72" font-size="13" font-weight="600">勝利の法則は決まった！</text>
+    <text x="150" y="171" fill="#c9d1d9" font-size="11" font-style="italic">The formula for victory is set!</text>
+    <text x="150" y="189" fill="#8b949e" font-size="10">Hukum kemenangannya telah ditentukan!</text>
   </g>
 
-  <!-- KONSOL MINIMALIS: Best Match Dulu, Baru Are You Ready -->
+  <!-- Konsol Formula (Best Match Dulu, Baru Are you ready) -->
   <g transform="translate(24, {CARD_H - 92})">
     <rect width="{CARD_W - 48}" height="56" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
-
-    <!-- 1. FORMULA / BEST MATCH (DI ATAS) -->
     <text x="{(CARD_W - 48)/2}" y="24" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" font-weight="600">
       <tspan fill="#ff7b72">Rabbit</tspan>
       <tspan fill="#6e7681"> × </tspan>
@@ -116,8 +103,6 @@ def generate_build_card():
       <tspan fill="#6e7681"> ➔ </tspan>
       <tspan fill="#3fb950" font-weight="bold">BEST MATCH</tspan>
     </text>
-
-    <!-- 2. DRIVER CALLOUT (DI BAWAH) -->
     <text x="{(CARD_W - 48)/2}" y="43" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#8b949e" letter-spacing="1">
       &gt; &quot;Are you ready?&quot;
     </text>
@@ -129,14 +114,14 @@ def generate_build_card():
     print(f"[2/3] assets/build-card.svg diperbarui ({CARD_W}x{CARD_H}) tanpa teks footer.")
 
 # =============================================================
-# 3. UPDATE README (CACHE BUSTER V4)
+# 3. UPDATE README (CACHE BUSTER V5)
 # =============================================================
 def update_readme():
     content = '''<div align="center">
 
 <!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=4" width="414" alt="Azvi Portrait" />
-<img src="./assets/build-card.svg?v=4" width="414" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=5" width="414" alt="Azvi Portrait" />
+<img src="./assets/build-card.svg?v=5" width="414" alt="Kamen Rider Build" />
 
 <br><br>
 
@@ -152,13 +137,13 @@ def update_readme():
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=4" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=5" alt="Aggregated Heatmap" width="840" />
 
 </div>
 '''
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(content)
-    print("[3/3] README.md diperbarui dengan cache-buster ?v=4.")
+    print("[3/3] README.md diperbarui dengan cache-buster ?v=5.")
 
 if __name__ == "__main__":
     patch_ascii_portrait()
