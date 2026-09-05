@@ -1,40 +1,23 @@
 <div align="center">
 
-<!-- 01. IDENTITY / PORTRAIT -->
-<p><b>azvi@github ~ $ whoami</b></p>
-<img src="./azvi-ascii.svg" alt="Terminal Portrait" width="480" />
+<!-- SIDE-BY-SIDE CARDS -->
+<img src="./azvi-ascii.svg" width="410" alt="Azvi Portrait" />
+<img src="./assets/build-card.svg" width="410" alt="Kamen Rider Build" />
 
 <br><br>
 
-<!-- 02. SYSTEM INFO (NEOFETCH) -->
-<p><b>azvi@github ~ $ neofetch --profile</b></p>
+<!-- SOURCE INDICATORS -->
+<p>
+  <sub>
+    <b>Data Sources:</b> 
+    GitHub (<code>Azvi27</code>) • 
+    Cloud GitLab (<code>gitlab.azvibelajar.my.id</code>) • 
+    GitLab Lab 1 (<code>Lab. SSTK 1</code>) • 
+    GitLab Lab 2 (<code>Lab. SSTK 2</code>)
+  </sub>
+</p>
 
-<table>
-  <tr>
-    <td align="center" width="150" valign="middle">
-      <img src="./assets/Build_Capsem_Sprite.webp" width="110" alt="Kamen Rider Build" /><br>
-      <sub><i>"Saa, jikken o hajimeyou ka?"</i></sub>
-    </td>
-    <td valign="middle">
-<pre>
-OS: Engineering Physics @ UGM
-Role: Full-Stack Dev & Embedded Instrumentation
-Kernel: Applied Physics, IoT, Control Systems
-Core: Go, Python, C/C++, Docker, SQL
-Best Match: Physics (Rabbit) + Code (Tank)
-Status: "Shouritsu no housoku wa kimatta!"
-</pre>
-    </td>
-  </tr>
-</table>
+<!-- AGGREGATED HEATMAP -->
+<img src="./contrib-heatmap.svg" alt="Aggregated Heatmap" width="840" />
 
-<br><br>
-
-<!-- 03. MULTI-SERVER CONTRIBUTIONS -->
-<p><b>azvi@github ~ $ ./contributions.sh --status</b></p>
-
-```text
-[✓] GitHub Core (Azvi27)
-[✓] Cloud GitLab (gitlab.azvibelajar.my.id)
-[✓] Lab On-Premise Node 1 (Lab. SSTK 1)
-[✓] Lab On-Premise Node 2 (Lab. SSTK 2)
+</div>
