@@ -9,8 +9,7 @@ GITHUB_USERNAME = "Azvi27"
 GITLAB_HOST = "gitlab.azvibelajar.my.id"
 
 # Masukkan token GitLab publikmu di antara tanda kutip jika ingin otomatis terbaca
-DEFAULT_GITLAB_TOKEN = "glpat-uBilYYf3L09IIL4KIBNWCG86MQp1OjEH.01.0w0d5eg2d"
-GITLAB_TOKEN = os.getenv("GITLAB_TOKEN", DEFAULT_GITLAB_TOKEN)
+GITLAB_TOKEN = os.getenv("GITLAB_TOKEN", "")
 
 
 def get_github_data(username):
