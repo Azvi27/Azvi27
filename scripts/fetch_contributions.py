@@ -12,52 +12,39 @@ def fetch_contributions(username):
   response = requests.get(url, headers=headers)
 
   if response.status_code != 200:
-    raise Exception(f"Gagal: {response.status_code}")
+    raise Exception(f"Gagal mengambil data: {response.status_code}")
 
   soup = BeautifulSoup(response.text, "html.parser")
 
-  # Targetkan tabel kalender utama secara spesifik
-  table = soup.find("table", class_="ContributionCalendar-grid")
-  if not table:
-    # fallback jika class berbeda
-    table = soup.find("tbody")
-
-  days = []
-  # Ambil kolom per kolom (minggu per minggu) persis DOM GitHub
-  # GitHub menyusun per kolom <td> di dalam <tbody>
-  # atau per row tergantung versi tampilan
-  day_cells = soup.select(
-      "td.ContributionCalendar-day, td[data-date]"
-  )
-
-  # Ambil hanya 371 cell terakhir (53 minggu x 7 hari) jika ada sisa
-  for td in day_cells:
+  days_dict = {}
+  for td in soup.find_all("td", class_="ContributionCalendar-day"):
     date = td.get("data-date")
     level = td.get("data-level")
     if date and level is not None:
-      days.append({"date": date, "level": int(level)})
+      days_dict[date] = int(level)
 
-  # Ambil tepat 53 minggu terakhir (371 hari) agar tidak ada offset tahun lalu
-  if len(days) > 371:
-    days = days[-371:]
+  # Urutkan secara kronologis berdasarkan tanggal
+  sorted_dates = sorted(days_dict.keys())
+  days = [{"date": d, "level": days_dict[d]} for d in sorted_dates]
 
-  # Ambil total commit teks dari header kalender jika ada
-  heading = soup.find(
-      lambda tag: tag.name in ["h2", "h3"] and "contributions" in tag.text.lower()
+  # Ambil teks total kontribusi
+  h2 = soup.find(
+      lambda tag: tag.name in ["h2", "h3"]
+      and "contributions" in tag.text.lower()
   )
-  total_str = (
-      heading.text.strip().split()[0]
-      if heading
-      else "298"
-  )
+  total_text = "299 contributions in the last year"
+  if h2:
+    total_text = " ".join(h2.text.strip().split())
 
-  payload = {"total": total_str, "days": days}
+  payload = {"total": total_text, "days": days}
 
   os.makedirs("data", exist_ok=True)
   with open("data/contributions.json", "w") as f:
     json.dump(payload, f, indent=2)
 
-  print(f"Tersimpan {len(days)} hari. Total kontribusi: {total_str}")
+  print(
+      f"Berhasil menyimpan {len(days)} hari (terurut kronologis: {days[0]['date']} s/d {days[-1]['date']})"
+  )
 
 
 if __name__ == "__main__":
