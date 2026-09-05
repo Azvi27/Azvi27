@@ -1,62 +1,65 @@
+import os, json, requests, urllib3
 from datetime import datetime, timedelta
-import json
-import os
-import requests
-import urllib3
 
-# Nonaktifkan peringatan SSL sertifikat self-signed
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-GITLAB_LOCAL_URL = "https://Lab. SSTK 1"
-LOCAL_TOKEN = os.getenv("GITLAB_LOCAL_TOKEN", "")
+LOCAL_INSTANCES = [
+    {"name": "GitLab Lab 1", "url": "https://Lab. SSTK 1", "token": os.getenv("GITLAB_LOCAL_TOKEN_1", "")},
+    {"name": "GitLab Lab 2", "url": "http://Lab. SSTK 2", "token": os.getenv("GITLAB_LOCAL_TOKEN_2", "")}
+]
 
+def fetch_from_instance(instance):
+    name = instance["name"]
+    base_url = instance["url"]
+    token = instance.get("token", "").strip()
 
-def fetch_local():
-  if not LOCAL_TOKEN:
-    print("Error: GITLAB_LOCAL_TOKEN belum diisi!")
-    return
+    if not token:
+        print(f"[-] Melewati {name}: Token kosong.")
+        return {}
 
-  headers = {"PRIVATE-TOKEN": LOCAL_TOKEN, "User-Agent": "Mozilla/5.0"}
-  one_year_ago = (datetime.now() - timedelta(days=365)).strftime("%Y-%m-%d")
+    print(f"[+] Menghubungi {name} ({base_url})...")
+    headers = {"PRIVATE-TOKEN": token, "User-Agent": "Mozilla/5.0"}
+    one_year_ago = (datetime.now() - timedelta(days=365)).strftime("%Y-%m-%d")
+    instance_dict = {}
+    page = 1
 
-  print("Menghubungi GitLab Lokal (Lab. SSTK 1)...")
-  local_dict = {}
-  page = 1
+    while page <= 10:
+        url = f"{base_url}/api/v4/events?after={one_year_ago}&per_page=100&page={page}"
+        try:
+            res = requests.get(url, headers=headers, verify=False, timeout=10)
+            if res.status_code != 200:
+                print(f"    Gagal akses (Status {res.status_code})")
+                break
+            events = res.json()
+            if not events:
+                break
+            for ev in events:
+                d = ev.get("created_at", "")[:10]
+                if d:
+                    instance_dict[d] = instance_dict.get(d, 0) + 1
+            if len(events) < 100:
+                break
+            page += 1
+        except Exception as e:
+            print(f"    Error {name}: {e}")
+            break
 
-  while page <= 10:
-    url = f"{GITLAB_LOCAL_URL}/api/v4/events?after={one_year_ago}&per_page=100&page={page}"
-    try:
-      res = requests.get(url, headers=headers, verify=False, timeout=10)
-      if res.status_code != 200:
-        print(f"Gagal mengambil data, status HTTP: {res.status_code}")
-        break
+    total = sum(instance_dict.values())
+    print(f"    -> Ditemukan: {total} kontribusi ({len(instance_dict)} hari aktif)")
+    return instance_dict
 
-      events = res.json()
-      if not events:
-        break
+def main():
+    combined = {}
+    for inst in LOCAL_INSTANCES:
+        data = fetch_from_instance(inst)
+        for d, count in data.items():
+            combined[d] = combined.get(d, 0) + count
 
-      for ev in events:
-        date = ev.get("created_at", "")[:10]
-        if date:
-          local_dict[date] = local_dict.get(date, 0) + 1
+    os.makedirs("data", exist_ok=True)
+    with open("data/gitlab_local.json", "w") as f:
+        json.dump(combined, f, indent=2)
 
-      if len(events) < 100:
-        break
-      page += 1
-    except Exception as e:
-      print(f"Error koneksi ke GitLab lokal: {e}")
-      break
-
-  os.makedirs("data", exist_ok=True)
-  with open("data/gitlab_local.json", "w") as f:
-    json.dump(local_dict, f, indent=2)
-
-  total_local = sum(local_dict.values())
-  print(
-      f"Sukses! Tersimpan {total_local} kontribusi ({len(local_dict)} tanggal"
-      " aktif) ke data/gitlab_local.json"
-  )
-
+    print(f"Selesai! Total {sum(combined.values())} kontribusi lokal tersimpan.")
 
 if __name__ == "__main__":
-  fetch_local()
+    main()
