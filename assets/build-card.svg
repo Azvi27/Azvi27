@@ -19,7 +19,7 @@
     <text x="150" y="201" fill="#8b949e" font-size="10">Hukum kemenangannya telah ditentukan!</text>
   </g>
 
-  <!-- Formula di atas, Callout di bawah -->
+  <!-- Kotak Formula & Driver Callout -->
   <g transform="translate(24, 384)">
     <rect width="372" height="58" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
     <text x="186.0" y="25" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" font-weight="600">
