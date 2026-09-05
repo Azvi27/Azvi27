@@ -1,11 +1,11 @@
 def generate_info_card():
-  # Daftar baris informasi (Label, Nilai, Warna Label)
+  # Karakter '&' wajib diubah menjadi '&amp;' agar valid di XML/SVG
   lines = [
       ("user", "mkfazvi@azvi-vivobook", "#58a6ff"),
       ("os", "Ubuntu 24.04 LTS x86_64", "#3fb950"),
       ("host", "VivoBook ASUSLaptop K3402ZA", "#3fb950"),
-      ("role", "Engineering Physics Student & Dev", "#e3b341"),
-      ("focus", "AI, IoT & Full-Stack Development", "#f0883e"),
+      ("role", "Engineering Physics Student &amp; Dev", "#e3b341"),
+      ("focus", "AI, IoT &amp; Full-Stack Development", "#f0883e"),
       ("stack", "Go, Python, React, Docker, OpenCV", "#d29922"),
       ("tools", "KiCad, DBeaver, Portainer, Linux", "#bc8cff"),
       ("uptime", "4th year of non-stop engineering", "#58a6ff"),
@@ -24,7 +24,7 @@ def generate_info_card():
       <text x="115" y="{y_start + (idx * line_height)}" class="val" fill="#c9d1d9">{val}</text>
     </g>""")
 
-  # Color palette blocks khas Neofetch
+  # Neofetch color blocks
   palette_y = y_start + (len(lines) * line_height) + 15
   colors = [
       "#ff7b72",
@@ -36,8 +36,8 @@ def generate_info_card():
       "#b1bac4",
   ]
   palette_rects = "".join([
-      f'<rect x="{30 + (i * 22)}" y="{palette_y}" width="16" height="12"'
-      f' rx="2" fill="{c}"/>'
+      f'<rect x="{30 + (i * 22)}" y="{palette_y}" width="16" height="12" rx="2"'
+      f' fill="{c}"/>'
       for i, c in enumerate(colors)
   ])
 
@@ -60,25 +60,19 @@ def generate_info_card():
       font-weight: bold;
       fill: #8b949e;
     }}
+    .label, .sep, .val {{
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 12px;
+    }}
     .label {{
-      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-      font-size: 12px;
       font-weight: 600;
-    }}
-    .sep {{
-      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-      font-size: 12px;
-    }}
-    .val {{
-      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-      font-size: 12px;
     }}
   </style>
 
-  <!-- Background Box -->
+  <!-- Box Window -->
   <rect width="490" height="340" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
 
-  <!-- macOS / Terminal Window Dots -->
+  <!-- Window Dots -->
   <circle cx="28" cy="24" r="5" fill="#ff5f56"/>
   <circle cx="44" cy="24" r="5" fill="#ffbd2e"/>
   <circle cx="60" cy="24" r="5" fill="#27c93f"/>
@@ -89,14 +83,14 @@ def generate_info_card():
   <!-- Content Rows -->
   {''.join(svg_lines)}
 
-  <!-- Neofetch Color Dots -->
+  <!-- Neofetch Palette Dots -->
   {palette_rects}
 </svg>
 """
 
   with open("info-card.svg", "w") as f:
     f.write(svg_content)
-  print("Berhasil membuat file info-card.svg")
+  print("info-card.svg berhasil diperbaiki!")
 
 
 if __name__ == "__main__":
