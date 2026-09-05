@@ -1,8 +1,8 @@
 <div align="center">
 
 <!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=3" width="414" alt="Azvi Portrait" />
-<img src="./assets/build-card.svg?v=3" width="414" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=4" width="414" alt="Azvi Portrait" />
+<img src="./assets/build-card.svg?v=4" width="414" alt="Kamen Rider Build" />
 
 <br><br>
 
@@ -18,6 +18,6 @@
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=3" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=4" alt="Aggregated Heatmap" width="840" />
 
 </div>
