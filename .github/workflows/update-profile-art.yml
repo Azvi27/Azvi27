@@ -3,7 +3,7 @@ name: Update Profile Art
 on:
   schedule:
     - cron: "17 6 * * *" # Berjalan otomatis setiap hari ~06:17 UTC
-  workflow_dispatch:      # Tombol trigger manual di tab Actions
+  workflow_dispatch:     # Tombol trigger manual di tab Actions
 
 permissions:
   contents: write
@@ -23,13 +23,16 @@ jobs:
       - name: Install dependencies
         run: pip install -r scripts/requirements.txt
 
-      - name: Scrape contributions & render SVG
+      - name: Fetch and Render
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
         run: |
           python scripts/fetch_contributions.py
           python scripts/render_heatmap_svg.py
+          python scripts/make_ascii_portrait.py
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: refresh contribution heatmap [skip ci]"
-          file_pattern: "data/contributions.json contrib-heatmap.svg"
+          file_pattern: "data/contributions.json contrib-heatmap.svg azvi-ascii.svg"
