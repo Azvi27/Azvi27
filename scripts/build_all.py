@@ -5,93 +5,77 @@ CARD_W = 420
 CARD_H = 480
 
 # =============================================================
-# 1. PURE TERMINAL TYPEWRITER (LEFT-TO-RIGHT, LINE-BY-LINE)
+# 1. RESTORE FULL SHARP ASCII & APPLY STEPPED TERMINAL PRINT
 # =============================================================
-def get_original_sitting_ascii():
-    """Mengambil data teks ASCII meja lab asli (*+%*====)"""
-    if os.path.exists("azvi-ascii.svg"):
-        with open("azvi-ascii.svg", "r", encoding="utf-8") as f:
-            txt = f.read()
-            if "*+%*====" in txt:
-                return txt
-
+def get_pristine_ascii():
+    """Mengambil master potret asli yang tajam dan utuh dari riwayat git"""
     res = subprocess.run(["git", "log", "-S", "*+%*====", "--format=%H", "--", "azvi-ascii.svg"], capture_output=True, text=True)
     commits = [c.strip() for c in res.stdout.strip().split() if c.strip()]
-    for c in commits:
-        show = subprocess.run(["git", "show", f"{c}:azvi-ascii.svg"], capture_output=True, text=True)
+    if commits:
+        show = subprocess.run(["git", "show", f"{commits[-1]}:azvi-ascii.svg"], capture_output=True, text=True)
         if "*+%*====" in show.stdout:
             return show.stdout
     return None
 
 def patch_ascii_portrait():
-    raw_svg = get_original_sitting_ascii()
+    raw_svg = get_pristine_ascii()
     if not raw_svg:
-        print("[!] Gagal memuat data ASCII asli.")
+        print("[!] Gagal memuat data master ASCII.")
         return
 
-    # Ekstrak HANYA teks baris ASCII murni (buang tombol, garis biru, scanner, dan footer rendered)
-    raw_lines = re.findall(r'<text[^>]*y="([0-9.]+)"[^>]*>(.*?)</text>', raw_svg, flags=re.DOTALL)
-    ascii_rows = []
-    for y_str, content in raw_lines:
-        if "portrait.sh" in content or "rendered:" in content or "kernel:" in content:
-            continue
-        ascii_rows.append((float(y_str), content))
+    # 1. Bersihkan tombol bulat, teks header, footer rendered, dan garis pemindai
+    clean = re.sub(r'<circle[^>]*>', '', raw_svg)
+    clean = re.sub(r'<text[^>]*>portrait\.sh</text>', '', clean)
+    clean = re.sub(r'<text[^>]*>rendered:[^<]*</text>', '', clean)
+    clean = re.sub(r'<line[^>]*y1="4[04]"[^>]*/>', '', clean)
+    clean = re.sub(r'<line[^>]*stroke="#58a6ff"[^>]*/>', '', clean)
 
-    if not ascii_rows:
-        print("[!] Baris teks ASCII tidak ditemukan.")
-        return
+    # 2. Ekstrak grup konten potret asli (tanpa merusak font, spasi, dan detail karakter)
+    body_match = re.search(r'(<g[^>]*xml:space="preserve"[^>]*>.*?</g>)', clean, flags=re.DOTALL)
+    if not body_match:
+        body_match = re.search(r'(<g[^>]*font-family[^>]*>.*?</g>)', clean, flags=re.DOTALL)
+    
+    if body_match:
+        body_content = body_match.group(1)
+    else:
+        # Fallback jika tag g terpisah
+        body_content = clean
+        body_content = re.sub(r'<\?xml[^>]*\?>', '', body_content)
+        body_content = re.sub(r'<svg[^>]*>', '', body_content)
+        body_content = re.sub(r'</svg>', '', body_content)
+        body_content = re.sub(r'<rect[^>]*fill="#0d1117"[^>]*/>', '', body_content)
 
-    total_rows = len(ascii_rows)
-    total_dur = 8.0       # Siklus total 8 detik
-    type_phase = 5.0      # Mengetik selesai di detik ke-5.0
-
-    defs_clips = []
-    body_groups = []
-
-    for idx, (y_val, text_str) in enumerate(ascii_rows):
-        clip_id = f"tw_line_{idx}"
-        # Waktu mulai dan selesai ketikan per baris (kiri -> kanan)
-        t_start = (idx / total_rows) * type_phase
-        t_end = ((idx + 1) / total_rows) * type_phase
-
-        k0 = round(t_start / total_dur, 4)
-        k1 = round(t_end / total_dur, 4)
-        k_hold = 0.92   # Tetap tampil utuh sampai detik 7.36 sebelum reset
-
-        if idx == 0:
-            key_times = f"0;{k1};{k_hold};1"
-            anim_vals = f"0;{CARD_W};{CARD_W};0"
-        else:
-            key_times = f"0;{k0};{k1};{k_hold};1"
-            anim_vals = f"0;0;{CARD_W};{CARD_W};0"
-
-        # Masking per baris: lebar bergerak dari 0 ke CARD_W (kiri ke kanan)
-        defs_clips.append(f'''    <clipPath id="{clip_id}">
-      <rect x="0" y="{y_val - 8.5:.1f}" width="0" height="11.5">
-        <animate attributeName="width"
-                 values="{anim_vals}"
-                 keyTimes="{key_times}"
-                 dur="{total_dur}s"
-                 repeatCount="indefinite" />
-      </rect>
-    </clipPath>''')
-
-        body_groups.append(f'    <g clip-path="url(#{clip_id})">\n      <text x="24" y="{y_val:.1f}">{text_str}</text>\n    </g>')
-
-    all_clips_xml = "\n".join(defs_clips)
-    all_body_xml = "\n".join(body_groups)
+    # 3. Buat animasi ketikan bertingkat (discrete step per baris, bukan tirai scanner halus)
+    # Total siklus 7.5s: 4 detik mengetik bertahap -> 2.8 detik diam tampil penuh -> reset
+    step_values = "; ".join([str(int(i * 12.5)) for i in range(33)] + ["480", "480", "480", "0"])
+    step_times = []
+    # 33 langkah selama 0 s/d 0.54 (4 detik)
+    for i in range(33):
+        step_times.append(f"{round((i / 33) * 0.54, 3)}")
+    step_times.extend(["0.58", "0.92", "0.97", "1"])
+    key_times_str = "; ".join(step_times)
 
     new_svg = f'''<svg width="{CARD_W}" height="{CARD_H}" viewBox="0 0 {CARD_W} {CARD_H}" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-{all_clips_xml}
+    <!-- Stepped Terminal Reveal: Mengetik baris demi baris secara diskrit -->
+    <clipPath id="terminalTypewriterClip">
+      <rect x="0" y="0" width="{CARD_W}" height="0">
+        <animate attributeName="height"
+                 calcMode="discrete"
+                 values="{step_values}"
+                 keyTimes="{key_times_str}"
+                 dur="7.5s"
+                 repeatCount="indefinite" />
+      </rect>
+    </clipPath>
   </defs>
 
-  <!-- Frame Kembar Minimalis Bersih -->
+  <!-- Frame Kembar Bersih -->
   <rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
 
-  <!-- Teks Potret Lab Diketik Berurutan Baris Demi Baris -->
-  <g font-family="ui-monospace, SFMono-Regular, monospace" font-size="8.8" fill="#c9d1d9" xml:space="preserve">
-{all_body_xml}
+  <!-- Potret Lab Asli yang Tajam & Terpusat -->
+  <g clip-path="url(#terminalTypewriterClip)" transform="translate(35, 48)">
+    {body_content.strip()}
   </g>
 </svg>'''
 
@@ -99,7 +83,7 @@ def patch_ascii_portrait():
         ET.fromstring(new_svg)
         with open("azvi-ascii.svg", "w", encoding="utf-8") as f:
             f.write(new_svg)
-        print(f"[1/3] azvi-ascii.svg sukses: animasi ketikan baris demi baris, garis biru lenyap total.")
+        print(f"[1/3] azvi-ascii.svg berhasil dipulihkan tajam & penuh ({CARD_W}x{CARD_H}).")
     except ET.ParseError as err:
         print(f"[!] Error XML: {err}")
 
@@ -152,17 +136,17 @@ def generate_build_card():
 
     with open("assets/build-card.svg", "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"[2/3] assets/build-card.svg diperbarui ({CARD_W}x{CARD_H}).")
+    print(f"[2/3] assets/build-card.svg valid & diperbarui ({CARD_W}x{CARD_H}).")
 
 # =============================================================
-# 3. UPDATE README (CACHE BUSTER V12)
+# 3. UPDATE README (CACHE BUSTER V13)
 # =============================================================
 def update_readme():
     content = '''<div align="center">
 
 <!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=12" width="414" alt="Azvi Portrait" />
-<img src="./assets/build-card.svg?v=12" width="414" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=13" width="414" alt="Azvi Portrait" />
+<img src="./assets/build-card.svg?v=13" width="414" alt="Kamen Rider Build" />
 
 <br><br>
 
@@ -178,13 +162,13 @@ def update_readme():
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=12" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=13" alt="Aggregated Heatmap" width="840" />
 
 </div>
 '''
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(content)
-    print("[3/3] README.md diperbarui dengan cache-buster ?v=12.")
+    print("[3/3] README.md diperbarui dengan cache-buster ?v=13.")
 
 if __name__ == "__main__":
     patch_ascii_portrait()
