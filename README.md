@@ -1,17 +1,20 @@
 <div align="center">
 
-<!-- DUAL TERMINAL CARDS -->
+<!-- DUAL MINIMAL CARDS -->
 <img src="./azvi-ascii.svg" width="414" alt="Azvi Portrait" />
 <img src="./assets/build-card.svg" width="414" alt="Kamen Rider Build" />
 
 <br><br>
 
-<!-- TELEMETRY SOURCES STATUS BAR -->
+<!-- DATA SOURCES STATUS BAR WITH OFFICIAL LOGOS -->
 <p align="center">
-  <code>GH: Azvi27</code> &nbsp;•&nbsp;
-  <code>GL Cloud: gitlab.azvibelajar.my.id</code> &nbsp;•&nbsp;
-  <code>Lab 1: Lab. SSTK 1</code> &nbsp;•&nbsp;
-  <code>Lab 2: Lab. SSTK 2</code>
+  <img src="https://img.shields.io/badge/GitHub-Azvi27-161b22?style=flat-square&logo=github&logoColor=white" alt="GitHub Core" />
+  &nbsp;
+  <img src="https://img.shields.io/badge/GitLab%20Cloud-gitlab.azvibelajar.my.id-161b22?style=flat-square&logo=gitlab&logoColor=fc6d26" alt="GitLab Cloud" />
+  &nbsp;
+  <img src="https://img.shields.io/badge/GitLab%20Lab%201-Lab. SSTK 1-161b22?style=flat-square&logo=gitlab&logoColor=fc6d26" alt="GitLab Lab 1" />
+  &nbsp;
+  <img src="https://img.shields.io/badge/GitLab%20Lab%202-Lab. SSTK 2-161b22?style=flat-square&logo=gitlab&logoColor=fc6d26" alt="GitLab Lab 2" />
 </p>
 
 <!-- AGGREGATED HEATMAP -->
