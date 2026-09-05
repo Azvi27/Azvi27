@@ -1,0 +1,91 @@
+<svg width="490" height="340" viewBox="0 0 490 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .line {
+      opacity: 0;
+      transform: translateY(4px);
+      animation: fadeIn 0.3s ease forwards;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .title {
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 12px;
+      font-weight: bold;
+      fill: #8b949e;
+    }
+    .label {
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .sep {
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+    .val {
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+  </style>
+
+  <!-- Background Box -->
+  <rect width="490" height="340" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+
+  <!-- macOS / Terminal Window Dots -->
+  <circle cx="28" cy="24" r="5" fill="#ff5f56"/>
+  <circle cx="44" cy="24" r="5" fill="#ffbd2e"/>
+  <circle cx="60" cy="24" r="5" fill="#27c93f"/>
+  <text x="460" y="28" class="title" text-anchor="end">neofetch</text>
+
+  <line x1="20" y1="44" x2="470" y2="44" stroke="#21262d" stroke-width="1"/>
+
+  <!-- Content Rows -->
+  
+    <g class="line" style="animation-delay: 0.10s;">
+      <text x="30" y="75" class="label" fill="#58a6ff">user</text>
+      <text x="95" y="75" class="sep" fill="#6e7681">~</text>
+      <text x="115" y="75" class="val" fill="#c9d1d9">mkfazvi@azvi-vivobook</text>
+    </g>
+    <g class="line" style="animation-delay: 0.18s;">
+      <text x="30" y="99" class="label" fill="#3fb950">os</text>
+      <text x="95" y="99" class="sep" fill="#6e7681">~</text>
+      <text x="115" y="99" class="val" fill="#c9d1d9">Ubuntu 24.04 LTS x86_64</text>
+    </g>
+    <g class="line" style="animation-delay: 0.26s;">
+      <text x="30" y="123" class="label" fill="#3fb950">host</text>
+      <text x="95" y="123" class="sep" fill="#6e7681">~</text>
+      <text x="115" y="123" class="val" fill="#c9d1d9">VivoBook ASUSLaptop K3402ZA</text>
+    </g>
+    <g class="line" style="animation-delay: 0.34s;">
+      <text x="30" y="147" class="label" fill="#e3b341">role</text>
+      <text x="95" y="147" class="sep" fill="#6e7681">~</text>
+      <text x="115" y="147" class="val" fill="#c9d1d9">Engineering Physics Student & Dev</text>
+    </g>
+    <g class="line" style="animation-delay: 0.42s;">
+      <text x="30" y="171" class="label" fill="#f0883e">focus</text>
+      <text x="95" y="171" class="sep" fill="#6e7681">~</text>
+      <text x="115" y="171" class="val" fill="#c9d1d9">AI, IoT & Full-Stack Development</text>
+    </g>
+    <g class="line" style="animation-delay: 0.50s;">
+      <text x="30" y="195" class="label" fill="#d29922">stack</text>
+      <text x="95" y="195" class="sep" fill="#6e7681">~</text>
+      <text x="115" y="195" class="val" fill="#c9d1d9">Go, Python, React, Docker, OpenCV</text>
+    </g>
+    <g class="line" style="animation-delay: 0.58s;">
+      <text x="30" y="219" class="label" fill="#bc8cff">tools</text>
+      <text x="95" y="219" class="sep" fill="#6e7681">~</text>
+      <text x="115" y="219" class="val" fill="#c9d1d9">KiCad, DBeaver, Portainer, Linux</text>
+    </g>
+    <g class="line" style="animation-delay: 0.66s;">
+      <text x="30" y="243" class="label" fill="#58a6ff">uptime</text>
+      <text x="95" y="243" class="sep" fill="#6e7681">~</text>
+      <text x="115" y="243" class="val" fill="#c9d1d9">4th year of non-stop engineering</text>
+    </g>
+
+  <!-- Neofetch Color Dots -->
+  <rect x="30" y="282" width="16" height="12" rx="2" fill="#ff7b72"/><rect x="52" y="282" width="16" height="12" rx="2" fill="#3fb950"/><rect x="74" y="282" width="16" height="12" rx="2" fill="#d29922"/><rect x="96" y="282" width="16" height="12" rx="2" fill="#58a6ff"/><rect x="118" y="282" width="16" height="12" rx="2" fill="#bc8cff"/><rect x="140" y="282" width="16" height="12" rx="2" fill="#39c5cf"/><rect x="162" y="282" width="16" height="12" rx="2" fill="#b1bac4"/>
+</svg>
