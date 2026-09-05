@@ -1,85 +1,75 @@
-import os, json, base64
+import os, re, json, base64, subprocess
 import xml.etree.ElementTree as ET
-from PIL import Image
 
 CARD_W = 420
 CARD_H = 480
 
 # =============================================================
-# 1. GENERATE PURE ASCII SVG DIRECTLY FROM assets/avatar.png
+# 1. RESTORE GENUINE LAB BENCH ASCII WITH STEPPED TYPEWRITER
 # =============================================================
-ASCII_CHARS = [" ", ".", ":", "-", "=", "+", "*", "#", "%", "@"]
-
-def image_to_ascii_lines(image_path, target_width=52):
-    if not os.path.exists(image_path):
-        return []
+def get_original_sitting_ascii():
+    """Mencari commit git yang menyimpan potret lab asli (*+%*====)"""
+    res = subprocess.run(["git", "log", "--format=%H", "--", "azvi-ascii.svg"], capture_output=True, text=True)
+    commits = [c.strip() for c in res.stdout.strip().split() if c.strip()]
     
-    img = Image.open(image_path).convert("L")
-    # Aspek rasio font terminal monospace ~ 0.55
-    aspect_ratio = img.height / img.width
-    target_height = int(target_width * aspect_ratio * 0.55)
-    img = img.resize((target_width, target_height), Image.Resampling.LANCZOS)
-    
-    pixels = img.getdata()
-    lines = []
-    for y in range(target_height):
-        line = ""
-        for x in range(target_width):
-            pixel_val = pixels[y * target_width + x]
-            # Kontras sedikit ditingkatkan agar latar belakang gelap menjadi spasi kosong
-            if pixel_val < 45:
-                line += " "
-            else:
-                char_idx = int((pixel_val / 255) * (len(ASCII_CHARS) - 1))
-                line += ASCII_CHARS[char_idx]
-        lines.append(line)
-    return lines
+    for c in commits:
+        show = subprocess.run(["git", "show", f"{c}:azvi-ascii.svg"], capture_output=True, text=True)
+        txt = show.stdout
+        if "*+%*====" in txt:
+            return txt
+    return None
 
 def generate_ascii_card():
-    lines = image_to_ascii_lines("assets/avatar.png", target_width=54)
-    if not lines:
-        print("[!] Gagal membaca assets/avatar.png")
+    raw_svg = get_original_sitting_ascii()
+    if not raw_svg:
+        print("[!] Gagal menemukan data potret lab asli di riwayat git.")
         return
 
-    # Hitung posisi teks vertikal di dalam kartu
-    start_y = 58
-    line_spacing = 9.5
-    total_lines = len(lines)
-    anim_dur = 7.0
-    type_duration = 4.2
+    # Ekstrak seluruh tag <text> asli yang membentuk gambar ASCII
+    # Kebal dari error mismatched tag XML karena diekstrak tag per tag
+    all_text_tags = re.findall(r'(<text[^>]*>.*?</text>)', raw_svg, flags=re.DOTALL)
+    ascii_tags = []
+    y_coords = []
 
-    # Buat strip mask horizontal untuk efek ketikan baris demi baris
+    for tag in all_text_tags:
+        if "portrait.sh" in tag or "rendered:" in tag:
+            continue
+        ascii_tags.append(tag)
+        ym = re.search(r'y="([0-9.]+)"', tag)
+        if ym:
+            y_coords.append(float(ym.group(1)))
+
+    if not ascii_tags:
+        print("[!] Gagal mengekstrak baris teks ASCII.")
+        return
+
+    # Buat strip mask horizontal per baris sesuai koordinat Y asli
+    total_lines = len(ascii_tags)
+    anim_dur = 6.8
+    type_duration = 4.0
+
     strips = []
-    for i in range(total_lines):
-        y_pos = start_y + (i * line_spacing) - 8
+    for i, y_val in enumerate(y_coords):
         t0 = 0.2 + (i / total_lines) * type_duration
         t1 = 0.2 + ((i + 1) / total_lines) * type_duration
         k_start = round(t0 / anim_dur, 4)
         k_end = round(t1 / anim_dur, 4)
-
-        strips.append(f'''      <rect x="0" y="{y_pos:.1f}" width="0" height="{line_spacing + 1.0:.1f}">
+        
+        # y_val - 8 untuk menutup tinggi karakter teks
+        strips.append(f'''      <rect x="0" y="{y_val - 8.5:.1f}" width="0" height="11.5">
         <animate attributeName="width"
                  values="0;0;{CARD_W};{CARD_W};0"
-                 keyTimes="0;{k_start};{k_end};0.93;1"
+                 keyTimes="0;{k_start};{k_end};0.92;1"
                  dur="{anim_dur}s"
                  repeatCount="indefinite" />
       </rect>''')
 
     strips_xml = "\n".join(strips)
-
-    # Render baris-baris ASCII
-    text_spans = []
-    for i, line in enumerate(lines):
-        y_pos = start_y + (i * line_spacing)
-        # Escape karakter khusus XML
-        safe_line = line.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-        text_spans.append(f'    <text x="24" y="{y_pos:.1f}">{safe_line}</text>')
-
-    text_content = "\n".join(text_spans)
+    ascii_body = "\n    ".join(ascii_tags)
 
     svg = f'''<svg width="{CARD_W}" height="{CARD_H}" viewBox="0 0 {CARD_W} {CARD_H}" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <clipPath id="asciiTypewriterClip">
+    <clipPath id="terminalTypewriterClip">
 {strips_xml}
     </clipPath>
   </defs>
@@ -87,9 +77,9 @@ def generate_ascii_card():
   <!-- Frame Kembar -->
   <rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
 
-  <!-- Teks ASCII dari assets/avatar.png dengan Efek Ketikan -->
-  <g clip-path="url(#asciiTypewriterClip)" font-family="ui-monospace, SFMono-Regular, monospace" font-size="8.8" fill="#e6edf3" xml:space="preserve">
-{text_content}
+  <!-- Potret Lab Asli dengan Efek Ketikan Monospace -->
+  <g clip-path="url(#terminalTypewriterClip)">
+    {ascii_body}
   </g>
 </svg>'''
 
@@ -97,7 +87,7 @@ def generate_ascii_card():
         ET.fromstring(svg)
         with open("azvi-ascii.svg", "w", encoding="utf-8") as f:
             f.write(svg)
-        print(f"[1/3] azvi-ascii.svg BERHASIL DIGENERATE DARI assets/avatar.png ({CARD_W}x{CARD_H}).")
+        print(f"[1/3] azvi-ascii.svg BERHASIL DIPULIHKAN & VALID XML ({CARD_W}x{CARD_H}).")
     except ET.ParseError as err:
         print(f"[!] Error XML azvi-ascii.svg: {err}")
 
@@ -157,14 +147,14 @@ def generate_build_card():
         print(f"[!] Error XML build-card.svg: {err}")
 
 # =============================================================
-# 3. UPDATE README (CACHE BUSTER V9)
+# 3. UPDATE README (CACHE BUSTER V10)
 # =============================================================
 def update_readme():
     content = '''<div align="center">
 
 <!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=9" width="414" alt="Azvi Portrait" />
-<img src="./assets/build-card.svg?v=9" width="414" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=10" width="414" alt="Azvi Portrait" />
+<img src="./assets/build-card.svg?v=10" width="414" alt="Kamen Rider Build" />
 
 <br><br>
 
@@ -180,13 +170,13 @@ def update_readme():
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=9" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=10" alt="Aggregated Heatmap" width="840" />
 
 </div>
 '''
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(content)
-    print("[3/3] README.md diperbarui dengan cache-buster ?v=9.")
+    print("[3/3] README.md diperbarui dengan cache-buster ?v=10.")
 
 if __name__ == "__main__":
     generate_ascii_card()
