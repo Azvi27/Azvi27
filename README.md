@@ -1,10 +1,11 @@
 <div align="center">
 
-<!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=21" width="414" alt="Azvi Portrait" />
-<img src="./assets/build-card.svg?v=21" width="414" alt="Kamen Rider Build" />
-
-<br><br>
+<!-- DUAL MINIMAL CARDS (SEJAJAR BERDAMPINGAN) -->
+<p align="center">
+  <img src="./azvi-ascii.svg?v=25" width="414" alt="Azvi Portrait" />
+  &nbsp;
+  <img src="./assets/build-card.svg?v=25" width="414" alt="Kamen Rider Build" />
+</p>
 
 <!-- DATA SOURCES STATUS BAR -->
 <p align="center">
@@ -18,6 +19,6 @@
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=21" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=25" alt="Aggregated Heatmap" width="840" />
 
 </div>
