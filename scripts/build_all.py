@@ -353,14 +353,30 @@ def generate_divider():
 # 4. UPDATE README CACHE BUSTER
 # =============================================================
 def update_readme():
+    v_cache = "101"
+    if os.path.exists("README.md"):
+        with open("README.md", "r", encoding="utf-8") as f:
+            cur = f.read()
+            m = re.search(r'\?v=(\d+)', cur)
+            if m:
+                v_cache = m.group(1)
+
     content = f'''<div align="center">
 
 <!-- DUAL BALANCED CARDS (PROFILE 490px, BUILD 350px -> TOTAL 840px) -->
-<img src="./azvi-ascii.svg?v=99" width="{CARD_L_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=99" width="{CARD_R_W}" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v={v_cache}" width="{CARD_L_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v={v_cache}" width="{CARD_R_W}" alt="Kamen Rider Build" />
 
 <!-- RABBIT-TANK GRADIENT DIVIDER -->
 <br><br>
-<img src="./assets/divider.svg?v=99" width="840" alt="Divider" />
+<img src="./assets/divider.svg?v={v_cache}" width="840" alt="Divider" />
+<br><br>
+
+<!-- CAPABILITY & TECH MATRIX CARD (840px) -->
+<img src="./assets/tech-stack.svg?v={v_cache}" width="840" alt="Equipment and Tech Stack Matrix" />
+
+<!-- RABBIT-TANK GRADIENT DIVIDER -->
+<br><br>
+<img src="./assets/divider.svg?v={v_cache}" width="840" alt="Divider" />
 <br><br>
 
 <!-- DATA SOURCES STATUS BAR -->
@@ -375,16 +391,18 @@ def update_readme():
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=99" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v={v_cache}" alt="Aggregated Heatmap" width="840" />
 
 </div>
 '''
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(content)
-    print(f"[4/4] README.md diperbarui dengan cache v=99.")
+    print(f"[4/5] README.md diperbarui dengan kartu visual tech-stack.svg (v={v_cache}).")
 
 if __name__ == "__main__":
     patch_ascii_portrait()
     generate_build_card()
     generate_divider()
+    from generate_tech_card import generate_tech_card
+    generate_tech_card()
     update_readme()

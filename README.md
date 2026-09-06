@@ -1,11 +1,19 @@
 <div align="center">
 
 <!-- DUAL BALANCED CARDS (PROFILE 490px, BUILD 350px -> TOTAL 840px) -->
-<img src="./azvi-ascii.svg?v=101" width="490" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=101" width="350" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=102" width="490" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=102" width="350" alt="Kamen Rider Build" />
 
 <!-- RABBIT-TANK GRADIENT DIVIDER -->
 <br><br>
-<img src="./assets/divider.svg?v=101" width="840" alt="Divider" />
+<img src="./assets/divider.svg?v=102" width="840" alt="Divider" />
+<br><br>
+
+<!-- CAPABILITY & TECH MATRIX CARD (840px) -->
+<img src="./assets/tech-stack.svg?v=102" width="840" alt="Equipment and Tech Stack Matrix" />
+
+<!-- RABBIT-TANK GRADIENT DIVIDER -->
+<br><br>
+<img src="./assets/divider.svg?v=102" width="840" alt="Divider" />
 <br><br>
 
 <!-- DATA SOURCES STATUS BAR -->
@@ -20,6 +28,6 @@
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=101" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=102" alt="Aggregated Heatmap" width="840" />
 
 </div>
