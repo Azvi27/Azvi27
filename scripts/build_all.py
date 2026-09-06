@@ -5,7 +5,7 @@ CARD_W = 410
 CARD_H = 340
 
 # =============================================================
-# 1. PATCH AZVI-ASCII.SVG (LARGER HIGHER-CONTRAST TYPOGRAPHY)
+# 1. PATCH AZVI-ASCII.SVG (OPERATOR HUD)
 # =============================================================
 def patch_ascii_portrait():
     if not os.path.exists("azvi-ascii.svg"):
@@ -55,7 +55,6 @@ def patch_ascii_portrait():
     </clipPath>'''
     content = re.sub(r'<clipPath id="asciiTypeClip">[\s\S]*?</clipPath>', new_clip, content)
 
-    # HUD dengan Skala Font Lebih Besar & Tegas
     hud_injection = f'''
   <!-- Terminal Session Header -->
   <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
@@ -74,14 +73,12 @@ def patch_ascii_portrait():
     <text x="24" y="17.5" fill="#3fb950" font-family="ui-monospace, monospace" font-size="9.5" font-weight="bold" letter-spacing="1">OPERATOR</text>
     <text x="190" y="17.5" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="9.5" font-weight="bold" letter-spacing="0.5">[ ONLINE ]</text>
 
-    <!-- Nama Diperbesar (15.5px Bold) -->
     <text x="14" y="51" fill="#ffffff" font-family="ui-monospace, monospace" font-size="15" font-weight="bold">M. Khalis Farhan Azvi</text>
     <text x="14" y="68" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="12">@Azvi27</text>
     <text x="190" y="68" text-anchor="end" fill="#8b949e" font-family="ui-monospace, monospace" font-size="10">UGM</text>
 
     <line x1="12" y1="78" x2="192" y2="78" stroke="#30363d" stroke-width="1"/>
 
-    <!-- Section 1: Affiliation -->
     <text x="14" y="94" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9" font-weight="bold" letter-spacing="0.8">AFFILIATION</text>
     <text x="190" y="94" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="9" letter-spacing="0.5">ACADEMIC</text>
 
@@ -90,7 +87,6 @@ def patch_ascii_portrait():
 
     <line x1="12" y1="142" x2="192" y2="142" stroke="#30363d" stroke-width="1"/>
 
-    <!-- Section 2: Laboratory -->
     <text x="14" y="158" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9" font-weight="bold" letter-spacing="0.8">LABORATORY</text>
     <text x="190" y="158" text-anchor="end" fill="#39d353" font-family="ui-monospace, monospace" font-size="9" font-weight="bold">ACTIVE LAB</text>
 
@@ -99,7 +95,6 @@ def patch_ascii_portrait():
 
     <line x1="12" y1="207" x2="192" y2="207" stroke="#30363d" stroke-width="1"/>
 
-    <!-- Section 3: Current Activity -->
     <text x="14" y="223" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9" font-weight="bold" letter-spacing="0.8">CURRENT ACTIVITY</text>
     <text x="190" y="223" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="9" font-weight="600">STATUS</text>
 
@@ -114,15 +109,18 @@ def patch_ascii_portrait():
         ET.fromstring(content)
         with open("azvi-ascii.svg", "w", encoding="utf-8") as f:
             f.write(content)
-        print(f"[1/4] azvi-ascii.svg diperbarui dengan font diperbesar ({CARD_W}x{CARD_H}).")
+        print(f"[1/4] azvi-ascii.svg diperbarui ({CARD_W}x{CARD_H}).")
     except ET.ParseError as err:
         print(f"[!] Error XML azvi-ascii: {err}")
 
 # =============================================================
-# 2. GENERATE BUILD CARD (SPRITE & QUOTES CENTERED SYMMETRY)
+# 2. GENERATE BUILD CARD (CENTERED SPRITE & BALANCED QUOTES)
 # =============================================================
 def generate_build_card():
     sprite_path = "assets/Build_Capsem_Sprite.webp"
+    if not os.path.exists(sprite_path):
+        sprite_path = "./assets/Build_Capsem_Sprite.webp"
+
     sprite_b64 = ""
     if os.path.exists(sprite_path):
         with open(sprite_path, "rb") as f:
@@ -156,20 +154,22 @@ def generate_build_card():
   <!-- Top Session Header Simetris -->
   <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9" fill="#ff7b72" letter-spacing="1.2">SYSTEM://BUILD.DRIVER <tspan fill="#ff7b72"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
 
-  <!-- Bagian Atas: Sprite & Quotes Digeser Lebih ke Tengah -->
-  <g transform="translate(24, 34)">
-    <image href="data:image/webp;base64,{sprite_b64}" width="92" height="92"/>
+  <!-- Bagian Atas: Sprite & Quotes Seimbang Ditengahkan -->
+  <g transform="translate(20, 32)">
+    <g transform="translate(4, 2)">
+      <image href="data:image/webp;base64,{sprite_b64}" width="96" height="96"/>
+    </g>
 
     <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
-      <text x="104" y="15" fill="#58a6ff" font-size="11.5" font-weight="600">さぁ、実験を始めようか？</text>
-      <text x="104" y="30" fill="#c9d1d9" font-size="9.5" font-style="italic">Shall we begin the experiment?</text>
-      <text x="104" y="44" fill="#8b949e" font-size="8.8">Nah, mari kita mulai eksperimennya!</text>
+      <text x="110" y="16" fill="#58a6ff" font-size="12" font-weight="600">さぁ、実験を始めようか？</text>
+      <text x="110" y="32" fill="#c9d1d9" font-size="9.8" font-style="italic">Shall we begin the experiment?</text>
+      <text x="110" y="46" fill="#8b949e" font-size="9">Nah, mari kita mulai eksperimennya!</text>
 
-      <line x1="104" y1="53" x2="{CARD_W - 32}" y2="53" stroke="#21262d" stroke-width="1"/>
+      <line x1="110" y1="55" x2="{CARD_W - 36}" y2="55" stroke="#21262d" stroke-width="1"/>
 
-      <text x="104" y="69" fill="#ff7b72" font-size="11.5" font-weight="600">勝利の法則は決まった！</text>
-      <text x="104" y="84" fill="#c9d1d9" font-size="9.5" font-style="italic">The formula for victory is set!</text>
-      <text x="104" y="98" fill="#8b949e" font-size="8.8">Hukum kemenangannya telah ditentukan!</text>
+      <text x="110" y="72" fill="#ff7b72" font-size="12" font-weight="600">勝利の法則は決まった！</text>
+      <text x="110" y="87" fill="#c9d1d9" font-size="9.8" font-style="italic">The formula for victory is set!</text>
+      <text x="110" y="101" fill="#8b949e" font-size="9">Hukum kemenangannya telah ditentukan!</text>
     </g>
   </g>
 
@@ -418,7 +418,7 @@ def generate_build_card():
         ET.fromstring(svg)
         with open("assets/build-card.svg", "w", encoding="utf-8") as f:
             f.write(svg)
-        print(f"[2/4] assets/build-card.svg diperbarui dengan perataan tengah ({CARD_W}x{CARD_H}).")
+        print(f"[2/4] assets/build-card.svg diperbarui ({CARD_W}x{CARD_H}).")
     except ET.ParseError as err:
         print(f"[!] Error XML build-card: {err}")
 
