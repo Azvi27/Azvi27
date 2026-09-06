@@ -1,20 +1,32 @@
 import os, json, requests, urllib3
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+
+# Muat variabel environment dari .env di root
+load_dotenv()
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 LOCAL_INSTANCES = [
-    {"name": "GitLab Lab 1", "url": "https://Lab. SSTK 1", "token": os.getenv("GITLAB_LOCAL_TOKEN_1", "")},
-    {"name": "GitLab Lab 2", "url": "http://Lab. SSTK 2", "token": os.getenv("GITLAB_LOCAL_TOKEN_2", "")}
+    {
+        "name": "GitLab Lab SSTK 1",
+        "url": os.getenv("GITLAB_LOCAL_URL_1", "").rstrip("/"),
+        "token": os.getenv("GITLAB_LOCAL_TOKEN_1", "").strip()
+    },
+    {
+        "name": "GitLab Lab SSTK 2",
+        "url": os.getenv("GITLAB_LOCAL_URL_2", "").rstrip("/"),
+        "token": os.getenv("GITLAB_LOCAL_TOKEN_2", "").strip()
+    }
 ]
 
 def fetch_from_instance(instance):
     name = instance["name"]
     base_url = instance["url"]
-    token = instance.get("token", "").strip()
+    token = instance["token"]
 
-    if not token:
-        print(f"[-] Melewati {name}: Token kosong.")
+    if not base_url or not token:
+        print(f"[-] Melewati {name}: URL atau Token tidak ditemukan di .env")
         return {}
 
     print(f"[+] Menghubungi {name} ({base_url})...")
