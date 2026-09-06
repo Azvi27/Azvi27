@@ -119,6 +119,11 @@
   
 
 
+  
+
+  
+
+
   <!-- Terminal Session Header -->
   <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
   <!-- /Terminal Session Header -->
@@ -126,7 +131,6 @@
   <!-- OPERATOR HUD -->
   <g id="operator-hud" transform="translate(194, 32)">
     <rect width="204" height="284" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.2"/>
-
     <rect width="204" height="28" rx="10" fill="#21262d"/>
     <rect y="18" width="204" height="10" fill="#21262d"/>
     
@@ -136,6 +140,7 @@
     <text x="24" y="17.5" fill="#3fb950" font-family="ui-monospace, monospace" font-size="9.5" font-weight="bold" letter-spacing="1">OPERATOR</text>
     <text x="190" y="17.5" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="9.5" font-weight="bold" letter-spacing="0.5">[ ONLINE ]</text>
 
+    <!-- Font Profil Diperbesar -->
     <text x="14" y="51" fill="#ffffff" font-family="ui-monospace, monospace" font-size="15" font-weight="bold">M. Khalis Farhan Azvi</text>
     <text x="14" y="68" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="12">@Azvi27</text>
     <text x="190" y="68" text-anchor="end" fill="#8b949e" font-family="ui-monospace, monospace" font-size="10">UGM</text>
