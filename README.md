@@ -1,22 +1,22 @@
 <div align="center">
 
-<!-- DUAL MINIMAL CARDS (IDENTIK 410x340 SEJAJAR BERDAMPINGAN) -->
-<img src="./azvi-ascii.svg?v=30" width="410" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=30" width="410" alt="Kamen Rider Build" />
+<!-- DUAL MINIMAL CARDS -->
+<img src="./azvi-ascii.svg?v=31" width="410" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=31" width="410" alt="Kamen Rider Build" />
 
 <br><br>
 
-<!-- OFFICIAL BADGES -->
+<!-- DATA SOURCES STATUS BAR (IP SANITIZED) -->
 <p align="center">
   <img src="https://img.shields.io/badge/GitHub-Azvi27-161b22?style=flat-square&logo=github&logoColor=white" alt="GitHub Core" />
   &nbsp;
   <img src="https://img.shields.io/badge/GitLab%20Cloud-gitlab.azvibelajar.my.id-161b22?style=flat-square&logo=gitlab&logoColor=fc6d26" alt="GitLab Cloud" />
   &nbsp;
-  <img src="https://img.shields.io/badge/GitLab%20Lab%201-Lab. SSTK 1-161b22?style=flat-square&logo=gitlab&logoColor=fc6d26" alt="GitLab Lab 1" />
+  <img src="https://img.shields.io/badge/GitLab-Lab.%20SSTK%201-161b22?style=flat-square&logo=gitlab&logoColor=fc6d26" alt="GitLab Lab SSTK 1" />
   &nbsp;
-  <img src="https://img.shields.io/badge/GitLab%20Lab%202-Lab. SSTK 2-161b22?style=flat-square&logo=gitlab&logoColor=fc6d26" alt="GitLab Lab 2" />
+  <img src="https://img.shields.io/badge/GitLab-Lab.%20SSTK%202-161b22?style=flat-square&logo=gitlab&logoColor=fc6d26" alt="GitLab Lab SSTK 2" />
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=30" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=31" alt="Aggregated Heatmap" width="840" />
 
 </div>
