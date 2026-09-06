@@ -1,13 +1,11 @@
 <div align="center">
 
-<!-- DUAL MINIMAL CARDS (SEJAJAR BERDAMPINGAN) -->
-<p align="center">
-  <img src="./azvi-ascii.svg?v=25" width="414" alt="Azvi Portrait" />
-  &nbsp;
-  <img src="./assets/build-card.svg?v=25" width="414" alt="Kamen Rider Build" />
-</p>
+<!-- DUAL CARDS (SEJAJAR BERDAMPINGAN) -->
+<img src="./azvi-ascii.svg?v=26" width="410" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=26" width="410" alt="Kamen Rider Build" />
 
-<!-- DATA SOURCES STATUS BAR -->
+<br><br>
+
+<!-- OFFICIAL BADGES -->
 <p align="center">
   <img src="https://img.shields.io/badge/GitHub-Azvi27-161b22?style=flat-square&logo=github&logoColor=white" alt="GitHub Core" />
   &nbsp;
@@ -19,6 +17,6 @@
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=25" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=26" alt="Aggregated Heatmap" width="840" />
 
 </div>
