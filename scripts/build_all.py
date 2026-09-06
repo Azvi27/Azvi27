@@ -14,7 +14,7 @@ def patch_ascii_portrait():
     with open("azvi-ascii.svg", "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Bersihkan elemen lama
+    # Bersihkan HUD lama, header lama, scanline, dll.
     content = re.sub(r'<!-- (?:OPERATOR HUD|Terminal Session Header) -->[\s\S]*?<!-- /(?:OPERATOR HUD|Terminal Session Header) -->', '', content)
     content = re.sub(r'<text[^>]*SYSTEM://AZVI\.LAB[\s\S]*?</text>', '', content)
     content = re.sub(r'<g[^>]*id="operator-hud"[\s\S]*?</g>', '', content)
@@ -57,7 +57,7 @@ def patch_ascii_portrait():
     </clipPath>'''
     content = re.sub(r'<clipPath id="asciiTypeClip">[\s\S]*?</clipPath>', new_clip, content)
 
-    # Injeksi HUD Operator
+    # Injeksi HUD Operator Bersih
     hud_injection = f'''
   <!-- Terminal Session Header -->
   <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
@@ -117,7 +117,7 @@ def patch_ascii_portrait():
         print(f"[!] Error XML azvi-ascii: {err}")
 
 # =============================================================
-# 2. GENERATE BUILD CARD (DX BUILD DRIVER SIMULATOR VECTOR)
+# 2. GENERATE BUILD CARD (CANON 12S LOOP: ARE YOU READY DI AKHIR)
 # =============================================================
 def generate_build_card():
     sprite_path = "assets/Build_Capsem_Sprite.webp"
@@ -146,6 +146,11 @@ def generate_build_card():
     <clipPath id="dynamoClip">
       <circle cx="78" cy="84" r="28"/>
     </clipPath>
+
+    <!-- Clip Area Docking Botol -->
+    <clipPath id="slotAreaClip">
+      <rect x="175" y="6" width="190" height="106" rx="6"/>
+    </clipPath>
   </defs>
 
   <rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
@@ -155,9 +160,7 @@ def generate_build_card():
 
   <!-- Bagian Atas: Sprite + Quotes -->
   <g transform="translate(18, 34)">
-    <g transform="translate(0, 0)">
-      <image href="data:image/webp;base64,{sprite_b64}" width="92" height="92"/>
-    </g>
+    <image href="data:image/webp;base64,{sprite_b64}" width="92" height="92"/>
 
     <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
       <text x="106" y="15" fill="#58a6ff" font-size="11.5" font-weight="600">さぁ、実験を始めようか？</text>
@@ -173,51 +176,95 @@ def generate_build_card():
   </g>
 
   <!-- ============================================================== -->
-  <!-- BAGIAN BAWAH: DX BUILD DRIVER CONSOLE (BANDAI DX ANIMATED)     -->
+  <!-- BAGIAN BAWAH: DX BUILD DRIVER CINEMATIC STORY (12S FULL LOOP) -->
   <!-- ============================================================== -->
   <g transform="translate(18, 146)">
-    <!-- Chassis Gunmetal Utama -->
-    <rect width="374" height="174" rx="10" fill="#070b14" stroke="#30363d" stroke-width="1.5"/>
+    <!-- Main Chassis Body -->
+    <rect width="374" height="174" rx="10" fill="#070b14" stroke="#30363d" stroke-width="1.5">
+      <animate attributeName="stroke"
+               values="#30363d; #30363d; #ff7b72; #3fb950; #facc15; #30363d"
+               keyTimes="0; 0.60; 0.64; 0.75; 0.90; 1"
+               dur="12s" repeatCount="indefinite"/>
+    </rect>
 
     <!-- Tali Sabuk Kuning Berlubang (Yellow Belt Straps) -->
     <g>
-      <!-- Tali Kiri -->
       <rect x="0" y="52" width="9" height="66" rx="2" fill="#facc15" stroke="#ca8a04" stroke-width="1"/>
       <circle cx="4.5" cy="66" r="1.5" fill="#854d0e"/>
       <circle cx="4.5" cy="85" r="1.5" fill="#854d0e"/>
       <circle cx="4.5" cy="104" r="1.5" fill="#854d0e"/>
 
-      <!-- Tali Kanan -->
       <rect x="365" y="52" width="9" height="66" rx="2" fill="#facc15" stroke="#ca8a04" stroke-width="1"/>
       <circle cx="369.5" cy="66" r="1.5" fill="#854d0e"/>
       <circle cx="369.5" cy="85" r="1.5" fill="#854d0e"/>
       <circle cx="369.5" cy="104" r="1.5" fill="#854d0e"/>
     </g>
 
-    <!-- Bar Status Atas DX Driver -->
+    <!-- DYNAMIC TOP HUD RIBBON: STORY PROGRESSION -->
     <rect x="12" y="8" width="350" height="18" rx="4" fill="#111827"/>
     <circle cx="22" cy="17" r="3.2" fill="#ef4444">
-      <animate attributeName="fill" values="#ef4444;#3b82f6;#3fb950;#ef4444" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="fill" values="#ef4444;#3b82f6;#facc15;#3fb950;#ef4444" dur="4s" repeatCount="indefinite"/>
     </circle>
-    <text x="30" y="20.5" fill="#facc15" font-family="ui-monospace, monospace" font-size="8" font-weight="bold" letter-spacing="1">DX BUILD DRIVER // NASCITA LAB</text>
-    <text x="352" y="20.5" text-anchor="end" fill="#3fb950" font-family="ui-monospace, monospace" font-size="8" font-weight="bold">SYNC: 100%</text>
+
+    <!-- Teks Fase 1 (0-2s): Shaka-Shaka Rabbit -->
+    <text x="32" y="20.5" fill="#ff7b72" font-family="ui-monospace, monospace" font-size="8" font-weight="bold" letter-spacing="1">
+      <animate attributeName="opacity" values="1;1;0;0;0;0;1" keyTimes="0; 0.16; 0.17; 0.98; 0.99; 1; 1" dur="12s" repeatCount="indefinite"/>
+      [ SHAKA-SHAKA ] &gt;&gt; KOCOK: &quot;RABBIT!&quot; 🐰
+    </text>
+
+    <!-- Teks Fase 2 (2-4s): Shaka-Shaka Tank -->
+    <text x="32" y="20.5" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="8" font-weight="bold" letter-spacing="1">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0; 0.165; 0.175; 0.33; 0.34; 1" dur="12s" repeatCount="indefinite"/>
+      [ SHAKA-SHAKA ] &gt;&gt; KOCOK: &quot;TANK!&quot; 🛡️
+    </text>
+
+    <!-- Teks Fase 3 (4-6s): Docked & Best Match -->
+    <text x="32" y="20.5" fill="#facc15" font-family="ui-monospace, monospace" font-size="8" font-weight="bold" letter-spacing="1">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0; 0.335; 0.345; 0.50; 0.51; 1" dur="12s" repeatCount="indefinite"/>
+      [ DOCKED! ] &gt;&gt; &quot;BEST MATCH!&quot; ★
+    </text>
+
+    <!-- Teks Fase 4 (6-9s): Cranking & Hagane no Moonsault -->
+    <text x="32" y="20.5" fill="#3fb950" font-family="ui-monospace, monospace" font-size="8" font-weight="bold" letter-spacing="1">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0; 0.515; 0.525; 0.75; 0.76; 1" dur="12s" repeatCount="indefinite"/>
+      [ CRANKING ] &gt;&gt; HAGANE NO MOONSAULT! YEAAHH!
+    </text>
+
+    <!-- Teks Fase 5 (9-12s - DI AKHIR): ARE YOU READY?! -->
+    <text x="32" y="20.5" fill="#ffffff" font-family="ui-monospace, monospace" font-size="8" font-weight="bold" letter-spacing="1">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0; 0.755; 0.765; 1" dur="12s" repeatCount="indefinite"/>
+      [ DRIVER ] &gt;&gt; <tspan fill="#facc15">&quot;ARE YOU READY?!&quot; ★★★</tspan>
+    </text>
+
+    <!-- Indikator Kanan -->
+    <text x="352" y="20.5" text-anchor="end" font-family="ui-monospace, monospace" font-size="8" font-weight="bold">
+      <animate attributeName="fill" values="#8b949e;#ff7b72;#58a6ff;#facc15;#3fb950" keyTimes="0; 0.16; 0.33; 0.50; 1" dur="12s" repeatCount="indefinite"/>
+      SYNC: 100%
+    </text>
 
     <!-- SISI KIRI: VORTEX DYNAMO TACHOMETER (cx: 78, cy: 84) -->
     <circle cx="78" cy="84" r="34" fill="#1e293b" stroke="url(#chromeGrad)" stroke-width="3"/>
     <circle cx="78" cy="84" r="28" fill="#060911"/>
 
-    <!-- Tangki Cairan Ganda Dynamo -->
+    <!-- Tangki Cairan Berputar & Terisi -->
     <g clip-path="url(#dynamoClip)">
-      <rect x="50" y="66" width="28" height="48" fill="#dc2626" opacity="0.85"/>
-      <rect x="78" y="66" width="28" height="48" fill="#2563eb" opacity="0.85"/>
+      <rect x="50" y="66" width="28" height="48" fill="#dc2626">
+        <animate attributeName="opacity" values="0.15; 0.15; 0.15; 0.85; 0.85" keyTimes="0; 0.16; 0.33; 0.50; 1" dur="12s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="78" y="66" width="28" height="48" fill="#2563eb">
+        <animate attributeName="opacity" values="0.15; 0.15; 0.15; 0.85; 0.85" keyTimes="0; 0.16; 0.33; 0.50; 1" dur="12s" repeatCount="indefinite"/>
+      </rect>
       <circle cx="78" cy="84" r="16" fill="#facc15" opacity="0.4">
-        <animate attributeName="r" values="10;17;10" dur="1.5s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="8; 8; 18; 24; 16" keyTimes="0; 0.50; 0.65; 0.78; 1" dur="12s" repeatCount="indefinite"/>
       </circle>
     </g>
 
-    <!-- Turbin Perak Berputar (Tachometer Needle-Gears) -->
+    <!-- Turbin Perak Berputar (Needle-Gears Tachometer) -->
     <g>
-      <animateTransform attributeName="transform" type="rotate" from="0 78 84" to="360 78 84" dur="2.5s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="rotate"
+                        values="0 78 84; 0 78 84; 720 78 84; 2160 78 84; 2520 78 84"
+                        keyTimes="0; 0.50; 0.65; 0.88; 1"
+                        dur="12s" repeatCount="indefinite"/>
       <line x1="54" y1="84" x2="102" y2="84" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="66" y1="63.2" x2="90" y2="104.8" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="90" y1="63.2" x2="66" y2="104.8" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
@@ -226,9 +273,11 @@ def generate_build_card():
     </g>
 
     <!-- RODA GIGI BERTAUT (Interlocking Auxiliary Gears) -->
-    <!-- Gear 1: Berputar Counter-Clockwise -->
     <g>
-      <animateTransform attributeName="transform" type="rotate" from="0 124 96" to="-360 124 96" dur="3s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="rotate"
+                        values="0 124 96; 0 124 96; -720 124 96; -1800 124 96; -1980 124 96"
+                        keyTimes="0; 0.50; 0.65; 0.88; 1"
+                        dur="12s" repeatCount="indefinite"/>
       <circle cx="124" cy="96" r="11" fill="#cbd5e1" stroke="#475569" stroke-width="1.2"/>
       <line x1="124" y1="83" x2="124" y2="109" stroke="#475569" stroke-width="2.5"/>
       <line x1="111" y1="96" x2="137" y2="96" stroke="#475569" stroke-width="2.5"/>
@@ -237,18 +286,23 @@ def generate_build_card():
       <circle cx="124" cy="96" r="3.5" fill="#0f172a"/>
     </g>
 
-    <!-- Gear 2: Berputar Clockwise -->
     <g>
-      <animateTransform attributeName="transform" type="rotate" from="0 144 110" to="360 144 110" dur="2.1s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="rotate"
+                        values="0 144 110; 0 144 110; 960 144 110; 2400 144 110; 2640 144 110"
+                        keyTimes="0; 0.50; 0.65; 0.88; 1"
+                        dur="12s" repeatCount="indefinite"/>
       <circle cx="144" cy="110" r="8" fill="#94a3b8" stroke="#334155" stroke-width="1.2"/>
       <line x1="144" y1="100" x2="144" y2="120" stroke="#334155" stroke-width="2"/>
       <line x1="134" y1="110" x2="154" y2="110" stroke="#334155" stroke-width="2"/>
       <circle cx="144" cy="110" r="2.5" fill="#0f172a"/>
     </g>
 
-    <!-- TUAS PUTAR CRANK MERAH (Berputar 360 Derajat Penuh) -->
+    <!-- TUAS PUTAR CRANK MERAH (Berputar 360 Derajat saat Henshin) -->
     <g>
-      <animateTransform attributeName="transform" type="rotate" from="0 78 84" to="360 78 84" dur="3s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="rotate"
+                        values="0 78 84; 0 78 84; 360 78 84; 1080 78 84; 1080 78 84; 0 78 84"
+                        keyTimes="0; 0.50; 0.65; 0.85; 0.95; 1"
+                        dur="12s" repeatCount="indefinite"/>
       <path d="M 78 80 L 34 71 A 3 3 0 0 0 30 74 L 30 82 A 3 3 0 0 0 34 85 L 78 88 Z" fill="#111827" stroke="#475569" stroke-width="1.2"/>
       <rect x="12" y="67" width="22" height="15" rx="3" fill="#dc2626" stroke="#7f1d1d" stroke-width="1"/>
       <line x1="17" y1="68" x2="17" y2="81" stroke="#7f1d1d" stroke-width="1.2"/>
@@ -257,39 +311,82 @@ def generate_build_card():
       <circle cx="78" cy="84" r="7" fill="#1e293b" stroke="#cbd5e1" stroke-width="2"/>
     </g>
 
-    <!-- SISI KANAN: DUA FULLBOTTLE (RABBIT & TANK TERPASANG) -->
-    <g transform="translate(178, 30)">
-      <!-- Rabbit Fullbottle -->
-      <g transform="translate(0, 0)">
-        <rect x="26" y="0" width="34" height="10" rx="2" fill="#cbd5e1" stroke="#475569" stroke-width="1"/>
-        <rect x="38" y="2" width="10" height="6" fill="#dc2626"/>
-        <rect x="10" y="10" width="66" height="68" rx="6" fill="#1a0b0e" stroke="#ef4444" stroke-width="1.5"/>
-        <rect x="14" y="24" width="58" height="50" rx="4" fill="#dc2626" opacity="0.9"/>
-        <circle cx="43" cy="42" r="5" fill="#f8fafc" stroke="#64748b" stroke-width="1"/>
-        <text x="43" y="60" text-anchor="middle" font-size="12">🐰</text>
-        <text x="43" y="72" text-anchor="middle" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" fill="#ffffff" letter-spacing="1">RABBIT</text>
+    <!-- ======================================================= -->
+    <!-- SISI KANAN: ANIMASI KOCOK (SHAKA-SHAKA) & DOCKING BOTOL -->
+    <!-- ======================================================= -->
+    <g clip-path="url(#slotAreaClip)">
+      <!-- RABBIT FULLBOTTLE (SLOT 1) -->
+      <g transform="translate(180, 30)">
+        <g>
+          <animateTransform attributeName="transform" type="translate"
+            values="0,-22; 0,-14; 0,-26; 0,-14; 0,-24; 0,-16; 0,-22; 0,-22; 0,0; 0,0; 0,-22"
+            keyTimes="0; 0.04; 0.08; 0.12; 0.14; 0.16; 0.18; 0.33; 0.38; 0.95; 1"
+            dur="12s" repeatCount="indefinite"/>
+
+          <!-- Cap Dial Perak R/T -->
+          <rect x="26" y="0" width="34" height="10" rx="2" fill="#cbd5e1" stroke="#475569" stroke-width="1"/>
+          <rect x="38" y="2" width="10" height="6" fill="#dc2626"/>
+          <!-- Badan Botol -->
+          <rect x="10" y="10" width="66" height="68" rx="6" fill="#1a0b0e" stroke="#ef4444" stroke-width="1.5"/>
+          <rect x="14" y="24" width="58" height="50" rx="4" fill="#dc2626" opacity="0.9"/>
+
+          <!-- Gotri Bola Besi (Kocok naik-turun di detik 0-2) -->
+          <circle cx="43" cy="42" r="5" fill="#f8fafc" stroke="#64748b" stroke-width="1">
+            <animate attributeName="cy"
+              values="34; 54; 32; 56; 34; 42; 42"
+              keyTimes="0; 0.04; 0.08; 0.12; 0.16; 0.18; 1"
+              dur="12s" repeatCount="indefinite"/>
+          </circle>
+
+          <text x="43" y="60" text-anchor="middle" font-size="12">🐰</text>
+          <text x="43" y="72" text-anchor="middle" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" fill="#ffffff" letter-spacing="1">RABBIT</text>
+        </g>
       </g>
 
-      <!-- Tank Fullbottle -->
-      <g transform="translate(92, 0)">
-        <rect x="26" y="0" width="34" height="10" rx="2" fill="#cbd5e1" stroke="#475569" stroke-width="1"/>
-        <rect x="38" y="2" width="10" height="6" fill="#2563eb"/>
-        <rect x="10" y="10" width="66" height="68" rx="6" fill="#091426" stroke="#3b82f6" stroke-width="1.5"/>
-        <rect x="14" y="24" width="58" height="50" rx="4" fill="#2563eb" opacity="0.9"/>
-        <circle cx="43" cy="42" r="5" fill="#f8fafc" stroke="#64748b" stroke-width="1"/>
-        <text x="43" y="60" text-anchor="middle" font-size="12">🛡️</text>
-        <text x="43" y="72" text-anchor="middle" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" fill="#ffffff" letter-spacing="1">TANK</text>
+      <!-- TANK FULLBOTTLE (SLOT 2) -->
+      <g transform="translate(272, 30)">
+        <g>
+          <animateTransform attributeName="transform" type="translate"
+            values="0,-22; 0,-22; 0,-14; 0,-26; 0,-14; 0,-24; 0,-16; 0,-22; 0,0; 0,0; 0,-22"
+            keyTimes="0; 0.17; 0.20; 0.23; 0.26; 0.29; 0.31; 0.34; 0.40; 0.95; 1"
+            dur="12s" repeatCount="indefinite"/>
+
+          <!-- Cap Dial Perak R/T -->
+          <rect x="26" y="0" width="34" height="10" rx="2" fill="#cbd5e1" stroke="#475569" stroke-width="1"/>
+          <rect x="38" y="2" width="10" height="6" fill="#2563eb"/>
+          <!-- Badan Botol -->
+          <rect x="10" y="10" width="66" height="68" rx="6" fill="#091426" stroke="#3b82f6" stroke-width="1.5"/>
+          <rect x="14" y="24" width="58" height="50" rx="4" fill="#2563eb" opacity="0.9"/>
+
+          <!-- Gotri Bola Besi (Kocok naik-turun di detik 2-4) -->
+          <circle cx="43" cy="42" r="5" fill="#f8fafc" stroke="#64748b" stroke-width="1">
+            <animate attributeName="cy"
+              values="42; 42; 34; 54; 32; 56; 34; 42; 42"
+              keyTimes="0; 0.17; 0.20; 0.23; 0.26; 0.29; 0.31; 0.34; 1"
+              dur="12s" repeatCount="indefinite"/>
+          </circle>
+
+          <text x="43" y="60" text-anchor="middle" font-size="12">🛡️</text>
+          <text x="43" y="72" text-anchor="middle" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" fill="#ffffff" letter-spacing="1">TANK</text>
+        </g>
       </g>
     </g>
 
-    <!-- PLAT GARIS BAHAYA ////// & BEST MATCH BADGE -->
+    <!-- PLAT GARIS BAHAYA ////// & BEST MATCH + HENSHIN ANNOUNCEMENT -->
     <g transform="translate(180, 114)">
       <rect width="176" height="24" rx="4" fill="url(#hazardPattern)" stroke="#ef4444" stroke-width="1.5"/>
       <rect x="6" y="4" width="80" height="16" rx="3" fill="#000000" opacity="0.88"/>
-      <text x="46" y="15.5" text-anchor="middle" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" fill="#facc15" letter-spacing="1">BEST MATCH</text>
+      
+      <!-- BEST MATCH Label -->
+      <text x="46" y="15.5" text-anchor="middle" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="1">
+        <animate attributeName="fill" values="#8b949e; #8b949e; #facc15; #facc15; #3fb950; #facc15" keyTimes="0; 0.33; 0.38; 0.62; 0.75; 1" dur="12s" repeatCount="indefinite"/>
+        BEST MATCH
+      </text>
 
-      <text x="132" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" fill="#3fb950" letter-spacing="1">
-        ARE YOU READY?
+      <!-- Status Henhsin Moonsault -->
+      <text x="132" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="1">
+        <animate attributeName="fill" values="#484f58; #484f58; #484f58; #ff7b72; #3fb950; #3fb950; #484f58" keyTimes="0; 0.33; 0.50; 0.62; 0.85; 0.95; 1" dur="12s" repeatCount="indefinite"/>
+        HAGANE MOONSAULT
       </text>
     </g>
 
@@ -297,12 +394,16 @@ def generate_build_card():
     <path d="M 112 147 L 235 147 Q 250 147 250 141 Q 250 137 265 137 L 354 137" stroke="url(#chromeGrad)" stroke-width="4" stroke-linecap="round" fill="none"/>
     <path d="M 122 154 L 230 154 Q 243 154 243 148 Q 243 144 255 144 L 340 144" stroke="url(#chromeGrad)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
 
-    <!-- ANNOUNCEMENT BANNER DI BAGIAN BAWAH -->
-    <text x="187" y="163" text-anchor="middle" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="1.2">
-      <tspan fill="#ef4444">HAGANE NO MOONSAULT! </tspan>
-      <tspan fill="#3b82f6">RABBIT</tspan><tspan fill="#facc15">TANK! </tspan>
-      <tspan fill="#3fb950">YEAAHH! ★</tspan>
-    </text>
+    <!-- ANNOUNCEMENT BANNER DI BAGIAN BAWAH: "ARE YOU READY?" DI AKHIR -->
+    <g transform="translate(187, 163)">
+      <text text-anchor="middle" font-family="ui-monospace, monospace" font-size="9" font-weight="bold" letter-spacing="1.5">
+        <animate attributeName="fill"
+                 values="#484f58; #484f58; #484f58; #484f58; #facc15; #3fb950; #484f58"
+                 keyTimes="0; 0.33; 0.50; 0.72; 0.78; 0.96; 1"
+                 dur="12s" repeatCount="indefinite"/>
+        [ DRIVER: &quot;ARE YOU READY?&quot; ]
+      </text>
+    </g>
   </g>
 </svg>'''
 
@@ -310,7 +411,7 @@ def generate_build_card():
         ET.fromstring(svg)
         with open("assets/build-card.svg", "w", encoding="utf-8") as f:
             f.write(svg)
-        print(f"[2/4] assets/build-card.svg diperbarui dengan Simulator DX Build Driver ({CARD_W}x{CARD_H}).")
+        print(f"[2/4] assets/build-card.svg diperbarui dengan 'Are You Ready?' di akhir ({CARD_W}x{CARD_H}).")
     except ET.ParseError as err:
         print(f"[!] Error XML build-card: {err}")
 
@@ -342,11 +443,11 @@ def update_readme():
     content = f'''<div align="center">
 
 <!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=48" width="{CARD_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=48" width="{CARD_W}" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=50" width="{CARD_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=50" width="{CARD_W}" alt="Kamen Rider Build" />
 
 <!-- RABBIT-TANK GRADIENT DIVIDER -->
 <br><br>
-<img src="./assets/divider.svg?v=48" width="840" alt="Divider" />
+<img src="./assets/divider.svg?v=50" width="840" alt="Divider" />
 <br><br>
 
 <!-- DATA SOURCES STATUS BAR -->
@@ -361,13 +462,13 @@ def update_readme():
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=48" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=50" alt="Aggregated Heatmap" width="840" />
 
 </div>
 '''
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(content)
-    print("[4/4] README.md diperbarui dengan versi cache v=48.")
+    print("[4/4] README.md diperbarui dengan versi cache v=50.")
 
 if __name__ == "__main__":
     patch_ascii_portrait()
