@@ -17,7 +17,7 @@ def patch_ascii_portrait():
         content = f.read()
 
     base = content
-    for marker in ['<!-- Terminal Session Header -->', '<text x="18" y="22"', '<text x="18" y="20"', '<!-- OPERATOR HUD -->', '<g id="operator-hud"']:
+    for marker in ['<!-- Laser Scanline Beam', '<!-- Terminal Session Header -->', '<text x="18" y="22"', '<text x="18" y="20"', '<!-- OPERATOR HUD -->', '<g id="operator-hud"']:
         if marker in base:
             base = base[:base.index(marker)]
     base = base.strip()
@@ -59,7 +59,8 @@ def patch_ascii_portrait():
     v_str = "; ".join(str(h) for h in heights)
     kt_str = "; ".join(str(t) for t in times)
 
-    new_clip = f'''<clipPath id="asciiTypeClip">
+    defs_content = f'''<defs>
+    <clipPath id="asciiTypeClip">
       <rect x="0" y="28" width="176" height="0">
         <animate attributeName="height"
                  calcMode="discrete"
@@ -75,8 +76,9 @@ def patch_ascii_portrait():
       <stop offset="50%" stop-color="#3fb950" stop-opacity="1"/>
       <stop offset="70%" stop-color="#58a6ff" stop-opacity="0.8"/>
       <stop offset="100%" stop-color="#58a6ff" stop-opacity="0"/>
-    </linearGradient>'''
-    base = re.sub(r'<clipPath id="asciiTypeClip">[\s\S]*?</clipPath>', new_clip, base)
+    </linearGradient>
+  </defs>'''
+    base = re.sub(r'<defs>[\s\S]*?</defs>', defs_content, base)
 
     hud_injection = f'''  <!-- Laser Scanline Beam on ASCII Portrait -->
   <line x1="6" y1="28" x2="166" y2="28" stroke="#58a6ff" stroke-width="1.6" stroke-linecap="round">
@@ -153,9 +155,9 @@ def patch_ascii_portrait():
       </circle>
       <text x="261" y="131" text-anchor="middle" fill="#39d353" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9" font-weight="700" letter-spacing="0.5">ACTIVE</text>
 
-      <text x="16" y="163" fill="#3fb950" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="800">
+      <text x="16" y="163" fill="#3fb950" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="800">
         <animate attributeName="fill" values="#3fb950; #56d364; #3fb950" dur="4s" repeatCount="indefinite"/>
-        Lab. SSTK
+        Laboratorium SSTK
       </text>
       <text x="16" y="185" fill="#f0f6fc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600">Sensor &amp; Sistem Telekontrol</text>
     </g>
@@ -450,9 +452,9 @@ def update_readme():
   &nbsp;
   <img src="https://img.shields.io/badge/GitLab%20Cloud-gitlab.azvibelajar.my.id-161b22?style=flat-square&logo=gitlab&logoColor=fc6d26" alt="GitLab Cloud" />
   &nbsp;
-  <img src="https://img.shields.io/badge/GitLab-Lab.%20SSTK%201-161b22?style=flat-square&logo=gitlab&logoColor=fc6d26" alt="GitLab Lab SSTK 1" />
+  <img src="https://img.shields.io/badge/GitLab-Laboratorium%20SSTK%201-161b22?style=flat-square&logo=gitlab&logoColor=fc6d26" alt="GitLab Laboratorium SSTK 1" />
   &nbsp;
-  <img src="https://img.shields.io/badge/GitLab-Lab.%20SSTK%202-161b22?style=flat-square&logo=gitlab&logoColor=fc6d26" alt="GitLab Lab SSTK 2" />
+  <img src="https://img.shields.io/badge/GitLab-Laboratorium%20SSTK%202-161b22?style=flat-square&logo=gitlab&logoColor=fc6d26" alt="GitLab Laboratorium SSTK 2" />
 </p>
 
 <!-- AGGREGATED HEATMAP -->
