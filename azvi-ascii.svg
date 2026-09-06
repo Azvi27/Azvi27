@@ -1,12 +1,11 @@
-<svg width="420" height="480" viewBox="0 0 420 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="350" height="340" viewBox="0 0 350 340" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Stepped Terminal Typing Reveal: Diskrit turun baris demi baris, TANPA garis laser -->
     <clipPath id="asciiTypeClip">
-      <rect x="0" y="0" width="420" height="0">
+      <rect x="0" y="24" width="420" height="0">
         <animate attributeName="height"
                  calcMode="discrete"
-                 values="0; 46; 57; 69; 80; 91; 103; 114; 126; 137; 148; 160; 171; 183; 194; 205; 217; 228; 240; 251; 262; 274; 285; 296; 308; 319; 331; 342; 353; 365; 376; 388; 399; 410; 422; 433; 445; 480; 480; 0"
-                 keyTimes="0; 0.043; 0.057; 0.07; 0.083; 0.097; 0.11; 0.123; 0.137; 0.15; 0.163; 0.177; 0.19; 0.203; 0.217; 0.23; 0.243; 0.257; 0.27; 0.283; 0.297; 0.31; 0.323; 0.337; 0.35; 0.363; 0.377; 0.39; 0.403; 0.417; 0.43; 0.443; 0.457; 0.47; 0.483; 0.497; 0.51; 0.55; 0.90; 1"
+                 values="0; 41; 53; 65; 76; 88; 100; 111; 123; 135; 146; 158; 170; 181; 193; 205; 216; 228; 240; 251; 263; 275; 286; 298; 310; 321; 333; 345; 356; 368; 380; 391; 403; 415; 426; 438; 450; 460; 0"
+                 keyTimes="0.0; 0.054; 0.068; 0.082; 0.096; 0.109; 0.123; 0.137; 0.151; 0.165; 0.179; 0.193; 0.207; 0.221; 0.234; 0.248; 0.262; 0.276; 0.29; 0.304; 0.318; 0.332; 0.346; 0.359; 0.373; 0.387; 0.401; 0.415; 0.429; 0.443; 0.457; 0.471; 0.484; 0.498; 0.512; 0.526; 0.54; 0.92; 1.0"
                  dur="7.5s"
                  repeatCount="indefinite" />
       </rect>
@@ -15,10 +14,8 @@
 
   <rect width="350" height="340" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
 
-  <!-- Teks ASCII Utuh dengan Efek Ketikan Terminal -->
+  <!-- Teks ASCII dengan Integritas Monospace Terjaga 100% -->
   <g clip-path="url(#asciiTypeClip)">
-    <!-- Teks ASCII dengan Integritas Monospace Terjaga 100% -->
-  
     <style>
     text {
       fill: #c9d1d9;
@@ -66,5 +63,5 @@
   </g>
 
   <!-- Garis Laser Pemindai Sesuai Kodemu -->
-  </g>
+  
 </svg>
