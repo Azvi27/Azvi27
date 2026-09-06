@@ -12,13 +12,13 @@ def render():
         data = json.load(f)
 
     days = data.get("days", [])
-    total_str = data.get("total", "454 contributions in the last year")
+    total_str = data.get("total", "533 contributions in the last year")
 
     weeks = []
     current_week = []
     for d in days:
         dt = datetime.strptime(d["date"], "%Y-%m-%d")
-        w_day = (dt.weekday() + 1) % 7 
+        w_day = (dt.weekday() + 1) % 7  
         current_week.append((w_day, d.get("level", 0)))
         if w_day == 6:
             weeks.append(current_week)
@@ -33,63 +33,58 @@ def render():
     svg.append(f'<svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" fill="none" xmlns="http://www.w3.org/2000/svg">')
     svg.append(f'  <rect width="{width}" height="{height}" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="1"/>')
     
-    # CSS & ANIMASI RADAR SWEEP
+    # ANIMASI PING-PONG FILL & WIPE
     svg.append('''  <defs>
-    <linearGradient id="radarSweep" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#3fb950" stop-opacity="0" />
-      <stop offset="70%" stop-color="#3fb950" stop-opacity="0.08" />
-      <stop offset="100%" stop-color="#3fb950" stop-opacity="0.35" />
-    </linearGradient>
-    <clipPath id="gridClip">
-      <rect x="52" y="30" width="765" height="110" rx="4" />
+    <clipPath id="pingPongClip">
+      <rect x="53" y="32" width="0" height="104">
+        <animate attributeName="width"
+                 values="0; 0; 760; 760; 0; 0"
+                 keyTimes="0; 0.04; 0.46; 0.78; 0.94; 1"
+                 dur="8s"
+                 repeatCount="indefinite" />
+      </rect>
     </clipPath>
-    <style>
-      @keyframes sweepScan {
-        0% { transform: translateX(-150px); }
-        50% { transform: translateX(850px); }
-        100% { transform: translateX(850px); }
-      }
-      .radar-scanner {
-        animation: sweepScan 5s ease-in-out infinite;
-      }
-    </style>
   </defs>''')
 
-    # Month Labels
     months = ["Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"]
     for i, m in enumerate(months):
         x = 55 + (i * 64)
         svg.append(f'  <text x="{x}" y="22" fill="#8b949e" font-size="10" font-family="ui-monospace, monospace">{m}</text>')
 
-    # Day of week labels
     svg.append('  <text x="24" y="58" fill="#8b949e" font-size="9" font-family="ui-monospace, monospace">Mon</text>')
     svg.append('  <text x="24" y="88" fill="#8b949e" font-size="9" font-family="ui-monospace, monospace">Wed</text>')
     svg.append('  <text x="24" y="118" fill="#8b949e" font-size="9" font-family="ui-monospace, monospace">Fri</text>')
 
-    # GRID KONTRIBUSI
-    svg.append('  <g id="heatmap-grid">')
     start_x = 55
     start_y = 35
     cell_size = 10.5
     cell_gap = 3.5
 
+    # 1. Base Grid
+    svg.append('  <!-- BASE GRID -->')
+    svg.append('  <g id="base-grid">')
+    for c_idx, w in enumerate(weeks):
+        x = start_x + (c_idx * (cell_size + cell_gap))
+        for r_day, _ in w:
+            y = start_y + (r_day * (cell_size + cell_gap))
+            svg.append(f'    <rect x="{x:.1f}" y="{y:.1f}" width="{cell_size}" height="{cell_size}" rx="2" fill="#161b22" />')
+    svg.append('  </g>')
+
+    # 2. Active Grid dengan Halo Glow pada Level 4
+    svg.append('  <!-- ACTIVE GRID -->')
+    svg.append('  <g id="active-grid" clip-path="url(#pingPongClip)">')
     for c_idx, w in enumerate(weeks):
         x = start_x + (c_idx * (cell_size + cell_gap))
         for r_day, lvl in w:
-            y = start_y + (r_day * (cell_size + cell_gap))
-            color = COLOR_LEVELS[min(lvl, 4)]
-            svg.append(f'    <rect x="{x:.1f}" y="{y:.1f}" width="{cell_size}" height="{cell_size}" rx="2" fill="{color}" />')
+            if lvl > 0:
+                y = start_y + (r_day * (cell_size + cell_gap))
+                # Halo glow lembut khusus level 4 (paling aktif)
+                if lvl == 4:
+                    svg.append(f'    <rect x="{x - 1.2:.1f}" y="{y - 1.2:.1f}" width="{cell_size + 2.4:.1f}" height="{cell_size + 2.4:.1f}" rx="3" fill="#39d353" opacity="0.32" />')
+                color = COLOR_LEVELS[min(lvl, 4)]
+                svg.append(f'    <rect x="{x:.1f}" y="{y:.1f}" width="{cell_size}" height="{cell_size}" rx="2" fill="{color}" />')
     svg.append('  </g>')
 
-    # ELEMEN RADAR SWEEP (Oscilloscope Line)
-    svg.append('''  <g clip-path="url(#gridClip)">
-    <g class="radar-scanner">
-      <rect x="0" y="30" width="100" height="110" fill="url(#radarSweep)" />
-      <line x1="100" y1="30" x2="100" y2="140" stroke="#3fb950" stroke-width="1.5" opacity="0.8" />
-    </g>
-  </g>''')
-
-    # FOOTER: Total & Legend
     svg.append(f'  <text x="55" y="172" fill="#c9d1d9" font-size="11" font-family="ui-monospace, monospace">{total_str}</text>')
     svg.append('  <g transform="translate(680, 162)">')
     svg.append('    <text x="-32" y="10" fill="#8b949e" font-size="10" font-family="ui-monospace, monospace">Less</text>')
@@ -102,7 +97,7 @@ def render():
 
     with open("contrib-heatmap.svg", "w", encoding="utf-8") as f:
         f.write("\n".join(svg))
-    print("[✓] contrib-heatmap.svg berhasil di-render dengan animasi radar sweep!")
+    print("[✓] contrib-heatmap.svg berhasil di-render dengan aura glow level 4!")
 
 if __name__ == "__main__":
     render()

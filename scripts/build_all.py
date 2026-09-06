@@ -1,11 +1,11 @@
-import os, re, json, base64
+import os, re, base64
 import xml.etree.ElementTree as ET
 
 CARD_W = 410
 CARD_H = 340
 
 # =============================================================
-# 1. PATCH AZVI-ASCII.SVG (KUNCI 410x340 & STEPPED TYPEWRITER)
+# 1. PATCH AZVI-ASCII.SVG (TERMINAL CURSOR + STEPPED TYPEWRITER)
 # =============================================================
 def patch_ascii_portrait():
     if not os.path.exists("azvi-ascii.svg"):
@@ -14,16 +14,19 @@ def patch_ascii_portrait():
     with open("azvi-ascii.svg", "r", encoding="utf-8") as f:
         content = f.read()
 
+    # Bersihkan scanline & footer lama
     content = re.sub(r'<line[^>]*stroke="#58a6ff"[^>]*/>', '', content)
     content = re.sub(r'<animateTransform[^>]*type="translate"[^>]*/>', '', content)
     content = re.sub(r'<text[^>]*>rendered:[^<]*</text>', '', content)
+    content = re.sub(r'<text[^>]*>SYSTEM://[^<]*</text>', '', content)
 
     content = re.sub(r'<svg[^>]*>', f'<svg width="{CARD_W}" height="{CARD_H}" viewBox="0 0 {CARD_W} {CARD_H}" fill="none" xmlns="http://www.w3.org/2000/svg">', content, count=1)
     content = re.sub(r'<rect[^>]*fill="#0d1117"[^>]*/>', f'<rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>', content, count=1)
 
+    # Tangga ketikan 36 baris
     n_lines = 36
-    start_y = 20
-    end_y = CARD_H - 25
+    start_y = 30
+    end_y = CARD_H - 22
     line_h = (end_y - start_y) / n_lines
 
     heights = [0]
@@ -41,7 +44,7 @@ def patch_ascii_portrait():
     kt_str = "; ".join(str(t) for t in times)
 
     new_clip = f'''<clipPath id="asciiTypeClip">
-      <rect x="0" y="20" width="{CARD_W}" height="0">
+      <rect x="0" y="28" width="{CARD_W}" height="0">
         <animate attributeName="height"
                  calcMode="discrete"
                  values="{v_str}"
@@ -50,19 +53,26 @@ def patch_ascii_portrait():
                  repeatCount="indefinite" />
       </rect>
     </clipPath>'''
-
     content = re.sub(r'<clipPath id="asciiTypeClip">[\s\S]*?</clipPath>', new_clip, content)
+
+    # Sisipkan Terminal Header Prompt dengan kursor berkedip statis
+    cursor_header = f'''  <!-- Terminal Session Header -->
+  <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>'''
+    
+    if "SYSTEM://AZVI.LAB" not in content:
+        content = content.replace(f'<rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>',
+                                  f'<rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>\n{cursor_header}')
 
     try:
         ET.fromstring(content)
         with open("azvi-ascii.svg", "w", encoding="utf-8") as f:
             f.write(content)
-        print(f"[1/3] azvi-ascii.svg 100% VALID XML ({CARD_W}x{CARD_H}).")
+        print(f"[1/4] azvi-ascii.svg diperbarui dengan terminal blinking cursor ({CARD_W}x{CARD_H}).")
     except ET.ParseError as err:
         print(f"[!] Error XML azvi-ascii: {err}")
 
 # =============================================================
-# 2. GENERATE BUILD CARD (TWIN 410x340)
+# 2. GENERATE BUILD CARD (CANON FORMULA + BREATHING PULSE)
 # =============================================================
 def generate_build_card():
     sprite_path = "assets/Build_Capsem_Sprite.webp"
@@ -92,19 +102,25 @@ def generate_build_card():
     <text x="146" y="150" fill="#8b949e" font-size="10">Hukum kemenangannya telah ditentukan!</text>
   </g>
 
-  <!-- Kotak Formula & Driver Callout -->
+  <!-- Kotak Konsol Formula Driver (Clean & Canon) -->
   <g transform="translate(18, 178)">
     <rect width="{CARD_W - 36}" height="128" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1"/>
 
-    <text x="{(CARD_W - 36)/2}" y="34" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12.5" font-weight="bold">
-      <tspan fill="#ff7b72">◆ Rabbit [Fisika]</tspan>
-      <tspan fill="#6e7681"> × </tspan>
-      <tspan fill="#58a6ff">Tank [Kode] ◆</tspan>
+    <!-- Canon Rabbit Tank Formula -->
+    <text x="{(CARD_W - 36)/2}" y="34" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" font-weight="bold" letter-spacing="1">
+      <tspan fill="#ff7b72">◆<animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/></tspan>
+      <tspan fill="#ff7b72"> Rabbit</tspan>
+      <tspan fill="#6e7681">  ×  </tspan>
+      <tspan fill="#58a6ff">Tank </tspan>
+      <tspan fill="#58a6ff">◆<animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/></tspan>
     </text>
 
+    <!-- Best Match with Breathing Glow Pulse -->
     <text x="{(CARD_W - 36)/2}" y="65" text-anchor="middle" font-family="ui-monospace, monospace" font-size="14.5" font-weight="bold">
       <tspan fill="#6e7681">=</tspan>
-      <tspan fill="#3fb950" letter-spacing="2.5"> BEST MATCH ! </tspan>
+      <tspan fill="#3fb950" letter-spacing="2.5"> BEST MATCH ! 
+        <animate attributeName="fill" values="#3fb950;#56d364;#2ea043;#3fb950" dur="2.5s" repeatCount="indefinite"/>
+      </tspan>
       <tspan fill="#6e7681">=</tspan>
     </text>
 
@@ -120,22 +136,46 @@ def generate_build_card():
         ET.fromstring(svg)
         with open("assets/build-card.svg", "w", encoding="utf-8") as f:
             f.write(svg)
-        print(f"[2/3] assets/build-card.svg 100% VALID XML ({CARD_W}x{CARD_H}).")
+        print(f"[2/4] assets/build-card.svg diperbarui secara kanon ({CARD_W}x{CARD_H}).")
     except ET.ParseError as err:
         print(f"[!] Error XML build-card: {err}")
 
 # =============================================================
-# 3. UPDATE README (CLEAN SSTK BADGES & CACHE BUSTER V31)
+# 3. GENERATE SLEEK RABBIT-TANK DIVIDER SVG
+# =============================================================
+def generate_divider():
+    svg = '''<svg width="840" height="8" viewBox="0 0 840 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="rtGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff7b72" stop-opacity="0.85"/>
+      <stop offset="25%" stop-color="#ff7b72" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#3fb950" stop-opacity="0.75"/>
+      <stop offset="75%" stop-color="#58a6ff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+  <rect x="20" y="3" width="800" height="2" rx="1" fill="url(#rtGrad)"/>
+  <circle cx="420" cy="4" r="2.5" fill="#3fb950"/>
+</svg>'''
+    with open("assets/divider.svg", "w", encoding="utf-8") as f:
+        f.write(svg)
+    print("[3/4] assets/divider.svg berhasil dibuat.")
+
+# =============================================================
+# 4. UPDATE README (CLEAN & NO BLUE STRAY LINE)
 # =============================================================
 def update_readme():
     content = f'''<div align="center">
 
 <!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=31" width="{CARD_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=31" width="{CARD_W}" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=40" width="{CARD_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=40" width="{CARD_W}" alt="Kamen Rider Build" />
 
+<!-- RABBIT-TANK GRADIENT DIVIDER -->
+<br><br>
+<img src="./assets/divider.svg?v=40" width="840" alt="Divider" />
 <br><br>
 
-<!-- DATA SOURCES STATUS BAR (IP SANITIZED) -->
+<!-- DATA SOURCES STATUS BAR -->
 <p align="center">
   <img src="https://img.shields.io/badge/GitHub-Azvi27-161b22?style=flat-square&logo=github&logoColor=white" alt="GitHub Core" />
   &nbsp;
@@ -147,15 +187,16 @@ def update_readme():
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=31" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=40" alt="Aggregated Heatmap" width="840" />
 
 </div>
 '''
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(content)
-    print("[3/3] README.md diperbarui dengan badge Lab SSTK & cache-buster ?v=31.")
+    print("[4/4] README.md bebas dari garis biru bug & dipasangi divider gradasi.")
 
 if __name__ == "__main__":
     patch_ascii_portrait()
     generate_build_card()
+    generate_divider()
     update_readme()
