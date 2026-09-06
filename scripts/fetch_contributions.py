@@ -1,10 +1,12 @@
+from dotenv import load_dotenv
+load_dotenv()
 import os, json, re, requests
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 
 GITHUB_USERNAME = "Azvi27"
 GITLAB_HOST = "gitlab.azvibelajar.my.id"
-GITLAB_TOKEN = os.getenv("GITLAB_TOKEN", "").strip()
+GITLAB_TOKEN = os.getenv("GITLAB_CLOUD_TOKEN") or os.getenv("GITLAB_TOKEN", "").strip()
 
 def get_github_data(username):
     url = f"https://github.com/users/{username}/contributions"
