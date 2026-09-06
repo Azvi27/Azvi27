@@ -5,7 +5,7 @@ CARD_W = 410
 CARD_H = 340
 
 # =============================================================
-# 1. PATCH AZVI-ASCII.SVG (TERMINAL CURSOR + STEPPED TYPEWRITER)
+# 1. PATCH AZVI-ASCII.SVG (TERMINAL CURSOR + OPERATOR HUD)
 # =============================================================
 def patch_ascii_portrait():
     if not os.path.exists("azvi-ascii.svg"):
@@ -14,7 +14,8 @@ def patch_ascii_portrait():
     with open("azvi-ascii.svg", "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Bersihkan scanline & footer lama
+    # Bersihkan scanline, footer lama, dan HUD lama jika ada
+    content = re.sub(r'<!-- OPERATOR HUD -->[\s\S]*?<!-- /OPERATOR HUD -->', '', content)
     content = re.sub(r'<line[^>]*stroke="#58a6ff"[^>]*/>', '', content)
     content = re.sub(r'<animateTransform[^>]*type="translate"[^>]*/>', '', content)
     content = re.sub(r'<text[^>]*>rendered:[^<]*</text>', '', content)
@@ -55,19 +56,46 @@ def patch_ascii_portrait():
     </clipPath>'''
     content = re.sub(r'<clipPath id="asciiTypeClip">[\s\S]*?</clipPath>', new_clip, content)
 
-    # Sisipkan Terminal Header Prompt dengan kursor berkedip statis
+    # Terminal Session Header + Kursor Berkedip
     cursor_header = f'''  <!-- Terminal Session Header -->
   <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>'''
     
+    # HUD Telemetri Identitas di Kuadran Kanan Atas
+    hud_overlay = f'''
+  <!-- OPERATOR HUD -->
+  <g font-family="ui-monospace, monospace">
+    <!-- Status Indicator Active Dot -->
+    <circle cx="232" cy="52" r="3" fill="#3fb950">
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="241" y="55" fill="#8b949e" font-size="8.5" letter-spacing="1">ONLINE // OPERATOR</text>
+    <text x="232" y="74" fill="#58a6ff" font-size="11.5" font-weight="bold">M. Khalis Farhan Azvi</text>
+    
+    <line x1="232" y1="86" x2="388" y2="86" stroke="#21262d" stroke-width="1"/>
+
+    <text x="232" y="103" fill="#8b949e" font-size="8.5" letter-spacing="1">CURRENT_ACTIVITY</text>
+    <text x="232" y="120" fill="#3fb950" font-size="10.5" font-weight="600">Lab Assistant &amp; Intern</text>
+    <text x="232" y="136" fill="#c9d1d9" font-size="9.5">Lab Sensor &amp; Sistem</text>
+    <text x="232" y="150" fill="#c9d1d9" font-size="9.5">Terkontrol (SSTK)</text>
+
+    <line x1="232" y1="162" x2="388" y2="162" stroke="#21262d" stroke-width="1"/>
+
+    <text x="232" y="179" fill="#8b949e" font-size="8.5" letter-spacing="1">DOMAIN</text>
+    <text x="232" y="195" fill="#c9d1d9" font-size="9.5">Sensors &amp; Embedded Sys.</text>
+  </g>
+  <!-- /OPERATOR HUD -->'''
+
     if "SYSTEM://AZVI.LAB" not in content:
         content = content.replace(f'<rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>',
-                                  f'<rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>\n{cursor_header}')
+                                  f'<rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>\n{cursor_header}\n{hud_overlay}')
+    else:
+        content = content.replace(cursor_header, f'{cursor_header}\n{hud_overlay}')
 
     try:
         ET.fromstring(content)
         with open("azvi-ascii.svg", "w", encoding="utf-8") as f:
             f.write(content)
-        print(f"[1/4] azvi-ascii.svg diperbarui dengan terminal blinking cursor ({CARD_W}x{CARD_H}).")
+        print(f"[1/4] azvi-ascii.svg diperbarui dengan Operator HUD Lab SSTK ({CARD_W}x{CARD_H}).")
     except ET.ParseError as err:
         print(f"[!] Error XML azvi-ascii: {err}")
 
@@ -106,7 +134,6 @@ def generate_build_card():
   <g transform="translate(18, 178)">
     <rect width="{CARD_W - 36}" height="128" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1"/>
 
-    <!-- Canon Rabbit Tank Formula -->
     <text x="{(CARD_W - 36)/2}" y="34" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" font-weight="bold" letter-spacing="1">
       <tspan fill="#ff7b72">◆<animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/></tspan>
       <tspan fill="#ff7b72"> Rabbit</tspan>
@@ -115,7 +142,6 @@ def generate_build_card():
       <tspan fill="#58a6ff">◆<animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/></tspan>
     </text>
 
-    <!-- Best Match with Breathing Glow Pulse -->
     <text x="{(CARD_W - 36)/2}" y="65" text-anchor="middle" font-family="ui-monospace, monospace" font-size="14.5" font-weight="bold">
       <tspan fill="#6e7681">=</tspan>
       <tspan fill="#3fb950" letter-spacing="2.5"> BEST MATCH ! 
@@ -162,17 +188,17 @@ def generate_divider():
     print("[3/4] assets/divider.svg berhasil dibuat.")
 
 # =============================================================
-# 4. UPDATE README (CLEAN & NO BLUE STRAY LINE)
+# 4. UPDATE README
 # =============================================================
 def update_readme():
     content = f'''<div align="center">
 
 <!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=40" width="{CARD_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=40" width="{CARD_W}" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=41" width="{CARD_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=41" width="{CARD_W}" alt="Kamen Rider Build" />
 
 <!-- RABBIT-TANK GRADIENT DIVIDER -->
 <br><br>
-<img src="./assets/divider.svg?v=40" width="840" alt="Divider" />
+<img src="./assets/divider.svg?v=41" width="840" alt="Divider" />
 <br><br>
 
 <!-- DATA SOURCES STATUS BAR -->
@@ -187,13 +213,13 @@ def update_readme():
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=40" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=41" alt="Aggregated Heatmap" width="840" />
 
 </div>
 '''
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(content)
-    print("[4/4] README.md bebas dari garis biru bug & dipasangi divider gradasi.")
+    print("[4/4] README.md diperbarui dengan versi cache v=41.")
 
 if __name__ == "__main__":
     patch_ascii_portrait()
