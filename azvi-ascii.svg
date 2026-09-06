@@ -17,27 +17,47 @@
   <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
 
   <!-- OPERATOR HUD -->
-  <g font-family="ui-monospace, monospace">
-    <!-- Status Indicator Active Dot -->
-    <circle cx="232" cy="52" r="3" fill="#3fb950">
-      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+  <g transform="translate(216, 40)">
+    <!-- Container Box -->
+    <rect width="178" height="264" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+
+    <!-- Status Header -->
+    <circle cx="14" cy="18" r="3.5" fill="#3fb950">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
     </circle>
-    <text x="241" y="55" fill="#8b949e" font-size="8.5" letter-spacing="1">ONLINE // OPERATOR</text>
-    <text x="232" y="74" fill="#58a6ff" font-size="11.5" font-weight="bold">M. Khalis Farhan Azvi</text>
+    <text x="24" y="21" fill="#3fb950" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="1">OPERATOR // ACTIVE</text>
     
-    <line x1="232" y1="86" x2="388" y2="86" stroke="#21262d" stroke-width="1"/>
+    <!-- Identity -->
+    <text x="14" y="44" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="11.5" font-weight="bold">M. Khalis Farhan Azvi</text>
+    <text x="14" y="58" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="9.5">@Azvi27</text>
 
-    <text x="232" y="103" fill="#8b949e" font-size="8.5" letter-spacing="1">CURRENT_ACTIVITY</text>
-    <text x="232" y="120" fill="#3fb950" font-size="10.5" font-weight="600">Lab Assistant &amp; Intern</text>
-    <text x="232" y="136" fill="#c9d1d9" font-size="9.5">Lab Sensor &amp; Sistem</text>
-    <text x="232" y="150" fill="#c9d1d9" font-size="9.5">Terkontrol (SSTK)</text>
+    <line x1="12" y1="68" x2="166" y2="68" stroke="#30363d" stroke-width="1"/>
 
-    <line x1="232" y1="162" x2="388" y2="162" stroke="#21262d" stroke-width="1"/>
+    <!-- Institution -->
+    <text x="14" y="83" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8" letter-spacing="0.8">AFFILIATION</text>
+    <text x="14" y="98" fill="#e6edf3" font-family="ui-monospace, monospace" font-size="10.5" font-weight="600">Teknik Fisika</text>
+    <text x="14" y="112" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5">Universitas Gadjah Mada</text>
 
-    <text x="232" y="179" fill="#8b949e" font-size="8.5" letter-spacing="1">DOMAIN</text>
-    <text x="232" y="195" fill="#c9d1d9" font-size="9.5">Sensors &amp; Embedded Sys.</text>
+    <line x1="12" y1="122" x2="166" y2="122" stroke="#30363d" stroke-width="1"/>
+
+    <!-- Lab SSTK Corrected -->
+    <text x="14" y="137" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8" letter-spacing="0.8">LABORATORY</text>
+    <text x="14" y="152" fill="#3fb950" font-family="ui-monospace, monospace" font-size="11" font-weight="bold">Lab. SSTK</text>
+    <text x="14" y="166" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="9.5">Sistem Sensor &amp;</text>
+    <text x="14" y="179" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="9.5">Telekontrol</text>
+
+    <line x1="12" y1="189" x2="166" y2="189" stroke="#30363d" stroke-width="1"/>
+
+    <!-- Role / Task -->
+    <text x="14" y="204" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8" letter-spacing="0.8">ASSIGNMENT</text>
+    <text x="14" y="219" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="10" font-weight="600">Lab Assistant &amp; Intern</text>
+    <text x="14" y="234" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9">Embedded Sys. &amp; IoT</text>
+    <text x="14" y="247" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9">Software Engineering</text>
   </g>
   <!-- /OPERATOR HUD -->
+  
+
+  
 
   <!-- Teks ASCII dengan Integritas Monospace Terjaga 100% -->
   <g clip-path="url(#asciiTypeClip)">
