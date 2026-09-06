@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=53" width="410" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=53" width="410" alt="Kamen Rider Build" />
+<img src="./azvi-portrait.svg?v=53" width="410" alt="Azvi Portrait" /><img src="./assets/build-driver.svg?v=53" width="410" alt="Kamen Rider Build" />
 
 <!-- RABBIT-TANK GRADIENT DIVIDER -->
 <br><br>
