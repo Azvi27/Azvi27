@@ -1,13 +1,12 @@
 import os, re, base64
 import xml.etree.ElementTree as ET
 
-# Proporsi baru: Profil lebih lebar untuk font besar, Build lebih ringkas & padat
 CARD_L_W = 455
 CARD_R_W = 375
 CARD_H = 340
 
 # =============================================================
-# 1. PATCH AZVI-ASCII.SVG (EXPANDED WIDTH & LARGE BOLD FONTS)
+# 1. PATCH AZVI-ASCII.SVG (MASSIVE BOLD TYPOGRAPHY)
 # =============================================================
 def patch_ascii_portrait():
     if not os.path.exists("azvi-ascii.svg"):
@@ -23,7 +22,6 @@ def patch_ascii_portrait():
     content = re.sub(r'<animateTransform[^>]*type="translate"[^>]*/>', '', content)
     content = re.sub(r'<text[^>]*>rendered:[^<]*</text>', '', content)
 
-    # Sesuaikan viewBox lebar kartu kiri menjadi 455px
     content = re.sub(r'<svg[^>]*>', f'<svg width="{CARD_L_W}" height="{CARD_H}" viewBox="0 0 {CARD_L_W} {CARD_H}" fill="none" xmlns="http://www.w3.org/2000/svg">', content, count=1)
     content = re.sub(r'<rect[^>]*fill="#0d1117"[^>]*/>', f'<rect width="{CARD_L_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>', content, count=1)
 
@@ -58,57 +56,48 @@ def patch_ascii_portrait():
     </clipPath>'''
     content = re.sub(r'<clipPath id="asciiTypeClip">[\s\S]*?</clipPath>', new_clip, content)
 
-    # Injeksi HUD Lebar 260px dengan Tipografi Besar & Jelas
+    # Injeksi HUD dengan Font Raksasa & Spasi Padat
     hud_injection = f'''
   <!-- Terminal Session Header -->
-  <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9.5" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
+  <text x="18" y="22" font-family="ui-monospace, monospace" font-size="10" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
   <!-- /Terminal Session Header -->
 
-  <!-- OPERATOR HUD (LEBAR & FONT BESAR) -->
-  <g id="operator-hud" transform="translate(182, 30)">
-    <rect width="260" height="288" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.2"/>
+  <!-- OPERATOR HUD (FONT BESAR, JELAS & PADAT) -->
+  <g id="operator-hud" transform="translate(180, 26)">
+    <rect width="265" height="294" rx="12" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
 
     <!-- Header Box Ribbon -->
-    <rect width="260" height="30" rx="10" fill="#21262d"/>
-    <rect y="20" width="260" height="10" fill="#21262d"/>
+    <rect width="265" height="34" rx="12" fill="#21262d"/>
+    <rect y="22" width="265" height="12" fill="#21262d"/>
     
-    <circle cx="16" cy="15" r="4" fill="#3fb950">
+    <circle cx="16" cy="17" r="4.5" fill="#3fb950">
       <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
     </circle>
-    <text x="28" y="19" fill="#3fb950" font-family="ui-monospace, monospace" font-size="10.5" font-weight="bold" letter-spacing="1">OPERATOR</text>
-    <text x="246" y="19" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="10.5" font-weight="bold" letter-spacing="0.5">[ ONLINE ]</text>
+    <text x="28" y="21" fill="#3fb950" font-family="ui-monospace, monospace" font-size="12" font-weight="bold" letter-spacing="1.2">OPERATOR</text>
+    <text x="250" y="21" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="11.5" font-weight="bold" letter-spacing="0.8">[ ONLINE ]</text>
 
-    <!-- Nama Lengkap Operator (17px Bold Putih) -->
-    <text x="16" y="54" fill="#ffffff" font-family="ui-monospace, monospace" font-size="16.5" font-weight="bold">M. Khalis Farhan Azvi</text>
-    <text x="16" y="73" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="13">@Azvi27</text>
-    <text x="246" y="73" text-anchor="end" fill="#8b949e" font-family="ui-monospace, monospace" font-size="11.5">UGM</text>
+    <!-- 1. IDENTITAS UTAMA (FONT 20px BOLD) -->
+    <text x="16" y="65" fill="#ffffff" font-family="ui-monospace, monospace" font-size="19" font-weight="bold">Farhan Azvi</text>
+    <text x="16" y="86" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="13.5" font-weight="600">@Azvi27 <tspan fill="#8b949e">· Teknik Fisika UGM</tspan></text>
 
-    <line x1="14" y1="84" x2="246" y2="84" stroke="#30363d" stroke-width="1"/>
+    <line x1="14" y1="102" x2="251" y2="102" stroke="#30363d" stroke-width="1.2"/>
 
-    <!-- Section 1: Affiliation -->
-    <text x="16" y="101" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5" font-weight="bold" letter-spacing="1">AFFILIATION</text>
-    <text x="246" y="101" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="9.5" letter-spacing="0.5">ACADEMIC</text>
+    <!-- 2. LABORATORY (FONT 22px BOLD) -->
+    <text x="16" y="122" fill="#8b949e" font-family="ui-monospace, monospace" font-size="11" font-weight="bold" letter-spacing="1">LABORATORY</text>
+    <text x="250" y="122" text-anchor="end" fill="#39d353" font-family="ui-monospace, monospace" font-size="11" font-weight="bold">[ ACTIVE ]</text>
 
-    <text x="16" y="122" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="14.5" font-weight="bold">Teknik Fisika</text>
-    <text x="16" y="140" fill="#8b949e" font-family="ui-monospace, monospace" font-size="12">Universitas Gadjah Mada</text>
+    <text x="16" y="148" fill="#3fb950" font-family="ui-monospace, monospace" font-size="22" font-weight="bold">Lab. SSTK</text>
+    <text x="16" y="171" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="14" font-weight="600">Sensor &amp; Sistem Telekontrol</text>
 
-    <line x1="14" y1="152" x2="246" y2="152" stroke="#30363d" stroke-width="1"/>
+    <line x1="14" y1="188" x2="251" y2="188" stroke="#30363d" stroke-width="1.2"/>
 
-    <!-- Section 2: Laboratory -->
-    <text x="16" y="169" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5" font-weight="bold" letter-spacing="1">LABORATORY</text>
-    <text x="246" y="169" text-anchor="end" fill="#39d353" font-family="ui-monospace, monospace" font-size="9.5" font-weight="bold">ACTIVE LAB</text>
+    <!-- 3. CURRENT ROLE & ACTIVITY (FONT 18px BOLD) -->
+    <text x="16" y="208" fill="#8b949e" font-family="ui-monospace, monospace" font-size="11" font-weight="bold" letter-spacing="1">ROLE &amp; ASSIGNMENT</text>
+    <text x="250" y="208" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="11" font-weight="bold">STATUS</text>
 
-    <text x="16" y="191" fill="#3fb950" font-family="ui-monospace, monospace" font-size="15" font-weight="bold">Lab. SSTK</text>
-    <text x="16" y="209" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="12.5" font-weight="500">Sensor dan Sistem Telekontrol</text>
-
-    <line x1="14" y1="221" x2="246" y2="221" stroke="#30363d" stroke-width="1"/>
-
-    <!-- Section 3: Current Activity -->
-    <text x="16" y="238" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5" font-weight="bold" letter-spacing="1">CURRENT ACTIVITY</text>
-    <text x="246" y="238" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="9.5" font-weight="600">STATUS</text>
-
-    <text x="16" y="261" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="14.5" font-weight="bold">Lab Assistant &amp; Intern</text>
-    <text x="16" y="280" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="12">Asisten Lab &amp; Magang SSTK</text>
+    <text x="16" y="235" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="18" font-weight="bold">Lab Assistant &amp; Intern</text>
+    <text x="16" y="258" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="14" font-weight="500">Asisten Lab &amp; Magang SSTK</text>
+    <text x="16" y="278" fill="#8b949e" font-family="ui-monospace, monospace" font-size="12">Universitas Gadjah Mada</text>
   </g>
   <!-- /OPERATOR HUD -->
 '''
@@ -117,7 +106,7 @@ def patch_ascii_portrait():
         f.write(content)
 
 # =============================================================
-# 2. GENERATE BUILD CARD (COMPACT DRIVER & NO DEAD SPACE)
+# 2. GENERATE BUILD CARD (COMPACT & BALANCED)
 # =============================================================
 def generate_build_card():
     sprite_path = "assets/Build_Capsem_Sprite.webp"
@@ -151,10 +140,10 @@ def generate_build_card():
 
   <rect width="{CARD_R_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
 
-  <!-- Top Session Header Simetris -->
+  <!-- Top Session Header -->
   <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9" fill="#ff7b72" letter-spacing="1.2">SYSTEM://BUILD.DRIVER <tspan fill="#ff7b72"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
 
-  <!-- Bagian Atas: Sprite & Quotes Padat Tanpa Ruang Kosong -->
+  <!-- Bagian Atas: Sprite & Quotes Padat -->
   <g transform="translate(16, 32)">
     <image href="data:image/webp;base64,{sprite_b64}" width="88" height="88"/>
 
@@ -171,13 +160,12 @@ def generate_build_card():
     </g>
   </g>
 
-  <!-- Bagian Bawah: DX Driver Dirampingkan & Proporsional -->
+  <!-- Bagian Bawah: DX Driver Dirampingkan Rapi -->
   <g transform="translate(14, 142)">
     <rect width="{CARD_R_W - 28}" height="178" rx="10" fill="#070b14" stroke="#30363d" stroke-width="1.5">
       <animate attributeName="stroke" values="#30363d; #30363d; #ff7b72; #3fb950; #facc15; #30363d" keyTimes="0; 0.60; 0.64; 0.75; 0.90; 1" dur="12s" repeatCount="indefinite"/>
     </rect>
 
-    <!-- Tali Kuning Pinggir -->
     <g>
       <rect x="0" y="56" width="8" height="60" rx="2" fill="#facc15" stroke="#ca8a04" stroke-width="1"/>
       <circle cx="4" cy="70" r="1.5" fill="#854d0e"/><circle cx="4" cy="86" r="1.5" fill="#854d0e"/><circle cx="4" cy="102" r="1.5" fill="#854d0e"/>
@@ -185,7 +173,6 @@ def generate_build_card():
       <circle cx="{CARD_R_W - 32}" cy="70" r="1.5" fill="#854d0e"/><circle cx="{CARD_R_W - 32}" cy="86" r="1.5" fill="#854d0e"/><circle cx="{CARD_R_W - 32}" cy="102" r="1.5" fill="#854d0e"/>
     </g>
 
-    <!-- Status Ribbon Driver -->
     <rect x="10" y="8" width="{CARD_R_W - 48}" height="18" rx="4" fill="#111827"/>
     <circle cx="20" cy="17" r="3" fill="#ef4444">
       <animate attributeName="fill" values="#ef4444;#3b82f6;#facc15;#3fb950;#ef4444" dur="4s" repeatCount="indefinite"/>
@@ -217,7 +204,7 @@ def generate_build_card():
       100%
     </text>
 
-    <!-- Dynamo Assembly Ramping (cx: 66, cy: 80) -->
+    <!-- Dynamo & Crank Assembly -->
     <circle cx="66" cy="80" r="30" fill="#1e293b" stroke="url(#chromeGrad)" stroke-width="2.5"/>
     <circle cx="66" cy="80" r="24" fill="#060911"/>
 
@@ -255,7 +242,7 @@ def generate_build_card():
       <circle cx="66" cy="80" r="6" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.8"/>
     </g>
 
-    <!-- Botol Fullbottle Ramping Pas Slot -->
+    <!-- Botol Fullbottle Ramping -->
     <g clip-path="url(#slotAreaClip)" transform="translate(-10, 0)">
       <g transform="translate(164, 30)">
         <g><animateTransform attributeName="transform" type="translate" values="0,-20; 0,-12; 0,-24; 0,-12; 0,-22; 0,-14; 0,-20; 0,-20; 0,0; 0,0; 0,-20" keyTimes="0; 0.04; 0.08; 0.12; 0.14; 0.16; 0.18; 0.33; 0.38; 0.95; 1" dur="12s" repeatCount="indefinite"/>
@@ -336,17 +323,17 @@ def generate_divider():
         f.write(svg)
 
 # =============================================================
-# 4. UPDATE README (LEBAR PROFIL 455px, BUILD 375px)
+# 4. UPDATE README CACHE BUSTER (v=65)
 # =============================================================
 def update_readme():
     content = f'''<div align="center">
 
 <!-- DUAL BALANCED CARDS (PROFILE 455px, BUILD 375px -> TOTAL 830px) -->
-<img src="./azvi-ascii.svg?v=60" width="{CARD_L_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=60" width="{CARD_R_W}" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=65" width="{CARD_L_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=65" width="{CARD_R_W}" alt="Kamen Rider Build" />
 
 <!-- RABBIT-TANK GRADIENT DIVIDER -->
 <br><br>
-<img src="./assets/divider.svg?v=60" width="840" alt="Divider" />
+<img src="./assets/divider.svg?v=65" width="840" alt="Divider" />
 <br><br>
 
 <!-- DATA SOURCES STATUS BAR -->
@@ -361,7 +348,7 @@ def update_readme():
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=60" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=65" alt="Aggregated Heatmap" width="840" />
 
 </div>
 '''
@@ -373,4 +360,4 @@ if __name__ == "__main__":
     generate_build_card()
     generate_divider()
     update_readme()
-    print("[✓] Berhasil melebarkan kartu profil (455px), membesarkan font, dan memadatkan kartu build (375px)!")
+    print("[✓] Layout diperbaiki: Font profil besar & jelas, rongga kosong hilang total!")
