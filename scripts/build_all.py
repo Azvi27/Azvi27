@@ -49,7 +49,7 @@ def patch_ascii_portrait():
     times = [0.0]
     for i in range(1, n_lines + 1):
         h = int(start_y + (i * line_h))
-        t = round(0.04 + (i / n_lines) * 0.46, 3)
+        t = round(0.04 + (i / n_lines) * 0.44, 3)
         heights.append(h)
         times.append(t)
 
@@ -65,19 +65,35 @@ def patch_ascii_portrait():
                  calcMode="discrete"
                  values="{v_str}"
                  keyTimes="{kt_str}"
-                 dur="7.5s"
+                 dur="12s"
                  repeatCount="indefinite" />
       </rect>
-    </clipPath>'''
+    </clipPath>
+    <linearGradient id="hudScanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#58a6ff" stop-opacity="0"/>
+      <stop offset="30%" stop-color="#58a6ff" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#3fb950" stop-opacity="1"/>
+      <stop offset="70%" stop-color="#58a6ff" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#58a6ff" stop-opacity="0"/>
+    </linearGradient>'''
     base = re.sub(r'<clipPath id="asciiTypeClip">[\s\S]*?</clipPath>', new_clip, base)
 
-    hud_injection = f'''  <!-- Terminal Session Header -->
-  <text x="18" y="20" font-family="ui-monospace, monospace" font-size="10.5" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
+    hud_injection = f'''  <!-- Laser Scanline Beam on ASCII Portrait -->
+  <line x1="6" y1="28" x2="166" y2="28" stroke="#58a6ff" stroke-width="1.6" stroke-linecap="round">
+    <animate attributeName="y1" values="28; 320; 320; 28" keyTimes="0; 0.48; 0.92; 1" dur="12s" repeatCount="indefinite"/>
+    <animate attributeName="y2" values="28; 320; 320; 28" keyTimes="0; 0.48; 0.92; 1" dur="12s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.85; 0.85; 0; 0" keyTimes="0; 0.48; 0.50; 1" dur="12s" repeatCount="indefinite"/>
+  </line>
+
+  <!-- Terminal Session Header -->
+  <text x="18" y="20" font-family="ui-monospace, monospace" font-size="10.5" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite">█</animate></tspan></text>
 
   <!-- OPERATOR HUD CARD -->
   <g id="operator-hud" transform="translate(172, 18)">
     <!-- Card Frame -->
-    <rect width="306" height="306" rx="12" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+    <rect width="306" height="306" rx="12" fill="#161b22" stroke="#30363d" stroke-width="1.5">
+      <animate attributeName="stroke" values="#30363d; #30363d; #58a6ff; #3fb950; #30363d" keyTimes="0; 0.45; 0.50; 0.55; 1" dur="12s" repeatCount="indefinite"/>
+    </rect>
 
     <!-- Header Bar -->
     <rect width="306" height="36" rx="12" fill="#21262d"/>
@@ -85,42 +101,90 @@ def patch_ascii_portrait():
     
     <!-- Pulse Dot -->
     <circle cx="16" cy="18" r="4" fill="#3fb950">
-      <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
     </circle>
     <text x="28" y="22" fill="#3fb950" font-family="ui-monospace, SFMono-Regular, monospace" font-size="11.5" font-weight="700" letter-spacing="1">OPERATOR // TERMINAL</text>
     
     <!-- Online Pill Badge -->
-    <rect x="228" y="9" width="66" height="18" rx="9" fill="#11261a" stroke="#238636" stroke-width="0.8"/>
-    <text x="261" y="21" text-anchor="middle" fill="#3fb950" font-family="ui-monospace, SFMono-Regular, monospace" font-size="10" font-weight="700" letter-spacing="0.5">ONLINE</text>
+    <rect x="224" y="9" width="70" height="18" rx="9" fill="#11261a" stroke="#238636" stroke-width="0.8">
+      <animate attributeName="stroke" values="#238636;#3fb950;#238636" dur="2s" repeatCount="indefinite"/>
+    </rect>
+    <circle cx="235" cy="18" r="2.8" fill="#3fb950">
+      <animate attributeName="opacity" values="1;0.2;1" dur="1s" repeatCount="indefinite"/>
+    </circle>
+    <text x="265" y="21.5" text-anchor="middle" fill="#3fb950" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9.5" font-weight="700" letter-spacing="0.5">ONLINE</text>
 
-    <!-- 1. IDENTITAS -->
-    <text x="16" y="64" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="20" font-weight="700">M. Khalis Farhan Azvi</text>
-    
-    <!-- Handle Pill Tag -->
-    <rect x="16" y="78" width="68" height="20" rx="5" fill="#1c2d42" stroke="#388bfd" stroke-width="0.8"/>
-    <text x="50" y="92" text-anchor="middle" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, monospace" font-size="11.5" font-weight="700">@Azvi27</text>
-    <text x="92" y="92" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500">Teknik Fisika UGM</text>
+    <!-- Operator HUD Scanning Radar Beam -->
+    <line x1="16" y1="42" x2="290" y2="42" stroke="url(#hudScanGrad)" stroke-width="1.6" pointer-events="none">
+      <animate attributeName="y1" values="42; 298; 42" keyTimes="0; 0.5; 1" dur="12s" repeatCount="indefinite"/>
+      <animate attributeName="y2" values="42; 298; 42" keyTimes="0; 0.5; 1" dur="12s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.25; 0.85; 0.25" keyTimes="0; 0.5; 1" dur="12s" repeatCount="indefinite"/>
+    </line>
 
-    <line x1="16" y1="110" x2="290" y2="110" stroke="#262c36" stroke-width="1.2"/>
+    <!-- 1. IDENTITAS (Stagger 1: Muncul Pertama) -->
+    <g id="hud-sec-identity">
+      <animate attributeName="opacity" values="0; 0; 1; 1; 0; 0" keyTimes="0; 0.05; 0.13; 0.93; 0.98; 1" dur="12s" repeatCount="indefinite"/>
+      <text x="16" y="64" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="20" font-weight="700">M. Khalis Farhan Azvi</text>
+      
+      <!-- Handle Pill Tag -->
+      <rect x="16" y="78" width="68" height="20" rx="5" fill="#1c2d42" stroke="#388bfd" stroke-width="0.8">
+        <animate attributeName="stroke" values="#388bfd;#58a6ff;#388bfd" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <text x="50" y="92" text-anchor="middle" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, monospace" font-size="11.5" font-weight="700">@Azvi27</text>
+      <text x="92" y="92" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500">Engineering Physics, UGM</text>
+    </g>
 
-    <!-- 2. LABORATORIUM RISET -->
-    <text x="16" y="130" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, monospace" font-size="10" font-weight="700" letter-spacing="1.5">LABORATORIUM RISET</text>
-    <rect x="234" y="119" width="56" height="17" rx="4" fill="#122d1d" stroke="#238636" stroke-width="0.8"/>
-    <text x="262" y="131" text-anchor="middle" fill="#39d353" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9.5" font-weight="700">ACTIVE</text>
+    <!-- 2. RESEARCH LABORATORY (Stagger 2: Muncul Kedua) -->
+    <g id="hud-sec-lab">
+      <animate attributeName="opacity" values="0; 0; 1; 1; 0; 0" keyTimes="0; 0.16; 0.25; 0.93; 0.98; 1" dur="12s" repeatCount="indefinite"/>
+      <!-- Animated Divider 1 -->
+      <line x1="16" y1="110" x2="290" y2="110" stroke="#388bfd" stroke-width="1.2">
+        <animate attributeName="stroke" values="#262c36; #388bfd; #262c36" dur="3s" repeatCount="indefinite"/>
+      </line>
 
-    <text x="16" y="163" fill="#3fb950" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="800">Lab. SSTK</text>
-    <text x="16" y="185" fill="#f0f6fc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600">Sensor &amp; Sistem Telekontrol</text>
+      <text x="16" y="130" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, monospace" font-size="10" font-weight="700" letter-spacing="1.5">RESEARCH LABORATORY</text>
+      
+      <!-- Active Status Pill -->
+      <rect x="224" y="119" width="66" height="17" rx="4" fill="#122d1d" stroke="#238636" stroke-width="0.8">
+        <animate attributeName="stroke" values="#238636; #39d353; #238636" dur="2s" repeatCount="indefinite"/>
+      </rect>
+      <circle cx="234" cy="127.5" r="2.2" fill="#39d353">
+        <animate attributeName="opacity" values="1; 0.2; 1" dur="1s" repeatCount="indefinite"/>
+      </circle>
+      <text x="261" y="131" text-anchor="middle" fill="#39d353" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9" font-weight="700" letter-spacing="0.5">ACTIVE</text>
 
-    <line x1="16" y1="203" x2="290" y2="203" stroke="#262c36" stroke-width="1.2"/>
+      <text x="16" y="163" fill="#3fb950" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="800">
+        <animate attributeName="fill" values="#3fb950; #56d364; #3fb950" dur="4s" repeatCount="indefinite"/>
+        Lab. SSTK
+      </text>
+      <text x="16" y="185" fill="#f0f6fc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600">Sensor &amp; Sistem Telekontrol</text>
+    </g>
 
-    <!-- 3. PERAN & PENUGASAN -->
-    <text x="16" y="223" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, monospace" font-size="10" font-weight="700" letter-spacing="1.5">PERAN &amp; PENUGASAN</text>
-    <rect x="236" y="212" width="54" height="17" rx="4" fill="#1c2d42" stroke="#388bfd" stroke-width="0.8"/>
-    <text x="263" y="224" text-anchor="middle" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9.5" font-weight="700">STATUS</text>
+    <!-- 3. ROLE & ASSIGNMENT (Stagger 3: Muncul Ketiga) -->
+    <g id="hud-sec-role">
+      <animate attributeName="opacity" values="0; 0; 1; 1; 0; 0" keyTimes="0; 0.28; 0.38; 0.93; 0.98; 1" dur="12s" repeatCount="indefinite"/>
+      <!-- Animated Divider 2 -->
+      <line x1="16" y1="203" x2="290" y2="203" stroke="#3fb950" stroke-width="1.2">
+        <animate attributeName="stroke" values="#262c36; #3fb950; #262c36" dur="3s" repeatCount="indefinite"/>
+      </line>
 
-    <text x="16" y="251" fill="#58a6ff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="19" font-weight="700">Lab Assistant &amp; Intern</text>
-    <text x="16" y="274" fill="#c9d1d9" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13.5" font-weight="500">Asisten Lab &amp; Magang SSTK</text>
-    <text x="16" y="295" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="500">Universitas Gadjah Mada</text>
+      <text x="16" y="223" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, monospace" font-size="10" font-weight="700" letter-spacing="1.5">ROLE &amp; ASSIGNMENT</text>
+      
+      <!-- Status Pill -->
+      <rect x="220" y="212" width="70" height="17" rx="4" fill="#1c2d42" stroke="#388bfd" stroke-width="0.8">
+        <animate attributeName="stroke" values="#388bfd; #58a6ff; #388bfd" dur="2s" repeatCount="indefinite"/>
+      </rect>
+      <circle cx="230" cy="220.5" r="2.2" fill="#58a6ff">
+        <animate attributeName="opacity" values="1; 0.2; 1" dur="1s" repeatCount="indefinite"/>
+      </circle>
+      <text x="259" y="224" text-anchor="middle" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9" font-weight="700" letter-spacing="0.5">ASSIGNED</text>
+
+      <text x="16" y="254" fill="#58a6ff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="19" font-weight="700">
+        <animate attributeName="fill" values="#58a6ff; #79c0ff; #58a6ff" dur="4s" repeatCount="indefinite"/>
+        Lab Assistant &amp; Intern
+      </text>
+      <text x="16" y="280" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500">Universitas Gadjah Mada</text>
+    </g>
   </g>'''
 
     final_content = f"{base}\n{hud_injection}\n</svg>"
@@ -163,7 +227,7 @@ def generate_build_card():
 
   <rect width="{CARD_R_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
 
-  <text x="16" y="20" font-family="ui-monospace, monospace" font-size="9.5" fill="#ff7b72" letter-spacing="1.2">SYSTEM://BUILD.DRIVER <tspan fill="#ff7b72"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
+  <text x="16" y="20" font-family="ui-monospace, monospace" font-size="9.5" fill="#ff7b72" letter-spacing="1.2">SYSTEM://BUILD.DRIVER <tspan fill="#ff7b72"><animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite">█</animate></tspan></text>
 
   <!-- Bagian Atas: Sprite & Quotes Padat -->
   <g transform="translate(14, 28)">
@@ -172,15 +236,13 @@ def generate_build_card():
     </g>
 
     <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
-      <text x="94" y="16" fill="#58a6ff" font-size="11.5" font-weight="bold">さぁ、実験を始めようか？</text>
-      <text x="94" y="32" fill="#c9d1d9" font-size="9.8" font-style="italic">Shall we begin the experiment?</text>
-      <text x="94" y="46" fill="#8b949e" font-size="9">Nah, mari kita mulai eksperimennya!</text>
+      <text x="94" y="18" fill="#58a6ff" font-size="12" font-weight="bold">さぁ、実験を始めようか？</text>
+      <text x="94" y="36" fill="#c9d1d9" font-size="10.5" font-style="italic">Shall we begin the experiment?</text>
 
-      <line x1="94" y1="56" x2="{CARD_R_W - 24}" y2="56" stroke="#21262d" stroke-width="1"/>
+      <line x1="94" y1="52" x2="{CARD_R_W - 24}" y2="52" stroke="#21262d" stroke-width="1"/>
 
-      <text x="94" y="73" fill="#ff7b72" font-size="11.5" font-weight="bold">勝利の法則は決まった！</text>
-      <text x="94" y="89" fill="#c9d1d9" font-size="9.8" font-style="italic">The formula for victory is set!</text>
-      <text x="94" y="103" fill="#8b949e" font-size="9">Hukum kemenangannya telah ditentukan!</text>
+      <text x="94" y="73" fill="#ff7b72" font-size="12" font-weight="bold">勝利の法則は決まった！</text>
+      <text x="94" y="91" fill="#c9d1d9" font-size="10.5" font-style="italic">The formula for victory is set!</text>
     </g>
   </g>
 
@@ -343,7 +405,10 @@ def generate_divider():
     </linearGradient>
   </defs>
   <rect x="20" y="3" width="800" height="2" rx="1" fill="url(#rtGrad)"/>
-  <circle cx="420" cy="4" r="2.5" fill="#3fb950"/>
+  <circle cx="420" cy="4" r="2.5" fill="#3fb950">
+    <animate attributeName="r" values="2; 3.5; 2" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#3fb950; #58a6ff; #3fb950" dur="2s" repeatCount="indefinite"/>
+  </circle>
 </svg>'''
     with open("assets/divider.svg", "w", encoding="utf-8") as f:
         f.write(svg)
@@ -359,7 +424,7 @@ def update_readme():
             cur = f.read()
             m = re.search(r'\?v=(\d+)', cur)
             if m:
-                v_cache = m.group(1)
+                v_cache = str(int(m.group(1)) + 1)
 
     content = f'''<div align="center">
 

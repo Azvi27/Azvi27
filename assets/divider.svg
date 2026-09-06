@@ -9,5 +9,8 @@
     </linearGradient>
   </defs>
   <rect x="20" y="3" width="800" height="2" rx="1" fill="url(#rtGrad)"/>
-  <circle cx="420" cy="4" r="2.5" fill="#3fb950"/>
+  <circle cx="420" cy="4" r="2.5" fill="#3fb950">
+    <animate attributeName="r" values="2; 3.5; 2" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#3fb950; #58a6ff; #3fb950" dur="2s" repeatCount="indefinite"/>
+  </circle>
 </svg>
