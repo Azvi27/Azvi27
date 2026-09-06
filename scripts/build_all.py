@@ -450,11 +450,11 @@ def update_readme():
     content = f'''<div align="center">
 
 <!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=52" width="{CARD_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=52" width="{CARD_W}" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=53" width="{CARD_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=53" width="{CARD_W}" alt="Kamen Rider Build" />
 
 <!-- RABBIT-TANK GRADIENT DIVIDER -->
 <br><br>
-<img src="./assets/divider.svg?v=52" width="840" alt="Divider" />
+<img src="./assets/divider.svg?v=53" width="840" alt="Divider" />
 <br><br>
 
 <!-- DATA SOURCES STATUS BAR -->
@@ -469,13 +469,13 @@ def update_readme():
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=52" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=53" alt="Aggregated Heatmap" width="840" />
 
 </div>
 '''
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(content)
-    print("[4/4] README.md diperbarui dengan versi cache v=52.")
+    print("[4/4] README.md diperbarui dengan versi cache v=53.")
 
 if __name__ == "__main__":
     patch_ascii_portrait()

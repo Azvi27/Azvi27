@@ -109,6 +109,11 @@
   
 
 
+  
+
+  
+
+
   <!-- Terminal Session Header -->
   <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
   <!-- /Terminal Session Header -->
