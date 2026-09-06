@@ -5,7 +5,7 @@ CARD_W = 410
 CARD_H = 340
 
 # =============================================================
-# 1. PATCH AZVI-ASCII.SVG (FULL-WIDTH CYBER TELEMETRY GRID)
+# 1. PATCH AZVI-ASCII.SVG (CLEAN OPERATOR HUD - NO TAG BOXES)
 # =============================================================
 def patch_ascii_portrait():
     if not os.path.exists("azvi-ascii.svg"):
@@ -14,7 +14,7 @@ def patch_ascii_portrait():
     with open("azvi-ascii.svg", "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Bersihkan elemen lama
+    # Bersihkan HUD, header, dan scanline lama
     content = re.sub(r'<!-- (?:OPERATOR HUD|Terminal Session Header) -->[\s\S]*?<!-- /(?:OPERATOR HUD|Terminal Session Header) -->', '', content)
     content = re.sub(r'<text[^>]*SYSTEM://AZVI\.LAB[\s\S]*?</text>', '', content)
     content = re.sub(r'<g[^>]*id="operator-hud"[\s\S]*?</g>', '', content)
@@ -57,7 +57,7 @@ def patch_ascii_portrait():
     </clipPath>'''
     content = re.sub(r'<clipPath id="asciiTypeClip">[\s\S]*?</clipPath>', new_clip, content)
 
-    # Injeksi Panel Operator Full-Width yang Mengisi Seluruh Ruang
+    # Injeksi HUD Baru yang Bersih & Proporsional
     hud_injection = f'''
   <!-- Terminal Session Header -->
   <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
@@ -68,79 +68,55 @@ def patch_ascii_portrait():
     <!-- Container Box -->
     <rect width="204" height="284" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.2"/>
 
-    <!-- Header Bar: Full Width -->
+    <!-- Header Bar -->
     <rect width="204" height="28" rx="10" fill="#21262d"/>
     <rect y="18" width="204" height="10" fill="#21262d"/>
     
     <circle cx="14" cy="14" r="3.5" fill="#3fb950">
       <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
     </circle>
-    <text x="23" y="17.5" fill="#3fb950" font-family="ui-monospace, monospace" font-size="9" font-weight="bold" letter-spacing="1">OPERATOR</text>
+    <text x="24" y="17.5" fill="#3fb950" font-family="ui-monospace, monospace" font-size="9" font-weight="bold" letter-spacing="1">OPERATOR</text>
     <text x="190" y="17.5" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="9" font-weight="bold" letter-spacing="0.5">[ ONLINE ]</text>
 
-    <!-- Identity Area: Full Width -->
-    <text x="12" y="47" fill="#ffffff" font-family="ui-monospace, monospace" font-size="13.5" font-weight="bold">M. Khalis Farhan Azvi</text>
+    <!-- Identity Area -->
+    <text x="14" y="50" fill="#ffffff" font-family="ui-monospace, monospace" font-size="13.5" font-weight="bold">M. Khalis Farhan Azvi</text>
+    <text x="14" y="67" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="11">@Azvi27</text>
+    <text x="190" y="67" text-anchor="end" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5">Engineering Physics</text>
+
+    <line x1="12" y1="78" x2="192" y2="78" stroke="#30363d" stroke-width="1"/>
+
+    <!-- Section 1: Affiliation -->
+    <text x="14" y="94" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="0.8">AFFILIATION</text>
+    <text x="190" y="94" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="8.5" letter-spacing="0.5">ACADEMIC</text>
+
+    <text x="14" y="112" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="12" font-weight="600">Teknik Fisika</text>
+    <text x="190" y="112" text-anchor="end" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5">UGM</text>
+
+    <text x="14" y="128" fill="#8b949e" font-family="ui-monospace, monospace" font-size="10">Universitas Gadjah Mada</text>
+    <text x="190" y="128" text-anchor="end" fill="#3fb950" font-family="ui-monospace, monospace" font-size="9">● ID</text>
+
+    <line x1="12" y1="140" x2="192" y2="140" stroke="#30363d" stroke-width="1"/>
+
+    <!-- Section 2: Laboratory (Sensor dan Sistem Telekontrol) -->
+    <text x="14" y="156" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="0.8">LABORATORY</text>
+    <rect x="132" y="146" width="60" height="15" rx="3" fill="#0e4429" stroke="#26a641" stroke-width="0.8"/>
+    <text x="162" y="156.5" text-anchor="middle" fill="#39d353" font-family="ui-monospace, monospace" font-size="8" font-weight="bold">ACTIVE LAB</text>
+
+    <text x="14" y="176" fill="#3fb950" font-family="ui-monospace, monospace" font-size="13" font-weight="bold">Lab. SSTK</text>
+    <text x="190" y="176" text-anchor="end" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5">RESEARCH</text>
+
+    <text x="14" y="193" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="10.5" font-weight="500">Sensor dan Sistem Telekontrol</text>
+
+    <line x1="12" y1="205" x2="192" y2="205" stroke="#30363d" stroke-width="1"/>
+
+    <!-- Section 3: Role & Activity (Clean Typography - No Tag Boxes) -->
+    <text x="14" y="221" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="0.8">ROLE &amp; ASSIGNMENT</text>
+    <text x="190" y="221" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="8.5" font-weight="600">STAFF / INTERN</text>
+
+    <text x="14" y="240" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="12" font-weight="600">Lab Assistant &amp; Intern</text>
     
-    <!-- Username + Cohort Pill -->
-    <text x="12" y="63" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="10.5">@Azvi27</text>
-    <rect x="136" y="51" width="56" height="16" rx="4" fill="#0d1117" stroke="#30363d" stroke-width="0.8"/>
-    <text x="164" y="62.5" text-anchor="middle" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold">TF &apos;22</text>
-
-    <line x1="10" y1="73" x2="194" y2="73" stroke="#30363d" stroke-width="1"/>
-
-    <!-- Section 1: Affiliation (Left Info + Right Metas) -->
-    <text x="12" y="88" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8" font-weight="bold" letter-spacing="0.8">AFFILIATION</text>
-    <text x="190" y="88" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="8" letter-spacing="0.5">ACADEMIC</text>
-
-    <text x="12" y="104" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="11.5" font-weight="600">Teknik Fisika</text>
-    <text x="190" y="104" text-anchor="end" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5">UGM</text>
-
-    <text x="12" y="119" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5">Universitas Gadjah Mada</text>
-    <text x="190" y="119" text-anchor="end" fill="#3fb950" font-family="ui-monospace, monospace" font-size="9">● YOGYA</text>
-
-    <line x1="10" y1="129" x2="194" y2="129" stroke="#30363d" stroke-width="1"/>
-
-    <!-- Section 2: Laboratory (Left Info + Right Active Badge) -->
-    <text x="12" y="144" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8" font-weight="bold" letter-spacing="0.8">LABORATORY</text>
-    <rect x="132" y="134" width="60" height="15" rx="3" fill="#0e4429" stroke="#26a641" stroke-width="0.8"/>
-    <text x="162" y="144.5" text-anchor="middle" fill="#39d353" font-family="ui-monospace, monospace" font-size="8" font-weight="bold">ACTIVE LAB</text>
-
-    <text x="12" y="162" fill="#3fb950" font-family="ui-monospace, monospace" font-size="12.5" font-weight="bold">Lab. SSTK</text>
-    <text x="190" y="162" text-anchor="end" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5">DEB // LAB</text>
-
-    <text x="12" y="177" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="10" font-weight="500">Sistem Sensor &amp; Telekontrol</text>
-
-    <line x1="10" y1="188" x2="194" y2="188" stroke="#30363d" stroke-width="1"/>
-
-    <!-- Section 3: Role & Tech Badges (Mengisi Seluruh Ruang Bawah) -->
-    <text x="12" y="203" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8" font-weight="bold" letter-spacing="0.8">ROLE &amp; FOCUS</text>
-    <text x="190" y="203" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="8.5" font-weight="600">STAFF / INTERN</text>
-
-    <text x="12" y="220" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="11" font-weight="600">Lab Assistant &amp; Intern</text>
-
-    <!-- Baris 1 Badge Domain -->
-    <g transform="translate(10, 232)">
-      <rect x="0" y="0" width="58" height="18" rx="4" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
-      <text x="29" y="12.5" text-anchor="middle" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="8.5">Sensors</text>
-
-      <rect x="63" y="0" width="56" height="18" rx="4" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
-      <text x="91" y="12.5" text-anchor="middle" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="8.5">Embedded</text>
-
-      <rect x="124" y="0" width="60" height="18" rx="4" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
-      <text x="154" y="12.5" text-anchor="middle" fill="#3fb950" font-family="ui-monospace, monospace" font-size="8.5">IoT Sys.</text>
-    </g>
-
-    <!-- Baris 2 Badge Tech Stack -->
-    <g transform="translate(10, 255)">
-      <rect x="0" y="0" width="42" height="18" rx="4" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
-      <text x="21" y="12.5" text-anchor="middle" fill="#ff7b72" font-family="ui-monospace, monospace" font-size="8.5">Go</text>
-
-      <rect x="47" y="0" width="56" height="18" rx="4" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
-      <text x="75" y="12.5" text-anchor="middle" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="8.5">Python</text>
-
-      <rect x="108" y="0" width="76" height="18" rx="4" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
-      <text x="146" y="12.5" text-anchor="middle" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="8.5">KiCad/PCB</text>
-    </g>
+    <text x="14" y="258" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="10">Hardware, IoT &amp; Embedded Systems</text>
+    <text x="14" y="274" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5">Software &amp; Telemetry Architecture</text>
   </g>
   <!-- /OPERATOR HUD -->
 '''
@@ -150,7 +126,7 @@ def patch_ascii_portrait():
         ET.fromstring(content)
         with open("azvi-ascii.svg", "w", encoding="utf-8") as f:
             f.write(content)
-        print(f"[1/4] azvi-ascii.svg diperbarui dengan Full-Width HUD ({CARD_W}x{CARD_H}).")
+        print(f"[1/4] azvi-ascii.svg diperbarui dengan teks bersih & nama lab terkalibrasi ({CARD_W}x{CARD_H}).")
     except ET.ParseError as err:
         print(f"[!] Error XML azvi-ascii: {err}")
 
@@ -309,7 +285,7 @@ def generate_build_card():
         ET.fromstring(svg)
         with open("assets/build-card.svg", "w", encoding="utf-8") as f:
             f.write(svg)
-        print(f"[2/4] assets/build-card.svg dibuat dengan animasi Fullbottle Driver ({CARD_W}x{CARD_H}).")
+        print(f"[2/4] assets/build-card.svg dibuat ({CARD_W}x{CARD_H}).")
     except ET.ParseError as err:
         print(f"[!] Error XML build-card: {err}")
 
@@ -341,11 +317,11 @@ def update_readme():
     content = f'''<div align="center">
 
 <!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=45" width="{CARD_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=45" width="{CARD_W}" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=46" width="{CARD_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=46" width="{CARD_W}" alt="Kamen Rider Build" />
 
 <!-- RABBIT-TANK GRADIENT DIVIDER -->
 <br><br>
-<img src="./assets/divider.svg?v=45" width="840" alt="Divider" />
+<img src="./assets/divider.svg?v=46" width="840" alt="Divider" />
 <br><br>
 
 <!-- DATA SOURCES STATUS BAR -->
@@ -360,13 +336,13 @@ def update_readme():
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=45" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=46" alt="Aggregated Heatmap" width="840" />
 
 </div>
 '''
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(content)
-    print("[4/4] README.md diperbarui dengan versi cache v=45.")
+    print("[4/4] README.md diperbarui dengan versi cache v=46.")
 
 if __name__ == "__main__":
     patch_ascii_portrait()
