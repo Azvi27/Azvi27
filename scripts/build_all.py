@@ -14,7 +14,7 @@ def patch_ascii_portrait():
     with open("azvi-ascii.svg", "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Bersihkan HUD lama, header lama, scanline, dll.
+    # Bersihkan elemen lama
     content = re.sub(r'<!-- (?:OPERATOR HUD|Terminal Session Header) -->[\s\S]*?<!-- /(?:OPERATOR HUD|Terminal Session Header) -->', '', content)
     content = re.sub(r'<text[^>]*SYSTEM://AZVI\.LAB[\s\S]*?</text>', '', content)
     content = re.sub(r'<g[^>]*id="operator-hud"[\s\S]*?</g>', '', content)
@@ -25,7 +25,6 @@ def patch_ascii_portrait():
     content = re.sub(r'<svg[^>]*>', f'<svg width="{CARD_W}" height="{CARD_H}" viewBox="0 0 {CARD_W} {CARD_H}" fill="none" xmlns="http://www.w3.org/2000/svg">', content, count=1)
     content = re.sub(r'<rect[^>]*fill="#0d1117"[^>]*/>', f'<rect width="{CARD_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>', content, count=1)
 
-    # Tangga ketikan 36 baris
     n_lines = 36
     start_y = 30
     end_y = CARD_H - 22
@@ -57,7 +56,6 @@ def patch_ascii_portrait():
     </clipPath>'''
     content = re.sub(r'<clipPath id="asciiTypeClip">[\s\S]*?</clipPath>', new_clip, content)
 
-    # Injeksi HUD Operator Bersih
     hud_injection = f'''
   <!-- Terminal Session Header -->
   <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
@@ -117,7 +115,7 @@ def patch_ascii_portrait():
         print(f"[!] Error XML azvi-ascii: {err}")
 
 # =============================================================
-# 2. GENERATE BUILD CARD (CANON 12S LOOP: ARE YOU READY DI AKHIR)
+# 2. GENERATE BUILD CARD (DX ACCURATE FULLBOTTLES & ANIMATION)
 # =============================================================
 def generate_build_card():
     sprite_path = "assets/Build_Capsem_Sprite.webp"
@@ -136,6 +134,14 @@ def generate_build_card():
       <stop offset="100%" stop-color="#1e293b"/>
     </linearGradient>
 
+    <!-- Gradient Kilau Kaca Botol Akrilik -->
+    <linearGradient id="glassSheen" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="25%" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="75%" stop-color="#000000" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.25"/>
+    </linearGradient>
+
     <!-- Pola Garis Bahaya DX (Hazard Stripes 45 Derajat //////) -->
     <pattern id="hazardPattern" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
       <rect width="7" height="14" fill="#000000"/>
@@ -149,7 +155,7 @@ def generate_build_card():
 
     <!-- Clip Area Docking Botol -->
     <clipPath id="slotAreaClip">
-      <rect x="175" y="6" width="190" height="106" rx="6"/>
+      <rect x="175" y="4" width="190" height="110" rx="6"/>
     </clipPath>
   </defs>
 
@@ -236,7 +242,6 @@ def generate_build_card():
       [ DRIVER ] &gt;&gt; <tspan fill="#facc15">&quot;ARE YOU READY?!&quot; ★★★</tspan>
     </text>
 
-    <!-- Indikator Kanan -->
     <text x="352" y="20.5" text-anchor="end" font-family="ui-monospace, monospace" font-size="8" font-weight="bold">
       <animate attributeName="fill" values="#8b949e;#ff7b72;#58a6ff;#facc15;#3fb950" keyTimes="0; 0.16; 0.33; 0.50; 1" dur="12s" repeatCount="indefinite"/>
       SYNC: 100%
@@ -311,63 +316,118 @@ def generate_build_card():
       <circle cx="78" cy="84" r="7" fill="#1e293b" stroke="#cbd5e1" stroke-width="2"/>
     </g>
 
-    <!-- ======================================================= -->
-    <!-- SISI KANAN: ANIMASI KOCOK (SHAKA-SHAKA) & DOCKING BOTOL -->
-    <!-- ======================================================= -->
+    <!-- ========================================================================= -->
+    <!-- SISI KANAN: BOTOL DX OTENTIK (ANATOMI ASLI SESUAI GAMBAR BANDAI DX)      -->
+    <!-- ========================================================================= -->
     <g clip-path="url(#slotAreaClip)">
       <!-- RABBIT FULLBOTTLE (SLOT 1) -->
-      <g transform="translate(180, 30)">
+      <g transform="translate(182, 30)">
         <g>
           <animateTransform attributeName="transform" type="translate"
             values="0,-22; 0,-14; 0,-26; 0,-14; 0,-24; 0,-16; 0,-22; 0,-22; 0,0; 0,0; 0,-22"
             keyTimes="0; 0.04; 0.08; 0.12; 0.14; 0.16; 0.18; 0.33; 0.38; 0.95; 1"
             dur="12s" repeatCount="indefinite"/>
 
-          <!-- Cap Dial Perak R/T -->
-          <rect x="26" y="0" width="34" height="10" rx="2" fill="#cbd5e1" stroke="#475569" stroke-width="1"/>
-          <rect x="38" y="2" width="10" height="6" fill="#dc2626"/>
-          <!-- Badan Botol -->
-          <rect x="10" y="10" width="66" height="68" rx="6" fill="#1a0b0e" stroke="#ef4444" stroke-width="1.5"/>
-          <rect x="14" y="24" width="58" height="50" rx="4" fill="#dc2626" opacity="0.9"/>
+          <!-- 1. TUTUP PUTAR BERUSUK (Ribbed Dial Cap Merah) -->
+          <rect x="25" y="0" width="28" height="12" rx="3" fill="#dc2626" stroke="#991b1b" stroke-width="1"/>
+          <!-- Rusuk-rusuk Tutup -->
+          <line x1="29" y1="1" x2="29" y2="11" stroke="#ef4444" stroke-width="1"/>
+          <line x1="34" y1="1" x2="34" y2="11" stroke="#ef4444" stroke-width="1"/>
+          <line x1="44" y1="1" x2="44" y2="11" stroke="#ef4444" stroke-width="1"/>
+          <line x1="49" y1="1" x2="49" y2="11" stroke="#ef4444" stroke-width="1"/>
+          <!-- Label Plat Gir Tengah R/T -->
+          <rect x="34" y="2" width="10" height="8" rx="1.5" fill="#0d1117"/>
+          <text x="39" y="8.5" text-anchor="middle" font-family="ui-monospace, monospace" font-size="5.5" font-weight="bold" fill="#facc15">R/T</text>
 
-          <!-- Gotri Bola Besi (Kocok naik-turun di detik 0-2) -->
-          <circle cx="43" cy="42" r="5" fill="#f8fafc" stroke="#64748b" stroke-width="1">
+          <!-- 2. KERAH BAHU MEKANIS HITAM (Black Molded Shoulder Collar) -->
+          <path d="M 12 12 L 66 12 L 68 22 L 62 25 L 16 25 L 10 22 Z" fill="#1e293b" stroke="#0f172a" stroke-width="1.2"/>
+          <circle cx="16" cy="18" r="1.8" fill="#475569"/>
+          <circle cx="62" cy="18" r="1.8" fill="#475569"/>
+
+          <!-- 3. TABUNG KACA BERLEKUK (Contoured Acrylic Glass Body) -->
+          <!-- Siluet lekukan pinggang ramping khas DX Fullbottle -->
+          <path d="M 16 25 Q 14 42 20 50 Q 14 60 16 72 L 62 72 Q 64 60 58 50 Q 64 42 62 25 Z" 
+                fill="#2a080c" stroke="#ef4444" stroke-width="1.5"/>
+
+          <!-- Cairan Merah Transparan di Dalam -->
+          <path d="M 18 28 Q 16 42 22 50 Q 16 60 18 70 L 60 70 Q 62 60 56 50 Q 62 42 60 28 Z" 
+                fill="#dc2626" opacity="0.85"/>
+
+          <!-- Kilau Kaca Reflektif (Sheen Highlight) -->
+          <path d="M 21 30 Q 18 43 23 50 Q 18 58 20 68" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" opacity="0.55"/>
+
+          <!-- 4. GOTRI LOGAM BULAT BERGERAK (Internal Metal Shaking Bead) -->
+          <circle cx="39" cy="46" r="5" fill="#f8fafc" stroke="#64748b" stroke-width="1.2">
             <animate attributeName="cy"
-              values="34; 54; 32; 56; 34; 42; 42"
+              values="34; 58; 32; 60; 34; 46; 46"
               keyTimes="0; 0.04; 0.08; 0.12; 0.16; 0.18; 1"
               dur="12s" repeatCount="indefinite"/>
           </circle>
 
-          <text x="43" y="60" text-anchor="middle" font-size="12">🐰</text>
-          <text x="43" y="72" text-anchor="middle" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" fill="#ffffff" letter-spacing="1">RABBIT</text>
+          <!-- Simbol Kelinci & Nama -->
+          <text x="39" y="52" text-anchor="middle" font-size="11" opacity="0.9">🐰</text>
+          <text x="39" y="66" text-anchor="middle" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" fill="#ffffff" letter-spacing="1">RABBIT</text>
+
+          <!-- 5. ALAS MEKANIS HITAM (Black Molded Base Ring) -->
+          <rect x="14" y="72" width="50" height="9" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="1.2"/>
+          <line x1="22" y1="73" x2="22" y2="80" stroke="#475569" stroke-width="1.5"/>
+          <line x1="39" y1="73" x2="39" y2="80" stroke="#475569" stroke-width="1.5"/>
+          <line x1="56" y1="73" x2="56" y2="80" stroke="#475569" stroke-width="1.5"/>
         </g>
       </g>
 
       <!-- TANK FULLBOTTLE (SLOT 2) -->
-      <g transform="translate(272, 30)">
+      <g transform="translate(270, 30)">
         <g>
           <animateTransform attributeName="transform" type="translate"
             values="0,-22; 0,-22; 0,-14; 0,-26; 0,-14; 0,-24; 0,-16; 0,-22; 0,0; 0,0; 0,-22"
             keyTimes="0; 0.17; 0.20; 0.23; 0.26; 0.29; 0.31; 0.34; 0.40; 0.95; 1"
             dur="12s" repeatCount="indefinite"/>
 
-          <!-- Cap Dial Perak R/T -->
-          <rect x="26" y="0" width="34" height="10" rx="2" fill="#cbd5e1" stroke="#475569" stroke-width="1"/>
-          <rect x="38" y="2" width="10" height="6" fill="#2563eb"/>
-          <!-- Badan Botol -->
-          <rect x="10" y="10" width="66" height="68" rx="6" fill="#091426" stroke="#3b82f6" stroke-width="1.5"/>
-          <rect x="14" y="24" width="58" height="50" rx="4" fill="#2563eb" opacity="0.9"/>
+          <!-- 1. TUTUP PUTAR BERUSUK (Ribbed Dial Cap Biru) -->
+          <rect x="25" y="0" width="28" height="12" rx="3" fill="#2563eb" stroke="#1d4ed8" stroke-width="1"/>
+          <!-- Rusuk-rusuk Tutup -->
+          <line x1="29" y1="1" x2="29" y2="11" stroke="#60a5fa" stroke-width="1"/>
+          <line x1="34" y1="1" x2="34" y2="11" stroke="#60a5fa" stroke-width="1"/>
+          <line x1="44" y1="1" x2="44" y2="11" stroke="#60a5fa" stroke-width="1"/>
+          <line x1="49" y1="1" x2="49" y2="11" stroke="#60a5fa" stroke-width="1"/>
+          <!-- Label Plat Gir Tengah R/T -->
+          <rect x="34" y="2" width="10" height="8" rx="1.5" fill="#0d1117"/>
+          <text x="39" y="8.5" text-anchor="middle" font-family="ui-monospace, monospace" font-size="5.5" font-weight="bold" fill="#facc15">R/T</text>
 
-          <!-- Gotri Bola Besi (Kocok naik-turun di detik 2-4) -->
-          <circle cx="43" cy="42" r="5" fill="#f8fafc" stroke="#64748b" stroke-width="1">
+          <!-- 2. KERAH BAHU MEKANIS HITAM (Black Molded Shoulder Collar) -->
+          <path d="M 12 12 L 66 12 L 68 22 L 62 25 L 16 25 L 10 22 Z" fill="#1e293b" stroke="#0f172a" stroke-width="1.2"/>
+          <circle cx="16" cy="18" r="1.8" fill="#475569"/>
+          <circle cx="62" cy="18" r="1.8" fill="#475569"/>
+
+          <!-- 3. TABUNG KACA BERLEKUK (Contoured Acrylic Glass Body) -->
+          <path d="M 16 25 Q 14 42 20 50 Q 14 60 16 72 L 62 72 Q 64 60 58 50 Q 64 42 62 25 Z" 
+                fill="#091426" stroke="#3b82f6" stroke-width="1.5"/>
+
+          <!-- Cairan Biru Transparan di Dalam -->
+          <path d="M 18 28 Q 16 42 22 50 Q 16 60 18 70 L 60 70 Q 62 60 56 50 Q 62 42 60 28 Z" 
+                fill="#2563eb" opacity="0.85"/>
+
+          <!-- Kilau Kaca Reflektif -->
+          <path d="M 21 30 Q 18 43 23 50 Q 18 58 20 68" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" opacity="0.55"/>
+
+          <!-- 4. GOTRI LOGAM BULAT BERGERAK (Internal Metal Shaking Bead) -->
+          <circle cx="39" cy="46" r="5" fill="#f8fafc" stroke="#64748b" stroke-width="1.2">
             <animate attributeName="cy"
-              values="42; 42; 34; 54; 32; 56; 34; 42; 42"
+              values="46; 46; 34; 58; 32; 60; 34; 46; 46"
               keyTimes="0; 0.17; 0.20; 0.23; 0.26; 0.29; 0.31; 0.34; 1"
               dur="12s" repeatCount="indefinite"/>
           </circle>
 
-          <text x="43" y="60" text-anchor="middle" font-size="12">🛡️</text>
-          <text x="43" y="72" text-anchor="middle" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" fill="#ffffff" letter-spacing="1">TANK</text>
+          <!-- Simbol Tank & Nama -->
+          <text x="39" y="52" text-anchor="middle" font-size="11" opacity="0.9">🛡️</text>
+          <text x="39" y="66" text-anchor="middle" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" fill="#ffffff" letter-spacing="1">TANK</text>
+
+          <!-- 5. ALAS MEKANIS HITAM (Black Molded Base Ring) -->
+          <rect x="14" y="72" width="50" height="9" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="1.2"/>
+          <line x1="22" y1="73" x2="22" y2="80" stroke="#475569" stroke-width="1.5"/>
+          <line x1="39" y1="73" x2="39" y2="80" stroke="#475569" stroke-width="1.5"/>
+          <line x1="56" y1="73" x2="56" y2="80" stroke="#475569" stroke-width="1.5"/>
         </g>
       </g>
     </g>
@@ -383,7 +443,7 @@ def generate_build_card():
         BEST MATCH
       </text>
 
-      <!-- Status Henhsin Moonsault -->
+      <!-- Status Henshin Moonsault -->
       <text x="132" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="1">
         <animate attributeName="fill" values="#484f58; #484f58; #484f58; #ff7b72; #3fb950; #3fb950; #484f58" keyTimes="0; 0.33; 0.50; 0.62; 0.85; 0.95; 1" dur="12s" repeatCount="indefinite"/>
         HAGANE MOONSAULT
@@ -411,7 +471,7 @@ def generate_build_card():
         ET.fromstring(svg)
         with open("assets/build-card.svg", "w", encoding="utf-8") as f:
             f.write(svg)
-        print(f"[2/4] assets/build-card.svg diperbarui dengan 'Are You Ready?' di akhir ({CARD_W}x{CARD_H}).")
+        print(f"[2/4] assets/build-card.svg diperbarui dengan anatomi botol DX otentik ({CARD_W}x{CARD_H}).")
     except ET.ParseError as err:
         print(f"[!] Error XML build-card: {err}")
 
@@ -443,11 +503,11 @@ def update_readme():
     content = f'''<div align="center">
 
 <!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=50" width="{CARD_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=50" width="{CARD_W}" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=51" width="{CARD_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=51" width="{CARD_W}" alt="Kamen Rider Build" />
 
 <!-- RABBIT-TANK GRADIENT DIVIDER -->
 <br><br>
-<img src="./assets/divider.svg?v=50" width="840" alt="Divider" />
+<img src="./assets/divider.svg?v=51" width="840" alt="Divider" />
 <br><br>
 
 <!-- DATA SOURCES STATUS BAR -->
@@ -462,13 +522,13 @@ def update_readme():
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=50" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=51" alt="Aggregated Heatmap" width="840" />
 
 </div>
 '''
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(content)
-    print("[4/4] README.md diperbarui dengan versi cache v=50.")
+    print("[4/4] README.md diperbarui dengan versi cache v=51.")
 
 if __name__ == "__main__":
     patch_ascii_portrait()
