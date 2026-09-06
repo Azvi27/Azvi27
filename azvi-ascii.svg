@@ -94,6 +94,21 @@
   
 
 
+  
+
+  
+
+
+  
+
+  
+
+
+  
+
+  
+
+
   <!-- Terminal Session Header -->
   <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
   <!-- /Terminal Session Header -->
@@ -108,36 +123,40 @@
     <circle cx="14" cy="14" r="3.5" fill="#3fb950">
       <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
     </circle>
-    <text x="24" y="17.5" fill="#3fb950" font-family="ui-monospace, monospace" font-size="9" font-weight="bold" letter-spacing="1">OPERATOR</text>
-    <text x="190" y="17.5" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="9" font-weight="bold" letter-spacing="0.5">[ ONLINE ]</text>
+    <text x="24" y="17.5" fill="#3fb950" font-family="ui-monospace, monospace" font-size="9.5" font-weight="bold" letter-spacing="1">OPERATOR</text>
+    <text x="190" y="17.5" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="9.5" font-weight="bold" letter-spacing="0.5">[ ONLINE ]</text>
 
-    <text x="14" y="52" fill="#ffffff" font-family="ui-monospace, monospace" font-size="14" font-weight="bold">M. Khalis Farhan Azvi</text>
-    <text x="14" y="70" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="11.5">@Azvi27</text>
-    <text x="190" y="70" text-anchor="end" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5">UGM</text>
+    <!-- Nama Diperbesar (15.5px Bold) -->
+    <text x="14" y="51" fill="#ffffff" font-family="ui-monospace, monospace" font-size="15" font-weight="bold">M. Khalis Farhan Azvi</text>
+    <text x="14" y="68" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="12">@Azvi27</text>
+    <text x="190" y="68" text-anchor="end" fill="#8b949e" font-family="ui-monospace, monospace" font-size="10">UGM</text>
 
-    <line x1="12" y1="82" x2="192" y2="82" stroke="#30363d" stroke-width="1"/>
+    <line x1="12" y1="78" x2="192" y2="78" stroke="#30363d" stroke-width="1"/>
 
-    <text x="14" y="99" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="0.8">AFFILIATION</text>
-    <text x="190" y="99" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="8.5" letter-spacing="0.5">ACADEMIC</text>
+    <!-- Section 1: Affiliation -->
+    <text x="14" y="94" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9" font-weight="bold" letter-spacing="0.8">AFFILIATION</text>
+    <text x="190" y="94" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="9" letter-spacing="0.5">ACADEMIC</text>
 
-    <text x="14" y="118" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="12.5" font-weight="600">Teknik Fisika</text>
-    <text x="14" y="135" fill="#8b949e" font-family="ui-monospace, monospace" font-size="10.5">Universitas Gadjah Mada</text>
+    <text x="14" y="113" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="13.5" font-weight="600">Teknik Fisika</text>
+    <text x="14" y="130" fill="#8b949e" font-family="ui-monospace, monospace" font-size="11">Universitas Gadjah Mada</text>
 
-    <line x1="12" y1="147" x2="192" y2="147" stroke="#30363d" stroke-width="1"/>
+    <line x1="12" y1="142" x2="192" y2="142" stroke="#30363d" stroke-width="1"/>
 
-    <text x="14" y="164" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="0.8">LABORATORY</text>
-    <text x="190" y="164" text-anchor="end" fill="#39d353" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold">ACTIVE LAB</text>
+    <!-- Section 2: Laboratory -->
+    <text x="14" y="158" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9" font-weight="bold" letter-spacing="0.8">LABORATORY</text>
+    <text x="190" y="158" text-anchor="end" fill="#39d353" font-family="ui-monospace, monospace" font-size="9" font-weight="bold">ACTIVE LAB</text>
 
-    <text x="14" y="184" fill="#3fb950" font-family="ui-monospace, monospace" font-size="13.5" font-weight="bold">Lab. SSTK</text>
-    <text x="14" y="201" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="10.8" font-weight="500">Sensor dan Sistem Telekontrol</text>
+    <text x="14" y="178" fill="#3fb950" font-family="ui-monospace, monospace" font-size="14" font-weight="bold">Lab. SSTK</text>
+    <text x="14" y="195" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="11.5" font-weight="500">Sensor dan Sistem Telekontrol</text>
 
-    <line x1="12" y1="213" x2="192" y2="213" stroke="#30363d" stroke-width="1"/>
+    <line x1="12" y1="207" x2="192" y2="207" stroke="#30363d" stroke-width="1"/>
 
-    <text x="14" y="230" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="0.8">CURRENT ACTIVITY</text>
-    <text x="190" y="230" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="8.5" font-weight="600">STATUS</text>
+    <!-- Section 3: Current Activity -->
+    <text x="14" y="223" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9" font-weight="bold" letter-spacing="0.8">CURRENT ACTIVITY</text>
+    <text x="190" y="223" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="9" font-weight="600">STATUS</text>
 
-    <text x="14" y="252" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="13" font-weight="bold">Lab Assistant &amp; Intern</text>
-    <text x="14" y="270" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="10.5">Asisten Lab &amp; Magang SSTK</text>
+    <text x="14" y="245" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="13.5" font-weight="bold">Lab Assistant &amp; Intern</text>
+    <text x="14" y="264" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="11">Asisten Lab &amp; Magang SSTK</text>
   </g>
   <!-- /OPERATOR HUD -->
 
