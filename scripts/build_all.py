@@ -5,7 +5,7 @@ CARD_W = 410
 CARD_H = 340
 
 # =============================================================
-# 1. PATCH AZVI-ASCII.SVG (CLEAN OPERATOR HUD - NO TAG BOXES)
+# 1. PATCH AZVI-ASCII.SVG (CLEAN OPERATOR HUD - ZERO BUZZWORDS)
 # =============================================================
 def patch_ascii_portrait():
     if not os.path.exists("azvi-ascii.svg"):
@@ -14,7 +14,7 @@ def patch_ascii_portrait():
     with open("azvi-ascii.svg", "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Bersihkan HUD, header, dan scanline lama
+    # Bersihkan HUD lama, header lama, scanline, dll.
     content = re.sub(r'<!-- (?:OPERATOR HUD|Terminal Session Header) -->[\s\S]*?<!-- /(?:OPERATOR HUD|Terminal Session Header) -->', '', content)
     content = re.sub(r'<text[^>]*SYSTEM://AZVI\.LAB[\s\S]*?</text>', '', content)
     content = re.sub(r'<g[^>]*id="operator-hud"[\s\S]*?</g>', '', content)
@@ -57,7 +57,7 @@ def patch_ascii_portrait():
     </clipPath>'''
     content = re.sub(r'<clipPath id="asciiTypeClip">[\s\S]*?</clipPath>', new_clip, content)
 
-    # Injeksi HUD Baru yang Bersih & Proporsional
+    # Injeksi HUD Baru yang Bersih & Fokus
     hud_injection = f'''
   <!-- Terminal Session Header -->
   <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
@@ -79,44 +79,36 @@ def patch_ascii_portrait():
     <text x="190" y="17.5" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="9" font-weight="bold" letter-spacing="0.5">[ ONLINE ]</text>
 
     <!-- Identity Area -->
-    <text x="14" y="50" fill="#ffffff" font-family="ui-monospace, monospace" font-size="13.5" font-weight="bold">M. Khalis Farhan Azvi</text>
-    <text x="14" y="67" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="11">@Azvi27</text>
-    <text x="190" y="67" text-anchor="end" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5">Engineering Physics</text>
+    <text x="14" y="52" fill="#ffffff" font-family="ui-monospace, monospace" font-size="14" font-weight="bold">M. Khalis Farhan Azvi</text>
+    <text x="14" y="70" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="11.5">@Azvi27</text>
+    <text x="190" y="70" text-anchor="end" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5">UGM</text>
 
-    <line x1="12" y1="78" x2="192" y2="78" stroke="#30363d" stroke-width="1"/>
+    <line x1="12" y1="82" x2="192" y2="82" stroke="#30363d" stroke-width="1"/>
 
     <!-- Section 1: Affiliation -->
-    <text x="14" y="94" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="0.8">AFFILIATION</text>
-    <text x="190" y="94" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="8.5" letter-spacing="0.5">ACADEMIC</text>
+    <text x="14" y="99" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="0.8">AFFILIATION</text>
+    <text x="190" y="99" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="8.5" letter-spacing="0.5">ACADEMIC</text>
 
-    <text x="14" y="112" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="12" font-weight="600">Teknik Fisika</text>
-    <text x="190" y="112" text-anchor="end" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5">UGM</text>
+    <text x="14" y="118" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="12.5" font-weight="600">Teknik Fisika</text>
+    <text x="14" y="135" fill="#8b949e" font-family="ui-monospace, monospace" font-size="10.5">Universitas Gadjah Mada</text>
 
-    <text x="14" y="128" fill="#8b949e" font-family="ui-monospace, monospace" font-size="10">Universitas Gadjah Mada</text>
-    <text x="190" y="128" text-anchor="end" fill="#3fb950" font-family="ui-monospace, monospace" font-size="9">● ID</text>
+    <line x1="12" y1="147" x2="192" y2="147" stroke="#30363d" stroke-width="1"/>
 
-    <line x1="12" y1="140" x2="192" y2="140" stroke="#30363d" stroke-width="1"/>
+    <!-- Section 2: Laboratory -->
+    <text x="14" y="164" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="0.8">LABORATORY</text>
+    <text x="190" y="164" text-anchor="end" fill="#39d353" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold">ACTIVE LAB</text>
 
-    <!-- Section 2: Laboratory (Sensor dan Sistem Telekontrol) -->
-    <text x="14" y="156" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="0.8">LABORATORY</text>
-    <rect x="132" y="146" width="60" height="15" rx="3" fill="#0e4429" stroke="#26a641" stroke-width="0.8"/>
-    <text x="162" y="156.5" text-anchor="middle" fill="#39d353" font-family="ui-monospace, monospace" font-size="8" font-weight="bold">ACTIVE LAB</text>
+    <text x="14" y="184" fill="#3fb950" font-family="ui-monospace, monospace" font-size="13.5" font-weight="bold">Lab. SSTK</text>
+    <text x="14" y="201" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="10.8" font-weight="500">Sensor dan Sistem Telekontrol</text>
 
-    <text x="14" y="176" fill="#3fb950" font-family="ui-monospace, monospace" font-size="13" font-weight="bold">Lab. SSTK</text>
-    <text x="190" y="176" text-anchor="end" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5">RESEARCH</text>
+    <line x1="12" y1="213" x2="192" y2="213" stroke="#30363d" stroke-width="1"/>
 
-    <text x="14" y="193" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="10.5" font-weight="500">Sensor dan Sistem Telekontrol</text>
+    <!-- Section 3: Current Activity -->
+    <text x="14" y="230" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="0.8">CURRENT ACTIVITY</text>
+    <text x="190" y="230" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="8.5" font-weight="600">STATUS</text>
 
-    <line x1="12" y1="205" x2="192" y2="205" stroke="#30363d" stroke-width="1"/>
-
-    <!-- Section 3: Role & Activity (Clean Typography - No Tag Boxes) -->
-    <text x="14" y="221" fill="#8b949e" font-family="ui-monospace, monospace" font-size="8.5" font-weight="bold" letter-spacing="0.8">ROLE &amp; ASSIGNMENT</text>
-    <text x="190" y="221" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="8.5" font-weight="600">STAFF / INTERN</text>
-
-    <text x="14" y="240" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="12" font-weight="600">Lab Assistant &amp; Intern</text>
-    
-    <text x="14" y="258" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="10">Hardware, IoT &amp; Embedded Systems</text>
-    <text x="14" y="274" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5">Software &amp; Telemetry Architecture</text>
+    <text x="14" y="252" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="13" font-weight="bold">Lab Assistant &amp; Intern</text>
+    <text x="14" y="270" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="10.5">Asisten Lab &amp; Magang SSTK</text>
   </g>
   <!-- /OPERATOR HUD -->
 '''
@@ -126,7 +118,7 @@ def patch_ascii_portrait():
         ET.fromstring(content)
         with open("azvi-ascii.svg", "w", encoding="utf-8") as f:
             f.write(content)
-        print(f"[1/4] azvi-ascii.svg diperbarui dengan teks bersih & nama lab terkalibrasi ({CARD_W}x{CARD_H}).")
+        print(f"[1/4] azvi-ascii.svg diperbarui bersih ({CARD_W}x{CARD_H}).")
     except ET.ParseError as err:
         print(f"[!] Error XML azvi-ascii: {err}")
 
@@ -202,7 +194,7 @@ def generate_build_card():
       <text x="267" y="18" text-anchor="middle" font-family="ui-monospace, monospace" font-size="9.5" fill="#484f58">[ SLOT 2 ]</text>
     </g>
 
-    <!-- ANIMATED FULLBOTTLES (Meluncur Masuk ke Driver) -->
+    <!-- ANIMATED FULLBOTTLES -->
     <g clip-path="url(#slotClip)">
       <!-- RABBIT BOTTLE (Slot 1) -->
       <g transform="translate(14, 36)">
@@ -317,11 +309,11 @@ def update_readme():
     content = f'''<div align="center">
 
 <!-- DUAL MINIMAL CARDS -->
-<img src="./azvi-ascii.svg?v=46" width="{CARD_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=46" width="{CARD_W}" alt="Kamen Rider Build" />
+<img src="./azvi-ascii.svg?v=47" width="{CARD_W}" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=47" width="{CARD_W}" alt="Kamen Rider Build" />
 
 <!-- RABBIT-TANK GRADIENT DIVIDER -->
 <br><br>
-<img src="./assets/divider.svg?v=46" width="840" alt="Divider" />
+<img src="./assets/divider.svg?v=47" width="840" alt="Divider" />
 <br><br>
 
 <!-- DATA SOURCES STATUS BAR -->
@@ -336,13 +328,13 @@ def update_readme():
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=46" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=47" alt="Aggregated Heatmap" width="840" />
 
 </div>
 '''
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(content)
-    print("[4/4] README.md diperbarui dengan versi cache v=46.")
+    print("[4/4] README.md diperbarui dengan versi cache v=47.")
 
 if __name__ == "__main__":
     patch_ascii_portrait()

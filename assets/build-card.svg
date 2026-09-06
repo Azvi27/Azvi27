@@ -60,7 +60,7 @@
       <text x="267" y="18" text-anchor="middle" font-family="ui-monospace, monospace" font-size="9.5" fill="#484f58">[ SLOT 2 ]</text>
     </g>
 
-    <!-- ANIMATED FULLBOTTLES (Meluncur Masuk ke Driver) -->
+    <!-- ANIMATED FULLBOTTLES -->
     <g clip-path="url(#slotClip)">
       <!-- RABBIT BOTTLE (Slot 1) -->
       <g transform="translate(14, 36)">
