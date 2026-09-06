@@ -1,11 +1,11 @@
 <div align="center">
 
-<!-- DUAL BALANCED CARDS (PROFILE 455px, BUILD 375px -> TOTAL 830px) -->
-<img src="./azvi-ascii.svg?v=65" width="455" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=65" width="375" alt="Kamen Rider Build" />
+<!-- DUAL BALANCED CARDS (PROFILE 460px, BUILD 370px -> TOTAL 830px) -->
+<img src="./azvi-ascii.svg?v=70" width="460" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=70" width="370" alt="Kamen Rider Build" />
 
 <!-- RABBIT-TANK GRADIENT DIVIDER -->
 <br><br>
-<img src="./assets/divider.svg?v=65" width="840" alt="Divider" />
+<img src="./assets/divider.svg?v=70" width="840" alt="Divider" />
 <br><br>
 
 <!-- DATA SOURCES STATUS BAR -->
@@ -20,6 +20,6 @@
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=65" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=70" alt="Aggregated Heatmap" width="840" />
 
 </div>

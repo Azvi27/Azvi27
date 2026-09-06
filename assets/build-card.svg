@@ -1,4 +1,4 @@
-<svg width="375" height="340" viewBox="0 0 375 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="370" height="340" viewBox="0 0 370 340" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="chromeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#ffffff"/>
@@ -13,121 +13,125 @@
     </pattern>
 
     <clipPath id="dynamoClip">
-      <circle cx="70" cy="74" r="24"/>
+      <circle cx="60" cy="74" r="22"/>
     </clipPath>
 
     <clipPath id="slotAreaClip">
-      <rect x="156" y="4" width="170" height="96" rx="6"/>
+      <rect x="142" y="4" width="180" height="96" rx="6"/>
     </clipPath>
   </defs>
 
-  <rect width="375" height="340" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+  <rect width="370" height="340" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
 
   <!-- Top Session Header -->
-  <text x="18" y="22" font-family="ui-monospace, monospace" font-size="9" fill="#ff7b72" letter-spacing="1.2">SYSTEM://BUILD.DRIVER <tspan fill="#ff7b72"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
+  <text x="18" y="20" font-family="ui-monospace, monospace" font-size="9.5" fill="#ff7b72" letter-spacing="1.2">SYSTEM://BUILD.DRIVER <tspan fill="#ff7b72"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
 
-  <!-- Bagian Atas: Sprite & Quotes Padat -->
-  <g transform="translate(16, 32)">
-    <image href="data:image/webp;base64,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" width="88" height="88"/>
+  <!-- Bagian Atas: Sprite & Quotes Padat (y: 28 s.d 138) -->
+  <g transform="translate(14, 28)">
+    <g transform="translate(0, 4)">
+      <image href="data:image/webp;base64,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" width="88" height="88"/>
+    </g>
 
     <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
-      <text x="96" y="15" fill="#58a6ff" font-size="11" font-weight="bold">さぁ、実験を始めようか？</text>
-      <text x="96" y="30" fill="#c9d1d9" font-size="9.5" font-style="italic">Shall we begin the experiment?</text>
-      <text x="96" y="44" fill="#8b949e" font-size="8.8">Nah, mari kita mulai eksperimennya!</text>
+      <text x="96" y="16" fill="#58a6ff" font-size="11.5" font-weight="bold">さぁ、実験を始めようか？</text>
+      <text x="96" y="32" fill="#c9d1d9" font-size="9.8" font-style="italic">Shall we begin the experiment?</text>
+      <text x="96" y="46" fill="#8b949e" font-size="9">Nah, mari kita mulai eksperimennya!</text>
 
-      <line x1="96" y1="52" x2="343" y2="52" stroke="#21262d" stroke-width="1"/>
+      <line x1="96" y1="56" x2="342" y2="56" stroke="#21262d" stroke-width="1"/>
 
-      <text x="96" y="68" fill="#ff7b72" font-size="11" font-weight="bold">勝利の法則は決まった！</text>
-      <text x="96" y="83" fill="#c9d1d9" font-size="9.5" font-style="italic">The formula for victory is set!</text>
-      <text x="96" y="97" fill="#8b949e" font-size="8.8">Hukum kemenangannya telah ditentukan!</text>
+      <text x="96" y="73" fill="#ff7b72" font-size="11.5" font-weight="bold">勝利の法則は決まった！</text>
+      <text x="96" y="89" fill="#c9d1d9" font-size="9.8" font-style="italic">The formula for victory is set!</text>
+      <text x="96" y="103" fill="#8b949e" font-size="9">Hukum kemenangannya telah ditentukan!</text>
     </g>
   </g>
 
-  <!-- Bagian Bawah: DX Driver Dirampingkan Rapi -->
-  <g transform="translate(14, 142)">
-    <rect width="347" height="178" rx="10" fill="#070b14" stroke="#30363d" stroke-width="1.5">
+  <!-- Bagian Bawah: DX Driver Dirampingkan Tepat di Bawah Quotes Tanpa Celah (y=142, h=182) -->
+  <g transform="translate(12, 142)">
+    <rect width="346" height="182" rx="10" fill="#070b14" stroke="#30363d" stroke-width="1.5">
       <animate attributeName="stroke" values="#30363d; #30363d; #ff7b72; #3fb950; #facc15; #30363d" keyTimes="0; 0.60; 0.64; 0.75; 0.90; 1" dur="12s" repeatCount="indefinite"/>
     </rect>
 
+    <!-- Tali Kuning Pinggir -->
     <g>
-      <rect x="0" y="56" width="8" height="60" rx="2" fill="#facc15" stroke="#ca8a04" stroke-width="1"/>
-      <circle cx="4" cy="70" r="1.5" fill="#854d0e"/><circle cx="4" cy="86" r="1.5" fill="#854d0e"/><circle cx="4" cy="102" r="1.5" fill="#854d0e"/>
-      <rect x="339" y="56" width="8" height="60" rx="2" fill="#facc15" stroke="#ca8a04" stroke-width="1"/>
-      <circle cx="343" cy="70" r="1.5" fill="#854d0e"/><circle cx="343" cy="86" r="1.5" fill="#854d0e"/><circle cx="343" cy="102" r="1.5" fill="#854d0e"/>
+      <rect x="0" y="58" width="8" height="60" rx="2" fill="#facc15" stroke="#ca8a04" stroke-width="1"/>
+      <circle cx="4" cy="72" r="1.5" fill="#854d0e"/><circle cx="4" cy="88" r="1.5" fill="#854d0e"/><circle cx="4" cy="104" r="1.5" fill="#854d0e"/>
+      <rect x="338" y="58" width="8" height="60" rx="2" fill="#facc15" stroke="#ca8a04" stroke-width="1"/>
+      <circle cx="342" cy="72" r="1.5" fill="#854d0e"/><circle cx="342" cy="88" r="1.5" fill="#854d0e"/><circle cx="342" cy="104" r="1.5" fill="#854d0e"/>
     </g>
 
-    <rect x="10" y="8" width="327" height="18" rx="4" fill="#111827"/>
-    <circle cx="20" cy="17" r="3" fill="#ef4444">
+    <!-- Status Ribbon Driver -->
+    <rect x="8" y="8" width="330" height="18" rx="4" fill="#111827"/>
+    <circle cx="18" cy="17" r="3" fill="#ef4444">
       <animate attributeName="fill" values="#ef4444;#3b82f6;#facc15;#3fb950;#ef4444" dur="4s" repeatCount="indefinite"/>
     </circle>
 
-    <text x="28" y="20.5" fill="#ff7b72" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" letter-spacing="0.8">
+    <text x="26" y="20.5" fill="#ff7b72" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" letter-spacing="0.8">
       <animate attributeName="opacity" values="1;1;0;0;0;0;1" keyTimes="0; 0.16; 0.17; 0.98; 0.99; 1; 1" dur="12s" repeatCount="indefinite"/>
       [ SHAKA-SHAKA ] &gt;&gt; &quot;RABBIT!&quot; 🐰
     </text>
-    <text x="28" y="20.5" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" letter-spacing="0.8">
+    <text x="26" y="20.5" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" letter-spacing="0.8">
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0; 0.165; 0.175; 0.33; 0.34; 1" dur="12s" repeatCount="indefinite"/>
       [ SHAKA-SHAKA ] &gt;&gt; &quot;TANK!&quot; 🛡️
     </text>
-    <text x="28" y="20.5" fill="#facc15" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" letter-spacing="0.8">
+    <text x="26" y="20.5" fill="#facc15" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" letter-spacing="0.8">
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0; 0.335; 0.345; 0.50; 0.51; 1" dur="12s" repeatCount="indefinite"/>
       [ DOCKED! ] &gt;&gt; &quot;BEST MATCH!&quot; ★
     </text>
-    <text x="28" y="20.5" fill="#3fb950" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" letter-spacing="0.8">
+    <text x="26" y="20.5" fill="#3fb950" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" letter-spacing="0.8">
       <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0; 0.515; 0.525; 0.75; 0.76; 1" dur="12s" repeatCount="indefinite"/>
       [ CRANKING ] &gt;&gt; MOONSAULT! YEAAHH!
     </text>
-    <text x="28" y="20.5" fill="#ffffff" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" letter-spacing="0.8">
+    <text x="26" y="20.5" fill="#ffffff" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold" letter-spacing="0.8">
       <animate attributeName="opacity" values="0;0;1;1" keyTimes="0; 0.755; 0.765; 1" dur="12s" repeatCount="indefinite"/>
       [ DRIVER ] &gt;&gt; <tspan fill="#facc15">&quot;ARE YOU READY?!&quot;</tspan>
     </text>
 
-    <text x="337" y="20.5" text-anchor="end" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold">
+    <text x="334" y="20.5" text-anchor="end" font-family="ui-monospace, monospace" font-size="7.5" font-weight="bold">
       <animate attributeName="fill" values="#8b949e;#ff7b72;#58a6ff;#facc15;#3fb950" keyTimes="0; 0.16; 0.33; 0.50; 1" dur="12s" repeatCount="indefinite"/>
       100%
     </text>
 
-    <!-- Dynamo & Crank Assembly -->
-    <circle cx="66" cy="80" r="30" fill="#1e293b" stroke="url(#chromeGrad)" stroke-width="2.5"/>
-    <circle cx="66" cy="80" r="24" fill="#060911"/>
+    <!-- Dynamo & Crank Assembly (cx: 60, cy: 80) -->
+    <circle cx="60" cy="80" r="28" fill="#1e293b" stroke="url(#chromeGrad)" stroke-width="2.5"/>
+    <circle cx="60" cy="80" r="22" fill="#060911"/>
 
-    <g clip-path="url(#dynamoClip)" transform="translate(-4, 6)">
-      <rect x="46" y="60" width="24" height="42" fill="#dc2626"><animate attributeName="opacity" values="0.15; 0.15; 0.15; 0.85; 0.85" keyTimes="0; 0.16; 0.33; 0.50; 1" dur="12s" repeatCount="indefinite"/></rect>
-      <rect x="70" y="60" width="24" height="42" fill="#2563eb"><animate attributeName="opacity" values="0.15; 0.15; 0.15; 0.85; 0.85" keyTimes="0; 0.16; 0.33; 0.50; 1" dur="12s" repeatCount="indefinite"/></rect>
-      <circle cx="70" cy="74" r="14" fill="#facc15" opacity="0.4"><animate attributeName="r" values="7; 7; 15; 20; 14" keyTimes="0; 0.50; 0.65; 0.78; 1" dur="12s" repeatCount="indefinite"/></circle>
+    <g clip-path="url(#dynamoClip)" transform="translate(-2, 6)">
+      <rect x="40" y="60" width="22" height="40" fill="#dc2626"><animate attributeName="opacity" values="0.15; 0.15; 0.15; 0.85; 0.85" keyTimes="0; 0.16; 0.33; 0.50; 1" dur="12s" repeatCount="indefinite"/></rect>
+      <rect x="62" y="60" width="22" height="40" fill="#2563eb"><animate attributeName="opacity" values="0.15; 0.15; 0.15; 0.85; 0.85" keyTimes="0; 0.16; 0.33; 0.50; 1" dur="12s" repeatCount="indefinite"/></rect>
+      <circle cx="62" cy="74" r="12" fill="#facc15" opacity="0.4"><animate attributeName="r" values="6; 6; 14; 18; 12" keyTimes="0; 0.50; 0.65; 0.78; 1" dur="12s" repeatCount="indefinite"/></circle>
     </g>
 
     <g>
-      <animateTransform attributeName="transform" type="rotate" values="0 66 80; 0 66 80; 720 66 80; 2160 66 80; 2520 66 80" keyTimes="0; 0.50; 0.65; 0.88; 1" dur="12s" repeatCount="indefinite"/>
-      <line x1="45" y1="80" x2="87" y2="80" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
-      <line x1="56" y1="62" x2="76" y2="98" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
-      <line x1="76" y1="62" x2="56" y2="98" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
-      <circle cx="66" cy="80" r="8" fill="#1e293b" stroke="url(#chromeGrad)" stroke-width="1.8"/>
-      <circle cx="66" cy="80" r="3" fill="#facc15"/>
+      <animateTransform attributeName="transform" type="rotate" values="0 60 80; 0 60 80; 720 60 80; 2160 60 80; 2520 60 80" keyTimes="0; 0.50; 0.65; 0.88; 1" dur="12s" repeatCount="indefinite"/>
+      <line x1="40" y1="80" x2="80" y2="80" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
+      <line x1="50" y1="63" x2="70" y2="97" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
+      <line x1="70" y1="63" x2="50" y2="97" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="60" cy="80" r="7" fill="#1e293b" stroke="url(#chromeGrad)" stroke-width="1.8"/>
+      <circle cx="60" cy="80" r="2.5" fill="#facc15"/>
     </g>
 
     <g>
-      <animateTransform attributeName="transform" type="rotate" values="0 106 90; 0 106 90; -720 106 90; -1800 106 90; -1980 106 90" keyTimes="0; 0.50; 0.65; 0.88; 1" dur="12s" repeatCount="indefinite"/>
-      <circle cx="106" cy="90" r="9.5" fill="#cbd5e1" stroke="#475569" stroke-width="1"/>
-      <line x1="106" y1="79" x2="106" y2="101" stroke="#475569" stroke-width="2"/><line x1="95" y1="90" x2="117" y2="90" stroke="#475569" stroke-width="2"/><circle cx="106" cy="90" r="3" fill="#0f172a"/>
+      <animateTransform attributeName="transform" type="rotate" values="0 98 90; 0 98 90; -720 98 90; -1800 98 90; -1980 98 90" keyTimes="0; 0.50; 0.65; 0.88; 1" dur="12s" repeatCount="indefinite"/>
+      <circle cx="98" cy="90" r="9" fill="#cbd5e1" stroke="#475569" stroke-width="1"/>
+      <line x1="98" y1="79" x2="98" y2="101" stroke="#475569" stroke-width="2"/><line x1="87" y1="90" x2="109" y2="90" stroke="#475569" stroke-width="2"/><circle cx="98" cy="90" r="2.5" fill="#0f172a"/>
     </g>
 
     <g>
-      <animateTransform attributeName="transform" type="rotate" values="0 123 102; 0 123 102; 960 123 102; 2400 123 102; 2640 123 102" keyTimes="0; 0.50; 0.65; 0.88; 1" dur="12s" repeatCount="indefinite"/>
-      <circle cx="123" cy="102" r="7" fill="#94a3b8" stroke="#334155" stroke-width="1"/>
-      <line x1="123" y1="94" x2="123" y2="110" stroke="#334155" stroke-width="1.8"/><line x1="115" y1="102" x2="131" y2="102" stroke="#334155" stroke-width="1.8"/><circle cx="123" cy="102" r="2" fill="#0f172a"/>
+      <animateTransform attributeName="transform" type="rotate" values="0 114 102; 0 114 102; 960 114 102; 2400 114 102; 2640 114 102" keyTimes="0; 0.50; 0.65; 0.88; 1" dur="12s" repeatCount="indefinite"/>
+      <circle cx="114" cy="102" r="6.5" fill="#94a3b8" stroke="#334155" stroke-width="1"/>
+      <line x1="114" y1="94" x2="114" y2="110" stroke="#334155" stroke-width="1.8"/><line x1="106" y1="102" x2="122" y2="102" stroke="#334155" stroke-width="1.8"/><circle cx="114" cy="102" r="2" fill="#0f172a"/>
     </g>
 
     <g>
-      <animateTransform attributeName="transform" type="rotate" values="0 66 80; 0 66 80; 360 66 80; 1080 66 80; 1080 66 80; 0 66 80" keyTimes="0; 0.50; 0.65; 0.85; 0.95; 1" dur="12s" repeatCount="indefinite"/>
-      <path d="M 66 77 L 28 69 A 3 3 0 0 0 25 72 L 25 79 A 3 3 0 0 0 28 82 L 66 85 Z" fill="#111827" stroke="#475569" stroke-width="1"/>
-      <rect x="9" y="65" width="20" height="14" rx="3" fill="#dc2626" stroke="#7f1d1d" stroke-width="1"/>
-      <circle cx="66" cy="80" r="6" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.8"/>
+      <animateTransform attributeName="transform" type="rotate" values="0 60 80; 0 60 80; 360 60 80; 1080 60 80; 1080 60 80; 0 60 80" keyTimes="0; 0.50; 0.65; 0.85; 0.95; 1" dur="12s" repeatCount="indefinite"/>
+      <path d="M 60 77 L 24 70 A 3 3 0 0 0 21 73 L 21 79 A 3 3 0 0 0 24 82 L 60 84 Z" fill="#111827" stroke="#475569" stroke-width="1"/>
+      <rect x="7" y="66" width="18" height="13" rx="2.5" fill="#dc2626" stroke="#7f1d1d" stroke-width="1"/>
+      <circle cx="60" cy="80" r="5.5" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.8"/>
     </g>
 
-    <!-- Botol Fullbottle Ramping -->
-    <g clip-path="url(#slotAreaClip)" transform="translate(-10, 0)">
-      <g transform="translate(164, 30)">
+    <!-- Botol Fullbottle Ramping Pas Slot -->
+    <g clip-path="url(#slotAreaClip)" transform="translate(-8, 0)">
+      <g transform="translate(154, 30)">
         <g><animateTransform attributeName="transform" type="translate" values="0,-20; 0,-12; 0,-24; 0,-12; 0,-22; 0,-14; 0,-20; 0,-20; 0,0; 0,0; 0,-20" keyTimes="0; 0.04; 0.08; 0.12; 0.14; 0.16; 0.18; 0.33; 0.38; 0.95; 1" dur="12s" repeatCount="indefinite"/>
           <rect x="24" y="0" width="26" height="10" rx="2.5" fill="#dc2626" stroke="#991b1b" stroke-width="1"/>
           <rect x="32" y="2" width="10" height="6" rx="1" fill="#0d1117"/><text x="37" y="7" text-anchor="middle" font-family="ui-monospace, monospace" font-size="5" font-weight="bold" fill="#facc15">R/T</text>
@@ -142,7 +146,7 @@
           <rect x="14" y="66" width="46" height="8" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="1"/>
         </g>
       </g>
-      <g transform="translate(242, 30)">
+      <g transform="translate(230, 30)">
         <g><animateTransform attributeName="transform" type="translate" values="0,-20; 0,-20; 0,-12; 0,-24; 0,-12; 0,-22; 0,-14; 0,-20; 0,0; 0,0; 0,-20" keyTimes="0; 0.17; 0.20; 0.23; 0.26; 0.29; 0.31; 0.34; 0.40; 0.95; 1" dur="12s" repeatCount="indefinite"/>
           <rect x="24" y="0" width="26" height="10" rx="2.5" fill="#2563eb" stroke="#1d4ed8" stroke-width="1"/>
           <rect x="32" y="2" width="10" height="6" rx="1" fill="#0d1117"/><text x="37" y="7" text-anchor="middle" font-family="ui-monospace, monospace" font-size="5" font-weight="bold" fill="#facc15">R/T</text>
@@ -160,7 +164,7 @@
     </g>
 
     <!-- Hazard Stripes & Banner Bawah -->
-    <g transform="translate(150, 108)">
+    <g transform="translate(140, 108)">
       <rect width="170" height="24" rx="4" fill="url(#hazardPattern)" stroke="#ef4444" stroke-width="1.5"/>
       <rect x="6" y="4" width="76" height="16" rx="3" fill="#000000" opacity="0.88"/>
       <text x="44" y="15.5" text-anchor="middle" font-family="ui-monospace, monospace" font-size="8" font-weight="bold" letter-spacing="1">
@@ -171,10 +175,10 @@
       </text>
     </g>
 
-    <path d="M 98 142 L 210 142 Q 224 142 224 136 Q 224 132 238 132 L 320 132" stroke="url(#chromeGrad)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-    <path d="M 106 148 L 206 148 Q 218 148 218 143 Q 218 139 230 139 L 308 139" stroke="url(#chromeGrad)" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M 88 142 L 200 142 Q 214 142 214 136 Q 214 132 228 132 L 310 132" stroke="url(#chromeGrad)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+    <path d="M 96 148 L 196 148 Q 208 148 208 143 Q 208 139 220 139 L 298 139" stroke="url(#chromeGrad)" stroke-width="2" stroke-linecap="round" fill="none"/>
 
-    <g transform="translate(174, 163)">
+    <g transform="translate(164, 163)">
       <text text-anchor="middle" font-family="ui-monospace, monospace" font-size="8.8" font-weight="bold" letter-spacing="1.5">
         <animate attributeName="fill" values="#484f58; #484f58; #484f58; #484f58; #facc15; #3fb950; #484f58" keyTimes="0; 0.33; 0.50; 0.72; 0.78; 0.96; 1" dur="12s" repeatCount="indefinite"/>
         [ DRIVER: &quot;ARE YOU READY?&quot; ]
