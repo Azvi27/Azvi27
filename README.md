@@ -1,7 +1,7 @@
 <div align="center">
 
-<!-- DUAL CARDS (SEJAJAR BERDAMPINGAN) -->
-<img src="./azvi-ascii.svg?v=26" width="410" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=26" width="410" alt="Kamen Rider Build" />
+<!-- DUAL MINIMAL CARDS (IDENTIK 410x340 SEJAJAR BERDAMPINGAN) -->
+<img src="./azvi-ascii.svg?v=30" width="410" alt="Azvi Portrait" /><img src="./assets/build-card.svg?v=30" width="410" alt="Kamen Rider Build" />
 
 <br><br>
 
@@ -17,6 +17,6 @@
 </p>
 
 <!-- AGGREGATED HEATMAP -->
-<img src="./contrib-heatmap.svg?v=26" alt="Aggregated Heatmap" width="840" />
+<img src="./contrib-heatmap.svg?v=30" alt="Aggregated Heatmap" width="840" />
 
 </div>
