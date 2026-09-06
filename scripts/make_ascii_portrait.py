@@ -81,7 +81,8 @@ def generate_ascii_svg():
 
   svg_content = f"""<svg width="350" height="340" viewBox="0 0 350 340" fill="none" xmlns="http://www.w3.org/2000/svg" xml:space="preserve">
   <style>
-    text {{
+    /* ponytail: scope ascii style to prevent overriding global svg text */
+    .ascii-matrix text {{
       fill: #c9d1d9;
       font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
       font-size: 5.1px;
@@ -123,7 +124,9 @@ def generate_ascii_svg():
   <line x1="15" y1="44" x2="335" y2="44" stroke="#21262d" stroke-width="1"/>
 
   <!-- Matriks ASCII -->
+  <g class="ascii-matrix">
   {''.join(text_elements)}
+  </g>
 
   <text x="22" y="328" class="subtext">rendered: azvi-terminal-v1.0</text>
 </svg>

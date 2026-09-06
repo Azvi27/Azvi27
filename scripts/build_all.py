@@ -25,6 +25,21 @@ def patch_ascii_portrait():
     base = re.sub(r'<svg[^>]*>', f'<svg width="{CARD_L_W}" height="{CARD_H}" viewBox="0 0 {CARD_L_W} {CARD_H}" fill="none" xmlns="http://www.w3.org/2000/svg">', base, count=1)
     base = re.sub(r'<rect[^>]*fill="#0d1117"[^>]*/>', f'<rect width="{CARD_L_W}" height="{CARD_H}" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>', base, count=1)
 
+    # ponytail: clean scoped style for ascii-matrix without chaining regex mutations
+    base = re.sub(
+        r'<style>[\s\S]*?</style>',
+        '''<style>
+    .ascii-matrix text {
+      fill: #c9d1d9;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 5.1px;
+      white-space: pre;
+    }
+  </style>''',
+        base
+    )
+    base = re.sub(r'<g clip-path="url\(#asciiTypeClip\)"[^>]*>', '<g clip-path="url(#asciiTypeClip)" class="ascii-matrix">', base)
+
     n_lines = 36
     start_y = 30
     end_y = CARD_H - 22
@@ -59,47 +74,59 @@ def patch_ascii_portrait():
     hud_injection = f'''  <!-- Terminal Session Header -->
   <text x="18" y="20" font-family="ui-monospace, monospace" font-size="10.5" fill="#58a6ff" letter-spacing="1.2">SYSTEM://AZVI.LAB <tspan fill="#58a6ff"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite">█</animate></tspan></text>
 
-  <!-- OPERATOR HUD (LEBAR 304px, FONT RAKSASA 22-28px, ZERO DEAD SPACE) -->
-  <g id="operator-hud" transform="translate(172, 22)">
-    <rect width="304" height="302" rx="12" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+  <!-- OPERATOR HUD CARD -->
+  <g id="operator-hud" transform="translate(172, 18)">
+    <!-- Card Frame -->
+    <rect width="306" height="306" rx="12" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
 
-    <rect width="304" height="34" rx="12" fill="#21262d"/>
-    <rect y="22" width="304" height="12" fill="#21262d"/>
+    <!-- Header Bar -->
+    <rect width="306" height="36" rx="12" fill="#21262d"/>
+    <rect y="24" width="306" height="12" fill="#21262d"/>
     
-    <circle cx="16" cy="17" r="4.5" fill="#3fb950">
+    <!-- Pulse Dot -->
+    <circle cx="16" cy="18" r="4" fill="#3fb950">
       <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
     </circle>
-    <text x="28" y="21" fill="#3fb950" font-family="ui-monospace, monospace" font-size="12.5" font-weight="bold" letter-spacing="1.2">OPERATOR // TERMINAL</text>
-    <text x="288" y="21" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="12" font-weight="bold" letter-spacing="0.8">[ ONLINE ]</text>
+    <text x="28" y="22" fill="#3fb950" font-family="ui-monospace, SFMono-Regular, monospace" font-size="11.5" font-weight="700" letter-spacing="1">OPERATOR // TERMINAL</text>
+    
+    <!-- Online Pill Badge -->
+    <rect x="228" y="9" width="66" height="18" rx="9" fill="#11261a" stroke="#238636" stroke-width="0.8"/>
+    <text x="261" y="21" text-anchor="middle" fill="#3fb950" font-family="ui-monospace, SFMono-Regular, monospace" font-size="10" font-weight="700" letter-spacing="0.5">ONLINE</text>
 
-    <!-- 1. IDENTITAS (22px BOLD) -->
-    <text x="16" y="66" fill="#ffffff" font-family="ui-monospace, monospace" font-size="22" font-weight="bold">M. Khalis Farhan Azvi</text>
-    <text x="16" y="90" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="15" font-weight="600">@Azvi27 <tspan fill="#8b949e">· Teknik Fisika UGM</tspan></text>
+    <!-- 1. IDENTITAS -->
+    <text x="16" y="64" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="20" font-weight="700">M. Khalis Farhan Azvi</text>
+    
+    <!-- Handle Pill Tag -->
+    <rect x="16" y="78" width="68" height="20" rx="5" fill="#1c2d42" stroke="#388bfd" stroke-width="0.8"/>
+    <text x="50" y="92" text-anchor="middle" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, monospace" font-size="11.5" font-weight="700">@Azvi27</text>
+    <text x="92" y="92" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500">Teknik Fisika UGM</text>
 
-    <line x1="14" y1="106" x2="290" y2="106" stroke="#30363d" stroke-width="1.2"/>
+    <line x1="16" y1="110" x2="290" y2="110" stroke="#262c36" stroke-width="1.2"/>
 
-    <!-- 2. LABORATORIUM RISET (28px BOLD NEON) -->
-    <text x="16" y="127" fill="#8b949e" font-family="ui-monospace, monospace" font-size="12" font-weight="bold" letter-spacing="1.2">LABORATORIUM RISET</text>
-    <text x="288" y="127" text-anchor="end" fill="#39d353" font-family="ui-monospace, monospace" font-size="12" font-weight="bold">[ ACTIVE ]</text>
+    <!-- 2. LABORATORIUM RISET -->
+    <text x="16" y="130" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, monospace" font-size="10" font-weight="700" letter-spacing="1.5">LABORATORIUM RISET</text>
+    <rect x="234" y="119" width="56" height="17" rx="4" fill="#122d1d" stroke="#238636" stroke-width="0.8"/>
+    <text x="262" y="131" text-anchor="middle" fill="#39d353" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9.5" font-weight="700">ACTIVE</text>
 
-    <text x="16" y="158" fill="#3fb950" font-family="ui-monospace, monospace" font-size="28" font-weight="bold">Lab. SSTK</text>
-    <text x="16" y="182" fill="#f0f6fc" font-family="ui-monospace, monospace" font-size="16" font-weight="600">Sensor &amp; Sistem Telekontrol</text>
+    <text x="16" y="163" fill="#3fb950" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="800">Lab. SSTK</text>
+    <text x="16" y="185" fill="#f0f6fc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600">Sensor &amp; Sistem Telekontrol</text>
 
-    <line x1="14" y1="200" x2="290" y2="200" stroke="#30363d" stroke-width="1.2"/>
+    <line x1="16" y1="203" x2="290" y2="203" stroke="#262c36" stroke-width="1.2"/>
 
-    <!-- 3. PENUGASAN (21px BOLD) -->
-    <text x="16" y="221" fill="#8b949e" font-family="ui-monospace, monospace" font-size="12" font-weight="bold" letter-spacing="1.2">AKTIVITAS &amp; PENUGASAN</text>
-    <text x="288" y="221" text-anchor="end" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="12" font-weight="bold">STATUS</text>
+    <!-- 3. PERAN & PENUGASAN -->
+    <text x="16" y="223" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, monospace" font-size="10" font-weight="700" letter-spacing="1.5">PERAN &amp; PENUGASAN</text>
+    <rect x="236" y="212" width="54" height="17" rx="4" fill="#1c2d42" stroke="#388bfd" stroke-width="0.8"/>
+    <text x="263" y="224" text-anchor="middle" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9.5" font-weight="700">STATUS</text>
 
-    <text x="16" y="249" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="21" font-weight="bold">Lab Assistant &amp; Intern</text>
-    <text x="16" y="272" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="15" font-weight="500">Asisten Lab &amp; Magang SSTK</text>
-    <text x="16" y="292" fill="#8b949e" font-family="ui-monospace, monospace" font-size="13.5">Universitas Gadjah Mada</text>
+    <text x="16" y="251" fill="#58a6ff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="19" font-weight="700">Lab Assistant &amp; Intern</text>
+    <text x="16" y="274" fill="#c9d1d9" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13.5" font-weight="500">Asisten Lab &amp; Magang SSTK</text>
+    <text x="16" y="295" fill="#8b949e" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="500">Universitas Gadjah Mada</text>
   </g>'''
 
     final_content = f"{base}\n{hud_injection}\n</svg>"
     with open("azvi-ascii.svg", "w", encoding="utf-8") as f:
         f.write(final_content)
-    print(f"[1/4] azvi-ascii.svg berhasil dirender ({CARD_L_W}x{CARD_H}) dengan font besar 22-28px!")
+    print(f"[1/4] azvi-ascii.svg berhasil dirender ({CARD_L_W}x{CARD_H}) dengan font besar 21-28px!")
 
 # =============================================================
 # 2. GENERATE BUILD CARD (COMPACT DRIVER & NO DEAD SPACE)
